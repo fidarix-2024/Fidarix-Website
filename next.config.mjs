@@ -2,6 +2,18 @@
 const nextConfig = {
   /* config options here */
   reactCompiler: true,
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'i.pravatar.cc',
+      },
+      {
+        protocol: 'https',
+        hostname: 'rocket-saas.io',
+      },
+    ],
+  },
 };
 
 export default nextConfig;
