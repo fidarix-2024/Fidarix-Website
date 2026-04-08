@@ -9,7 +9,7 @@ export default function CTA() {
     <section id="contact" className="section py-48 bg-white rounded-b-[70px] -mt-16 relative z-10 overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.1)]">
       {/* Decorative Assets */}
       <div className="absolute -right-20 top-20 w-80 h-80 opacity-5 pointer-events-none group hover:opacity-20 transition-opacity">
-        <Image src="https://rocket-saas.io/wp-content/themes/Rocket-SaaS-2025/images-new/planet.png.webp" alt="UI Decoration" width={320} height={320} className="animate-float" />
+        <Image src="/planet.png" alt="UI Decoration" width={320} height={320} className="animate-float" />
       </div>
 
       <div className="container relative z-10">
@@ -67,7 +67,7 @@ export default function CTA() {
              
              {/* Decorative Background Assets */}
              <div className="absolute -bottom-20 -right-20 w-64 h-64 opacity-5 pointer-events-none group-hover:rotate-45 transition-transform duration-1000">
-                <Image src="https://rocket-saas.io/wp-content/themes/Rocket-SaaS-2025/images-new/icon-rocket.png.webp" alt="UI Decoration" width={256} height={256} />
+                <Image src="/rocket.png" alt="UI Decoration" width={256} height={256} />
              </div>
           </motion.div>
         </div>

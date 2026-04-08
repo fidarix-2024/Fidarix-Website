@@ -20,7 +20,7 @@ export default function Navbar() {
     <nav className={`fixed top-4 left-1/2 -translate-x-1/2 w-[90%] md:w-[85%] max-w-[1200px] z-50 transition-all duration-300 rounded-full ${scrolled ? 'bg-dark/40 backdrop-blur-xl border border-white/10 py-3 px-6 shadow-2xl' : 'bg-transparent py-6 px-4'}`}>
       <div className="flex items-center justify-between">
         <Link href="/" className="flex items-center gap-3">
-          <Image src="https://rocket-saas.io/wp-content/themes/Rocket-SaaS-2025/images-new/logo-w.svg" alt="Fidarix" width={32} height={32} className="w-8 h-8 md:w-10 md:h-10 transition-transform duration-300 hover:rotate-12" />
+          <Image src="/fidarix.png" alt="Fidarix" width={32} height={32} className="w-8 h-8 md:w-10 md:h-10 transition-transform duration-300 rounded-lg hover:rotate-12" />
           <span className="text-2xl font-black tracking-tighter text-white">
             Fidarix<span className="text-primary">.</span>
           </span>

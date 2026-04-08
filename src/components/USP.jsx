@@ -12,9 +12,8 @@ export default function USP() {
   return (
     <section className="section py-32 bg-dark overflow-hidden relative">
       {/* Background Asset as seen in Rocket SaaS */}
-      <div className="absolute top-0 right-0 w-[600px] h-full opacity-5 pointer-events-none">
-        <Image src="/asset-svg-2.svg" alt="Background Texture" fill className="object-cover" />
-      </div>
+      {/* Background Radial Gradient */}
+      <div className="absolute top-0 right-0 w-[600px] h-full opacity-30 pointer-events-none bg-radial-to-bl from-primary/20 via-transparent to-transparent"></div>
 
       <div className="container">
         <div className="text-center max-w-2xl mx-auto mb-28">
@@ -56,7 +55,7 @@ export default function USP() {
                 {/* Floating Decoration for the first (wide) card */}
                 {index === 0 && (
                    <div className="absolute right-10 top-1/2 -translate-y-1/2 w-48 h-48 opacity-10 group-hover:opacity-40 transition-opacity">
-                      <Image src="https://rocket-saas.io/wp-content/themes/Rocket-SaaS-2025/images-new/icon-magnet.png.webp" alt="UI Decoration" width={192} height={192} className="animate-float" />
+                      <Image src="/rocket.png" alt="UI Decoration" width={192} height={192} className="animate-float" />
                    </div>
                 )}
               </motion.div>

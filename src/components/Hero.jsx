@@ -15,7 +15,7 @@ export default function Hero() {
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
         className="absolute top-20 left-[10%] w-32 h-32 md:w-56 md:h-56 pointer-events-none opacity-40 md:opacity-100"
       >
-        <Image src="https://rocket-saas.io/wp-content/themes/Rocket-SaaS-2025/images-new/planet.png.webp" alt="Planet" width={224} height={224} className="object-contain" />
+        <Image src="/planet.png" alt="Planet" width={224} height={224} className="object-contain" />
       </motion.div>
 
       <motion.div 
@@ -23,7 +23,7 @@ export default function Hero() {
         transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
         className="absolute top-40 right-[15%] w-48 h-48 md:w-80 md:h-80 pointer-events-none opacity-30 md:opacity-80"
       >
-        <Image src="https://rocket-saas.io/wp-content/themes/Rocket-SaaS-2025/images-new/astronaut.png.webp" alt="Astronaut" width={320} height={320} className="object-contain" />
+        <Image src="/astronaut.png" alt="Astronaut" width={320} height={320} className="object-contain" />
       </motion.div>
 
       <motion.div 
@@ -31,7 +31,7 @@ export default function Hero() {
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
         className="absolute bottom-20 left-[5%] w-32 h-32 md:w-64 md:h-64 pointer-events-none opacity-20 md:opacity-60"
       >
-        <Image src="https://rocket-saas.io/wp-content/themes/Rocket-SaaS-2025/images-new/rocket.png.webp" alt="Rocket" width={256} height={256} className="object-contain" />
+        <Image src="/rocket.png" alt="Rocket" width={256} height={256} className="object-contain" />
       </motion.div>
 
       {/* Main Content */}
@@ -82,20 +82,12 @@ export default function Hero() {
             {/* Trust Section */}
             <div className="pt-20 flex flex-col items-center gap-8">
                <div className="flex -space-x-5">
-                 {[
-                   "https://rocket-saas.io/wp-content/themes/Rocket-SaaS-2025/images-new/alex-client.jpg.webp",
-                   "https://rocket-saas.io/wp-content/themes/Rocket-SaaS-2025/images-new/blue-Ryan.png.webp",
-                   "https://rocket-saas.io/wp-content/themes/Rocket-SaaS-2025/images-new/Daniel-Briggs.jpg.webp",
-                   "https://rocket-saas.io/wp-content/themes/Rocket-SaaS-2025/images-new/Mike-Clark.jpg.webp"
-                 ].map((img, i) => (
-                   <motion.div 
-                    key={i}
-                    whileHover={{ y: -10, zIndex: 50 }}
-                    className="w-16 h-16 rounded-full border-4 border-dark overflow-hidden bg-dark-soft shadow-2xl scale-110"
-                   >
-                      <Image src={img} alt="Client" width={64} height={64} className="object-cover" />
-                   </motion.div>
-                 ))}
+                 <motion.div 
+                   whileHover={{ y: -10, zIndex: 50 }}
+                   className="w-48 h-16 rounded-full border-4 border-dark overflow-hidden bg-dark-soft shadow-2xl scale-110 relative"
+                 >
+                    <Image src="/clients.png" alt="Clients" fill className="object-cover" />
+                 </motion.div>
                </div>
                <div className="flex flex-col items-center">
                   <span className="text-sm font-black text-white uppercase tracking-widest opacity-40 mb-2">Join 1,000+ Scaled Agencies</span>
@@ -117,7 +109,7 @@ export default function Hero() {
       >
          <div className="relative rounded-[60px] overflow-hidden border-[1px] border-white/10 shadow-[0_100px_200px_-50px_rgba(217,27,92,0.3)] bg-[#1a144d]/40 backdrop-blur-3xl transform rotate-x-[15deg] rotate-y-[-5deg] rotate-z-[2deg] hover:rotate-0 transition-transform duration-1000">
             <div className="aspect-[21/9] w-full relative">
-               <Image src="https://rocket-saas.io/wp-content/themes/Rocket-SaaS-2025/images-new/home-hero.png" fill alt="Fidarix Dashboard" className="object-cover opacity-90" />
+               <Image src="/home-hero.png" fill alt="Fidarix Dashboard" className="object-cover opacity-90" />
             </div>
          </div>
       </motion.div>

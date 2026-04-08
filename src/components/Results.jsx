@@ -14,9 +14,8 @@ export default function Results() {
   return (
     <section className="section py-40 bg-dark relative overflow-hidden">
       {/* Background Asset as seen in Rocket SaaS */}
-      <div className="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none">
-        <Image src="https://rocket-saas.io/wp-content/themes/Rocket-SaaS-2025/images-new/asset-svg-2.svg" alt="Background Texture" fill className="object-cover" />
-      </div>
+      {/* Stats Background Gradient */}
+      <div className="absolute inset-0 bg-radial-to-t from-secondary/10 via-transparent to-transparent opacity-50"></div>
 
       <div className="container relative z-10">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-20 text-center">

@@ -75,10 +75,10 @@ export default function TemplatesPreview() {
       
       {/* Decorative Assets */}
       <div className="absolute -left-20 top-1/2 w-80 h-80 opacity-5 pointer-events-none">
-        <Image src="https://rocket-saas.io/wp-content/themes/Rocket-SaaS-2025/images-new/icon-footer1-new.png.webp" alt="UI Decoration" width={320} height={320} />
+        <Image src="/rocket.png" alt="UI Decoration" width={320} height={320} className="opacity-20" />
       </div>
       <div className="absolute -right-20 bottom-0 w-64 h-64 opacity-5 pointer-events-none">
-        <Image src="https://rocket-saas.io/wp-content/themes/Rocket-SaaS-2025/images-new/icon-footer2-new.png.webp" alt="UI Decoration" width={256} height={256} />
+        <Image src="/planet.png" alt="UI Decoration" width={256} height={256} className="opacity-20" />
       </div>
     </section>
   );

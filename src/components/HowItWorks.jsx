@@ -56,7 +56,7 @@ export default function HowItWorks() {
               {/* Decorative Element on Step 2 (Asset from public) */}
               {index === 1 && (
                  <div className="absolute -bottom-24 left-0 w-48 h-48 opacity-10 group-hover:opacity-60 transition-opacity rotate-12 pointer-events-none">
-                    <Image src="https://rocket-saas.io/wp-content/themes/Rocket-SaaS-2025/images-new/planet.png.webp" alt="UI Decoration" width={192} height={192} />
+                    <Image src="/planet.png" alt="UI Decoration" width={192} height={192} />
                  </div>
               )}
             </motion.div>

@@ -13,17 +13,17 @@ export default function Footer() {
     <footer className="bg-dark pt-36 pb-12 rounded-t-[70px] -mt-16 relative z-30 border-t border-white/5 overflow-hidden">
       {/* Decorative Assets from Rocket SaaS */}
       <div className="absolute -left-20 top-20 w-80 h-80 opacity-5 pointer-events-none">
-        <Image src="https://rocket-saas.io/wp-content/themes/Rocket-SaaS-2025/images-new/icon-footer3-new.png.webp" alt="UI Decoration" width={320} height={320} />
+        <Image src="/rocket.png" alt="UI Decoration" width={320} height={320} className="opacity-10" />
       </div>
       <div className="absolute right-0 bottom-0 w-[500px] h-[500px] opacity-10 pointer-events-none">
-        <Image src="https://rocket-saas.io/wp-content/themes/Rocket-SaaS-2025/images-new/funnel-footer.png.webp" alt="UI Decoration" width={500} height={500} className="object-contain" />
+        <Image src="/home-hero.png" alt="UI Decoration" width={500} height={500} className="object-contain opacity-20" />
       </div>
 
       <div className="container relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-20 mb-28">
           <div className="flex flex-col gap-10 max-w-sm">
             <Link href="/" className="flex items-center gap-3">
-              <Image src="https://rocket-saas.io/wp-content/themes/Rocket-SaaS-2025/images-new/logo-w.svg" alt="Fidarix" width={40} height={40} className="w-10 h-10" />
+              <Image src="/fidarix.png" alt="Fidarix" width={40} height={40} className="w-10 h-10 rounded-xl" />
               <span className="text-3xl font-extrabold tracking-tighter text-white">
                 Fidarix<span className="text-primary">.</span>
               </span>

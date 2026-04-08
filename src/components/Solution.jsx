@@ -61,7 +61,7 @@ export default function Solution() {
              {/* Complex UI Mockup with assets */}
              <div className="relative z-10 p-4 bg-dark rounded-[60px] shadow-[0_50px_100px_-20px_rgba(12,6,44,0.3)] border border-white/10 group overflow-hidden">
                 <div className="aspect-[4/3] relative rounded-[40px] overflow-hidden bg-dark-soft">
-                  <Image src="https://rocket-saas.io/wp-content/themes/Rocket-SaaS-2025/images-new/icon-computer.png.webp" fill alt="Automation Preview" className="object-cover opacity-80" />
+                  <Image src="/home-hero.png" fill alt="Automation Preview" className="object-cover opacity-80" />
                   
                   {/* Floating elements inside mockup */}
                   <motion.div 
@@ -94,10 +94,10 @@ export default function Solution() {
              
              {/* Decorative Background Assets */}
              <div className="absolute -top-10 -right-10 w-48 h-48 pointer-events-none opacity-40">
-                <Image src="https://rocket-saas.io/wp-content/themes/Rocket-SaaS-2025/images-new/icon-rocket.png.webp" alt="UI Icon" width={192} height={192} />
+                <Image src="/rocket.png" alt="UI Icon" width={192} height={192} />
              </div>
              <div className="absolute -bottom-20 -left-20 w-56 h-56 pointer-events-none opacity-40">
-                <Image src="https://rocket-saas.io/wp-content/themes/Rocket-SaaS-2025/images-new/icon-lightning.png.webp" alt="UI Icon" width={224} height={224} />
+                <Image src="/fidarix.png" alt="UI Icon" width={224} height={224} />
              </div>
           </motion.div>
         </div>
