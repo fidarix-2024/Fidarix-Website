@@ -8,8 +8,6 @@ import ServicesPage from './pages/ServicesPage';
 import PortfolioPage from './pages/PortfolioPage';
 import PricingPage from './pages/PricingPage';
 import ContactPage from './pages/ContactPage';
-import BlogPage from './pages/BlogPage';
-import FAQPage from './pages/FAQPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 function LenisProvider() {
@@ -55,8 +53,6 @@ function App() {
         <Route path="/portfolio" element={<PortfolioPage />} />
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/contact" element={<ContactPage />} />
-        <Route path="/blog" element={<BlogPage />} />
-        <Route path="/faq" element={<FAQPage />} />
         <Route path="/home" element={<Navigate to="/" replace />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

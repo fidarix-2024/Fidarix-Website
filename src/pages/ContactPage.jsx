@@ -1,5 +1,5 @@
 import { ButtonLink, ImpactHero, SectionWise, Marquee } from '../components/Chrome';
-import { contactLinks, socialLinks } from '../data/site';
+import { contactLinks, socialLinks, faqs } from '../data/site';
 
 function ContactPage() {
   return (
@@ -58,6 +58,18 @@ function ContactPage() {
           <h2 className="display-huge" style={{ color: '#fff' }}>Global Reach</h2>
           <p className="body-copy" style={{ color: 'rgba(255,255,255,0.6)', margin: '30px 0' }}>Based in the cloud, working for the world.</p>
           <div className="display-huge" style={{ fontSize: '2rem', opacity: 0.3 }}>LONDON • NEW YORK • TOKYO • DUBAI</div>
+        </div>
+      </SectionWise>
+
+      <SectionWise bg="bg-white">
+        <h2 className="display-huge" style={{ textAlign: 'center', marginBottom: 60 }}>Frequently Asked Questions</h2>
+        <div style={{ maxWidth: '800px', margin: '0 auto', display: 'grid', gap: 30 }}>
+          {faqs.map(faq => (
+            <div key={faq.question} className="faq-card" style={{ padding: '30px', background: 'var(--surface-soft)' }}>
+              <h3 className="section-title" style={{ fontSize: '1.4rem', marginBottom: 15 }}>{faq.question}</h3>
+              <p className="body-copy">{faq.answer}</p>
+            </div>
+          ))}
         </div>
       </SectionWise>
     </div>

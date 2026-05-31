@@ -55,7 +55,7 @@ function PricingPage() {
       <SectionWise bg="bg-dark">
         <div style={{ textAlign: 'center', padding: '80px 0' }}>
           <h2 className="display-huge" style={{ color: '#fff' }}>Custom Scope?</h2>
-          <p className="body-copy" style={{ color: 'rgba(255,255,255,0.6)', margin: '30px 0', maxWidth: '600px', margin: '30px auto' }}>
+          <p className="body-copy" style={{ color: 'rgba(255,255,255,0.6)', maxWidth: '600px', margin: '30px auto' }}>
             We can quote custom builds for web apps, SEO retainers, or multi-brand systems.
           </p>
           <ButtonLink to="/contact" style={{ borderRadius: '999px', padding: '20px 60px', background: 'var(--primary)', color: '#fff' }}>Request Custom Quote</ButtonLink>
