@@ -4,8 +4,6 @@ export const navItems = [
   { label: 'Services', path: '/services' },
   { label: 'Portfolio', path: '/portfolio' },
   { label: 'Pricing', path: '/pricing' },
-  { label: 'Blog', path: '/blog' },
-  { label: 'FAQ', path: '/faq' },
   { label: 'Contact', path: '/contact' },
 ];
 
@@ -182,6 +180,21 @@ export const aboutTimeline = [
   { year: '2020', title: 'Systems focus', text: 'We moved toward repeatable, component-driven builds.' },
   { year: '2023', title: 'Conversion strategy', text: 'More emphasis on messaging, speed, and lead generation.' },
   { year: '2026', title: 'Fidarix rebrand', text: 'A sharper visual system for premium digital experiences.' },
+];
+
+export const founders = [
+  { 
+    name: 'Dishi Gautam', 
+    role: 'Co-founder',
+    bio: 'Driving the visual language and strategic direction of Fidarix with a focus on premium aesthetics.',
+    image: '/images/dishi.png'
+  },
+  { 
+    name: 'Yash Raj', 
+    role: 'Co-founder',
+    bio: 'Architecting high-performance digital experiences and ensuring technical excellence across all builds.',
+    image: '/images/yash.png'
+  },
 ];
 
 export const team = [

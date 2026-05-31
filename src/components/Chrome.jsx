@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { navItems } from '../data/site';
 import InfiniteMenu from './InfiniteMenu';
@@ -22,6 +22,8 @@ function LogoMark() {
 
 function SiteHeader() {
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
+  const isLightPage = location.pathname === '/';
 
   const routes = useMemo(
     () => navItems.filter((item) => item.path !== '/home'),
@@ -29,8 +31,8 @@ function SiteHeader() {
   );
 
   return (
-    <header className="site-header" style={{ zIndex: 50, border: 'none', background: 'transparent' }}>
-      <div className="site-frame header-shell" style={{ background: 'transparent', border: 'none', boxShadow: 'none', backdropFilter: 'none', padding: '12px 0' }}>
+    <header className={`site-header ${isLightPage ? 'is-light' : ''}`} style={{ zIndex: 50, border: 'none', background: 'transparent' }}>
+      <div className={`site-frame header-shell ${isLightPage ? 'is-light' : ''}`} style={{ background: 'transparent', border: 'none', boxShadow: 'none', backdropFilter: 'none', padding: '12px 0' }}>
         <Link className="brand-link" to="/" onClick={() => setIsOpen(false)}>
           <LogoMark />
           <span className="brand-wordmark" style={{ color: '#fff' }}>
@@ -65,21 +67,64 @@ function SiteHeader() {
 function SiteFooter() {
   return (
     <footer className="footer-wise">
-      <div className="footer-marquee">
-        <Marquee 
-          items={[
-            "DESIGNED BY FIDARIX •", "DEVELOPED BY FIDARIX •", "MADE FOR THE WEB •",
-            "DESIGNED BY FIDARIX •", "DEVELOPED BY FIDARIX •", "MADE FOR THE WEB •"
-          ]} 
-          speed="40s"
-        />
-      </div>
-      <div className="site-frame" style={{ padding: '60px 0', textAlign: 'center', color: 'rgba(255,255,255,0.4)', fontSize: '0.9rem' }}>
-        <p>&copy; 2026 Fidarix Studio. All rights reserved.</p>
-        <div style={{ marginTop: 20, display: 'flex', justifyContent: 'center', gap: 30 }}>
-          <Link to="/about">About</Link>
-          <Link to="/services">Services</Link>
-          <Link to="/contact">Contact</Link>
+      <div className="site-frame">
+        <div className="footer-grid">
+          {/* Column 1: Logo and Pitch */}
+          <div className="footer-col" style={{ gap: '20px' }}>
+            <Link className="brand-link" to="/" style={{ display: 'inline-flex', alignItems: 'center', gap: '12px' }}>
+              <LogoMark />
+              <span className="brand-wordmark" style={{ color: '#0d1b3d' }}>
+                <span className="brand-name">Fidarix</span>
+              </span>
+            </Link>
+            <p style={{ color: '#5a6887', fontSize: '0.92rem', lineHeight: '1.6', margin: 0, maxWidth: '240px' }}>
+              High-performance editorial websites built with calm aesthetics, modular structures, and absolute precision.
+            </p>
+          </div>
+
+          {/* Column 2: Services */}
+          <div className="footer-col">
+            <h4 className="footer-heading">Services</h4>
+            <Link to="/services" className="footer-link">Web Design</Link>
+            <Link to="/services" className="footer-link">Development</Link>
+            <Link to="/services" className="footer-link">Branding</Link>
+            <Link to="/services" className="footer-link">Motion Systems</Link>
+            <Link to="/services" className="footer-link">Custom Apps</Link>
+          </div>
+
+          {/* Column 3: Studio */}
+          <div className="footer-col">
+            <h4 className="footer-heading">Studio</h4>
+            <Link to="/about" className="footer-link">About Us</Link>
+            <Link to="/portfolio" className="footer-link">Selected Works</Link>
+            <Link to="/pricing" className="footer-link">Pricing Packages</Link>
+            <Link to="/contact" className="footer-link">Contact Studio</Link>
+          </div>
+
+          {/* Column 4: Resources */}
+          <div className="footer-col">
+            <h4 className="footer-heading">Resources</h4>
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="footer-link">GitHub</a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="footer-link">LinkedIn</a>
+            <a href="https://dribbble.com" target="_blank" rel="noopener noreferrer" className="footer-link">Dribbble</a>
+            <div style={{ marginTop: '6px' }}>
+              <Link to="/contact" className="hiring-badge" style={{ textDecoration: 'none' }}>
+                👋 We're Hiring
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* Legal Bottom Bar */}
+        <div className="footer-bottom">
+          <span>&copy; 2026 Fidarix Studio. All rights reserved.</span>
+          <div className="footer-legal-links">
+            <Link to="/contact" className="footer-legal-link">Privacy Policy</Link>
+            <span style={{ opacity: 0.3 }}>•</span>
+            <Link to="/contact" className="footer-legal-link">Terms of Service</Link>
+            <span style={{ opacity: 0.3 }}>•</span>
+            <Link to="/contact" className="footer-legal-link">Security</Link>
+          </div>
         </div>
       </div>
     </footer>
@@ -118,7 +163,7 @@ export function SiteChrome({ children }) {
     <div className="app-shell">
       <SiteHeader />
       <main className="site-main">{children}</main>
-      
+
       {/* Interactive Infinite Menu just above footer */}
       <div style={{ height: '700px', position: 'relative', overflow: 'hidden' }}>
         <InfiniteMenu items={menuItems} scale={0.9} />
@@ -147,18 +192,25 @@ export function PageHero({ eyebrow, title, copy, actions, panel, children }) {
   );
 }
 
-export function ImpactHero({ lines, copy, actions }) {
+export function ImpactHero({ lines, copy, actions, children }) {
   return (
-    <section className="hero-impact">
-      <h1 className="hero-title">
-        {lines.map((line, i) => (
-          <span key={i} className="reveal-line">
-            <span className="reveal-text">{line}</span>
-          </span>
-        ))}
-      </h1>
-      <p className="hero-copy">{copy}</p>
-      {actions ? <div className="hero-actions">{actions}</div> : null}
+    <section className={`hero-impact ${!children ? 'hero-impact-default' : ''}`}>
+      {children && (
+        <div className="hero-impact-background">
+          {children}
+        </div>
+      )}
+      <div className="hero-impact-content" style={{ position: 'relative', zIndex: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <h1 className="hero-title">
+          {lines.map((line, i) => (
+            <span key={i} className="reveal-line">
+              <span className="reveal-text">{line}</span>
+            </span>
+          ))}
+        </h1>
+        <p className="hero-copy">{copy}</p>
+        {actions ? <div className="hero-actions">{actions}</div> : null}
+      </div>
     </section>
   );
 }
