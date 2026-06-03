@@ -32,9 +32,21 @@ function PricingPage() {
               color: plan.popular ? '#fff' : '#000',
               border: plan.popular ? 'none' : '1px solid rgba(0,0,0,0.1)'
             }}>
-              <p className="eyebrow" style={{ opacity: 0.6 }}>{plan.delivery}</p>
+              <p className="eyebrow" style={{ opacity: 0.6 }}>{plan.delivery} • {plan.revisions}</p>
               <h3 className="display-huge" style={{ fontSize: '3.5rem', marginTop: 20 }}>{plan.name}</h3>
-              <p className="display-huge" style={{ fontSize: '4rem', marginTop: 30, color: 'var(--primary)' }}>{plan.price}</p>
+              {plan.tagline && (
+                <p style={{ 
+                  fontSize: '0.96rem', 
+                  fontWeight: 700, 
+                  color: plan.popular ? 'var(--wise-green)' : 'var(--primary)', 
+                  marginTop: 10,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.04em'
+                }}>
+                  {plan.tagline}
+                </p>
+              )}
+              <p className="display-huge" style={{ fontSize: '4rem', marginTop: 24, color: 'var(--primary)' }}>{plan.price}</p>
               <ul className="check-list" style={{ marginTop: 40, marginBottom: 40, listStyle: 'none', padding: 0 }}>
                 {plan.features.map(f => (
                   <li key={f} style={{ marginBottom: 15, fontSize: '1.1rem' }}>✓ {f}</li>

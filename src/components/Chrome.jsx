@@ -2,7 +2,6 @@ import { useMemo, useState } from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { navItems } from '../data/site';
-import InfiniteMenu from './InfiniteMenu';
 
 function LogoMark() {
   return (
@@ -23,7 +22,7 @@ function LogoMark() {
 function SiteHeader() {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
-  const isLightPage = location.pathname === '/';
+  const isDarkPage = location.pathname === '/services';
 
   const routes = useMemo(
     () => navItems.filter((item) => item.path !== '/home'),
@@ -31,11 +30,11 @@ function SiteHeader() {
   );
 
   return (
-    <header className={`site-header ${isLightPage ? 'is-light' : ''}`} style={{ zIndex: 50, border: 'none', background: 'transparent' }}>
-      <div className={`site-frame header-shell ${isLightPage ? 'is-light' : ''}`} style={{ background: 'transparent', border: 'none', boxShadow: 'none', backdropFilter: 'none', padding: '12px 0' }}>
+    <header className="site-header" style={{ zIndex: 50, paddingTop: '24px' }}>
+      <div className={`site-frame header-shell ${isDarkPage ? 'is-dark' : 'is-light'}`}>
         <Link className="brand-link" to="/" onClick={() => setIsOpen(false)}>
           <LogoMark />
-          <span className="brand-wordmark" style={{ color: '#fff' }}>
+          <span className="brand-wordmark">
             <span className="brand-name">Fidarix</span>
           </span>
         </Link>
@@ -46,7 +45,7 @@ function SiteHeader() {
               key={item.path}
               to={item.path}
               className={({ isActive }) => `nav-link ${isActive ? 'is-active' : ''}`}
-              style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem', letterSpacing: '0.02em' }}
+              style={{ fontSize: '0.9rem', letterSpacing: '0.02em' }}
               onClick={() => setIsOpen(false)}
             >
               {item.label}
@@ -54,8 +53,8 @@ function SiteHeader() {
           ))}
         </nav>
 
-        <div className="header-actions" style={{ color: '#fff' }}>
-          <button className="button button-ghost button-small" style={{ border: 'none', background: 'transparent', color: '#fff' }}>
+        <div className="header-actions">
+          <button className="button button-ghost button-small" style={{ border: 'none', background: 'transparent' }}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
           </button>
         </div>
@@ -73,11 +72,11 @@ function SiteFooter() {
           <div className="footer-col" style={{ gap: '20px' }}>
             <Link className="brand-link" to="/" style={{ display: 'inline-flex', alignItems: 'center', gap: '12px' }}>
               <LogoMark />
-              <span className="brand-wordmark" style={{ color: '#0d1b3d' }}>
+              <span className="brand-wordmark" style={{ color: '#ffffff' }}>
                 <span className="brand-name">Fidarix</span>
               </span>
             </Link>
-            <p style={{ color: '#5a6887', fontSize: '0.92rem', lineHeight: '1.6', margin: 0, maxWidth: '240px' }}>
+            <p style={{ color: 'rgba(255, 255, 255, 0.6)', fontSize: '0.92rem', lineHeight: '1.6', margin: 0, maxWidth: '240px' }}>
               High-performance editorial websites built with calm aesthetics, modular structures, and absolute precision.
             </p>
           </div>
@@ -97,7 +96,7 @@ function SiteFooter() {
             <h4 className="footer-heading">Studio</h4>
             <Link to="/about" className="footer-link">About Us</Link>
             <Link to="/portfolio" className="footer-link">Selected Works</Link>
-            <Link to="/pricing" className="footer-link">Pricing Packages</Link>
+            <Link to="/services#pricing" className="footer-link">Pricing Packages</Link>
             <Link to="/contact" className="footer-link">Contact Studio</Link>
           </div>
 
@@ -131,44 +130,73 @@ function SiteFooter() {
   );
 }
 
-export function SiteChrome({ children }) {
-  const menuItems = [
-    {
-      image: 'https://picsum.photos/600/600?grayscale&1',
-      link: '/services',
-      title: 'Branding',
-      description: 'Core identities for modern companies.'
-    },
-    {
-      image: 'https://picsum.photos/600/600?grayscale&2',
-      link: '/portfolio',
-      title: 'Design',
-      description: 'Editorial web and interface systems.'
-    },
-    {
-      image: 'https://picsum.photos/600/600?grayscale&3',
-      link: '/services',
-      title: 'Web',
-      description: 'High-performance React development.'
-    },
-    {
-      image: 'https://picsum.photos/600/600?grayscale&4',
-      link: '/contact',
-      title: 'Studio',
-      description: 'Behind the scenes at Fidarix.'
-    }
-  ];
+export function PreFooter() {
+  return (
+    <section className="pre-footer-section">
+      <div className="site-frame">
+        <div className="pre-footer-grid">
+          {/* Left Column: Headline */}
+          <div className="pre-footer-left">
+            <span className="pre-footer-eyebrow">
+              <span className="eyebrow-dot" /> Contact
+            </span>
+            <h2 className="pre-footer-title">
+              LET’S WORK <br />
+              → TOGETHER
+            </h2>
+          </div>
 
+          {/* Right Column: concentric circles and contact info */}
+          <div className="pre-footer-right">
+            <div className="circles-visual-wrapper">
+              <svg className="circles-svg" viewBox="0 0 400 150">
+                <circle cx="75" cy="75" r="70" fill="none" stroke="rgba(13, 27, 61, 0.1)" strokeWidth="1.5" />
+                <circle cx="125" cy="75" r="70" fill="none" stroke="rgba(13, 27, 61, 0.12)" strokeWidth="1.5" />
+                <circle cx="175" cy="75" r="70" fill="none" stroke="rgba(13, 27, 61, 0.16)" strokeWidth="1.5" />
+                <circle cx="225" cy="75" r="70" fill="none" stroke="rgba(13, 27, 61, 0.2)" strokeWidth="1.5" />
+                <circle cx="275" cy="75" r="70" fill="none" stroke="rgba(13, 27, 61, 0.24)" strokeWidth="1.5" />
+                <circle cx="325" cy="75" r="70" fill="none" stroke="rgba(13, 27, 61, 0.28)" strokeWidth="1.5" />
+                
+                {/* Globe grid visual lines */}
+                <path d="M 200 5 A 70 70 0 0 1 200 145" fill="none" stroke="rgba(13, 27, 61, 0.12)" strokeWidth="1.5" />
+                <path d="M 200 5 A 35 70 0 0 1 200 145" fill="none" stroke="rgba(13, 27, 61, 0.15)" strokeWidth="1.5" />
+                <path d="M 200 5 A 15 70 0 0 1 200 145" fill="none" stroke="rgba(13, 27, 61, 0.18)" strokeWidth="1.5" />
+                <line x1="130" y1="75" x2="270" y2="75" stroke="rgba(13, 27, 61, 0.2)" strokeWidth="1.5" />
+              </svg>
+            </div>
+
+            <div className="pre-footer-divider" />
+
+            <div className="pre-footer-sub-grid">
+              <p className="pre-footer-text">
+                Feel free to reach out if you want to collaborate with us, or simply have a chat. We are always open to new digital sprint perspectives.
+              </p>
+              <div className="pre-footer-email-col">
+                <a href="mailto:hello@fidarix.com" className="pre-footer-email">
+                  hello@fidarix.com ↗
+                </a>
+              </div>
+            </div>
+
+            <div style={{ marginTop: '40px', textAlign: 'left' }}>
+              <Link to="/contact" className="pre-footer-btn">
+                GO TO THE CONTACT PAGE →
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function SiteChrome({ children }) {
   return (
     <div className="app-shell">
       <SiteHeader />
       <main className="site-main">{children}</main>
 
-      {/* Interactive Infinite Menu just above footer */}
-      <div style={{ height: '700px', position: 'relative', overflow: 'hidden' }}>
-        <InfiniteMenu items={menuItems} scale={0.9} />
-      </div>
-
+      <PreFooter />
       <SiteFooter />
     </div>
   );
@@ -215,9 +243,9 @@ export function ImpactHero({ lines, copy, actions, children }) {
   );
 }
 
-export function SectionWise({ children, className = '', bg = '' }) {
+export function SectionWise({ children, className = '', bg = '', style }) {
   return (
-    <section className={`section-wise ${bg} ${className}`}>
+    <section className={`section-wise ${bg} ${className}`} style={style}>
       <div className="site-frame">
         {children}
       </div>
