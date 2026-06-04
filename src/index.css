@@ -120,11 +120,12 @@
   }
 
   .site-header {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    z-index: 50;
+    z-index: 100;
+    padding-top: 0 !important;
   }
 
   .header-shell {
@@ -132,12 +133,12 @@
     align-items: center;
     justify-content: space-between;
     gap: 18px;
-    padding: 16px 18px;
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.76);
-    backdrop-filter: blur(18px);
-    box-shadow: var(--shadow-soft);
+    padding: 24px 0 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    box-shadow: none !important;
   }
 
   .brand-link {
@@ -247,6 +248,7 @@
 
   .site-main {
     width: 100%;
+    padding-top: 96px;
   }
 
   .page {
@@ -3692,4 +3694,52 @@
   border-top: 1px solid rgba(255, 255, 255, 0.06) !important;
 }
 
+/* Global Transparent Fixed Header Overrides */
+.site-header {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 100 !important;
+  padding-top: 0 !important;
+  background: rgba(10, 15, 30, 0.72) !important; /* dark glassmorphic bg */
+  backdrop-filter: blur(14px) !important; /* blur effect */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important; /* subtle border */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15) !important;
+  transition: background-color 0.3s ease;
+}
+
+.header-shell,
+.header-shell.is-light,
+.header-shell.is-dark {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  padding: 16px 0 !important; /* compact padding */
+}
+
+/* Align and color text elements inside the header */
+.site-header .brand-name {
+  color: #ffffff !important;
+}
+
+.site-header .nav-link {
+  color: rgba(255, 255, 255, 0.65) !important;
+}
+
+.site-header .nav-link:hover {
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+.site-header .nav-link.is-active {
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.12) !important;
+}
+
+.site-header .header-actions button svg {
+  stroke: #ffffff !important;
+}
 

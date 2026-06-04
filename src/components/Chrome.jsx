@@ -29,33 +29,35 @@ function SiteHeader() {
   );
 
   return (
-    <header className="site-header" style={{ zIndex: 50, paddingTop: '24px' }}>
-      <div className={`site-frame header-shell ${isDarkPage ? 'is-dark' : 'is-light'}`}>
-        <Link className="brand-link" to="/" onClick={() => setIsOpen(false)}>
-          <LogoMark />
-          <span className="brand-wordmark">
-            <span className="brand-name">Fidarix</span>
-          </span>
-        </Link>
+    <header className="site-header">
+      <div className="site-frame">
+        <div className={`header-shell ${isDarkPage ? 'is-dark' : 'is-light'}`}>
+          <Link className="brand-link" to="/" onClick={() => setIsOpen(false)}>
+            <LogoMark />
+            <span className="brand-wordmark">
+              <span className="brand-name">Fidarix</span>
+            </span>
+          </Link>
 
-        <nav className={`nav-links ${isOpen ? 'is-open' : ''}`} style={{ flex: 1, justifyContent: 'center' }}>
-          {routes.map((item) => (
-            <NavLink
-              key={item.path}
-              to={item.path}
-              className={({ isActive }) => `nav-link ${isActive ? 'is-active' : ''}`}
-              style={{ fontSize: '0.9rem', letterSpacing: '0.02em' }}
-              onClick={() => setIsOpen(false)}
-            >
-              {item.label}
-            </NavLink>
-          ))}
-        </nav>
+          <nav className={`nav-links ${isOpen ? 'is-open' : ''}`} style={{ flex: 1, justifyContent: 'center' }}>
+            {routes.map((item) => (
+              <NavLink
+                key={item.path}
+                to={item.path}
+                className={({ isActive }) => `nav-link ${isActive ? 'is-active' : ''}`}
+                style={{ fontSize: '0.9rem', letterSpacing: '0.02em' }}
+                onClick={() => setIsOpen(false)}
+              >
+                {item.label}
+              </NavLink>
+            ))}
+          </nav>
 
-        <div className="header-actions">
-          <button className="button button-ghost button-small" style={{ border: 'none', background: 'transparent' }}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-          </button>
+          <div className="header-actions">
+            <button className="button button-ghost button-small" style={{ border: 'none', background: 'transparent' }}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </button>
+          </div>
         </div>
       </div>
     </header>
