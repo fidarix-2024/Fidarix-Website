@@ -4,7 +4,6 @@ import { services, pricingPlans } from '../data/site';
 import { Check } from 'lucide-react';
 import { GridScan } from '../components/GridScan';
 import DomeGallery from '../components/DomeGallery';
-import Footer from '../components/Footer';
 import '../components/ServicesPageAnimations.css';
 
 const infiniteItems = [
@@ -157,116 +156,99 @@ function ServicesDiagonalScrollingShowcase() {
     setActiveIndex(idx);
   }, [scrollProgress, maxIndex]);
 
-  // Helper interpolate function
-  const interpolate = (val, inMin, inMax, outMin, outMax, ease = true) => {
-    if (val <= inMin) return outMin;
-    if (val >= inMax) return outMax;
-    let t = (val - inMin) / (inMax - inMin);
-    if (ease) {
-      t = t * t * (3 - 2 * t);
-    }
-    return outMin + t * (outMax - outMin);
-  };
-
-  // Card parameters: spacing cards diagonally along a shared continuous line
+  // Card parameters: sliding cards diagonally (entering from bottom-right, exiting top-left)
   const getCardStyle = (index) => {
-    const p = scrollProgress;
-    const spacingX = 65;
-    const spacingY = 65;
+    const activeProgressIndex = scrollProgress * maxIndex;
+    const delta = index - activeProgressIndex;
     
-    // Each card is centered at its respective progress phase target
-    const targetP = index / maxIndex;
-    const deltaP = targetP - p;
+    // Diagonal offset path (tx = horizontal shift, ty = vertical shift)
+    const tx = delta * 220; // slides from right to center to left
+    const ty = delta * 150; // slides from bottom to center to top
     
-    // Smooth continuous offset calculations
-    const tx = deltaP * 7.69 * spacingX;
-    const ty = deltaP * 7.69 * spacingY;
+    const scale = 1 - Math.abs(delta) * 0.08;
     
-    const dist = Math.abs(deltaP * 7.69);
-    const scale = interpolate(dist, 0, 1, 1, 0.85);
-    const opacity = interpolate(dist, 0, 1.2, 1, 0);
+    // Flatter opacity curve so cards overlap and never leave a blank screen
+    const opacity = Math.max(0, Math.min(1, 1.25 - Math.abs(delta) * 1.1));
 
     return {
-      transform: `translate(${tx}vw, ${ty}vh) scale(${scale})`,
-      opacity: opacity,
-      zIndex: dist < 0.5 ? 15 : 10,
+      transform: `translate3d(${tx}px, ${ty}px, 0) scale(${scale})`,
+      opacity,
+      zIndex: 10 - Math.round(Math.abs(delta) * 2),
+      pointerEvents: Math.abs(delta) < 0.5 ? 'auto' : 'none',
     };
   };
 
   const getTextStyle = (index) => {
-    const p = scrollProgress;
-    const targetP = index / maxIndex;
-    const deltaP = targetP - p;
-    const dist = Math.abs(deltaP * 7.69);
+    const activeProgressIndex = scrollProgress * maxIndex;
+    const delta = index - activeProgressIndex;
     
-    const opacity = interpolate(dist, 0, 0.6, 1, 0);
-    const ty = deltaP * 7.69 * 30;
+    const opacity = Math.max(0, Math.min(1, 1.3 - Math.abs(delta) * 1.5));
+    const ty = delta * 20; // subtle vertical shift
 
     return {
       opacity,
-      transform: `translateY(${ty}px)`,
-      pointerEvents: opacity > 0.5 ? 'auto' : 'none',
+      transform: `translate3d(0, ${ty}px, 0)`,
+      pointerEvents: Math.abs(delta) < 0.3 ? 'auto' : 'none',
     };
   };
 
   const getNumStyle = (index) => {
-    const p = scrollProgress;
-    const targetP = index / maxIndex;
-    const deltaP = targetP - p;
-    const dist = Math.abs(deltaP * 7.69);
+    const activeProgressIndex = scrollProgress * maxIndex;
+    const delta = index - activeProgressIndex;
     
-    const opacity = interpolate(dist, 0, 0.6, 1, 0);
-    const ty = deltaP * 7.69 * 50;
+    const opacity = Math.max(0, Math.min(1, 1.3 - Math.abs(delta) * 1.5));
+    const ty = delta * 30;
 
     return {
       opacity,
-      transform: `translateY(${ty}px)`,
+      transform: `translate3d(0, ${ty}px, 0)`,
     };
   };
 
   return (
     <div ref={containerRef} className="diagonal-scroll-track">
       <div className="diagonal-scroll-sticky">
-        {/* Massive Numbers */}
-        <div className="diagonal-slide-num-container">
-          {servicesDiagonalSlides.map((slide, idx) => (
-            <div
-              key={slide.num}
-              className="diagonal-slide-num"
-              style={{
-                position: idx === 0 ? 'relative' : 'absolute',
-                top: idx === 0 ? 'auto' : 0,
-                left: idx === 0 ? 'auto' : 0,
-                ...getNumStyle(idx),
-              }}
-            >
-              {slide.num}
-            </div>
-          ))}
-        </div>
-
         {/* Diagonal Showcase Layout */}
         <div className="diagonal-slide-layout">
           {/* Left Column: Sidebar Nav with dynamic dynamic numbering expanding */}
           <div className="diagonal-slide-nav">
-            {servicesDiagonalSlides.map((slide, idx) => (
-              <div
-                key={slide.num}
-                className={`diagonal-slide-nav-item ${activeIndex === idx ? 'is-active' : ''}`}
-                onClick={() => {
-                  const trackHeight = containerRef.current.getBoundingClientRect().height;
-                  const viewportHeight = window.innerHeight;
-                  const scrollable = trackHeight - viewportHeight;
-                  const progressTargets = servicesDiagonalSlides.map((_, targetIndex) => targetIndex / maxIndex);
-                  const elementTop = containerRef.current.offsetTop;
-                  const targetScrollTop = elementTop + progressTargets[idx] * scrollable;
-                  window.scrollTo({ top: targetScrollTop, behavior: 'smooth' });
-                }}
-              >
-                <span className="diagonal-slide-nav-dot" />
-                {activeIndex === idx ? `${slide.num} — ${slide.label}` : `${idx + 1}`}
-              </div>
-            ))}
+            <div className="diagonal-slide-nav-links">
+              {servicesDiagonalSlides.map((slide, idx) => (
+                <div
+                  key={slide.num}
+                  className={`diagonal-slide-nav-item ${activeIndex === idx ? 'is-active' : ''}`}
+                  onClick={() => {
+                    const trackHeight = containerRef.current.getBoundingClientRect().height;
+                    const viewportHeight = window.innerHeight;
+                    const scrollable = trackHeight - viewportHeight;
+                    const elementTop = containerRef.current.offsetTop;
+                    const targetScrollTop = elementTop + (idx / maxIndex) * scrollable;
+                    window.scrollTo({ top: targetScrollTop, behavior: 'smooth' });
+                  }}
+                >
+                  <span className="diagonal-slide-nav-dot" />
+                  {activeIndex === idx ? `• ${slide.num} — ${slide.label.toUpperCase()}` : `${idx + 1}`}
+                </div>
+              ))}
+            </div>
+
+            {/* Massive Numbers placed at the bottom of the navigation column */}
+            <div className="diagonal-slide-num-container">
+              {servicesDiagonalSlides.map((slide, idx) => (
+                <div
+                  key={slide.num}
+                  className="diagonal-slide-num"
+                  style={{
+                    position: idx === 0 ? 'relative' : 'absolute',
+                    top: idx === 0 ? 'auto' : 0,
+                    left: idx === 0 ? 'auto' : 0,
+                    ...getNumStyle(idx),
+                  }}
+                >
+                  {slide.num}
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* Center Column: Sliding Cards */}
@@ -294,8 +276,8 @@ function ServicesDiagonalScrollingShowcase() {
                 className="diagonal-slide-text-item"
                 style={getTextStyle(idx)}
               >
-                <h4>{slide.label}</h4>
-                <p>{slide.text}</p>
+                <h4 className="diagonal-slide-text-title">{slide.label.toUpperCase()}</h4>
+                <p className="diagonal-slide-text-desc">{slide.text}</p>
               </div>
             ))}
           </div>
@@ -572,21 +554,18 @@ function RecentWorksRippleShowcase() {
     const handleScroll = () => {
       if (!containerRef.current) return;
       const rect = containerRef.current.getBoundingClientRect();
+      const trackHeight = rect.height;
       const viewportHeight = window.innerHeight;
 
-      // Use the number of works to compute the scroll distance required
-      // so the mapping from scroll -> active slide is stable regardless
-      // of the CSS track height. This makes the section behave predictably.
-      const numWorks = recentWorksData.length;
-
-      // Keep the section shorter while still letting the track complete all slides.
-      const intendedScrollable = Math.max(1, (numWorks - 1) * viewportHeight * 0.7);
+      // Calculate total scrollable height dynamically based on the actual track height
+      const totalScrollable = trackHeight - viewportHeight;
+      if (totalScrollable <= 0) return;
 
       const scrolled = Math.max(0, -rect.top);
-      const rawProgress = scrolled / intendedScrollable;
+      const rawProgress = scrolled / totalScrollable;
       const progress = Math.max(0, Math.min(1, rawProgress));
 
-      // Map progress (0..1) to a phase covering indices 0..(numWorks-1)
+      // Map progress (0..1) to a phase covering indices 0..(recentWorksData.length-1)
       scrollProgressTargetRef.current = progress;
 
       const now = performance.now();
@@ -945,8 +924,6 @@ function ServicesPage() {
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 }

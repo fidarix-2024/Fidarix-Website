@@ -3,70 +3,7 @@ import { Link } from 'react-router-dom';
 import { Heart } from 'lucide-react';
 import { SectionWise, Marquee } from '../components/Chrome';
 import { services, projects } from '../data/site';
-
-const layerColors = [
-  '#6366f1', // Outermost Indigo
-  '#7c3aed', // Purple
-  '#8b5cf6', // Medium Purple
-  '#a78bfa', // Light Purple
-  '#c084fc', // Violet Pink
-  '#f472b6', // Dark Pink
-  '#fb7185', // Coral Pink
-  '#fda4af', // Light Coral
-  '#fed7aa', // Peach
-  '#ffedd5', // Orange Cream
-  '#fff7ed', // Cream
-  '#ffffff', // Innermost Center
-];
-
-function PortalLayer({ index, imageRef }) {
-  if (index >= layerColors.length) return null;
-  const color = layerColors[index];
-  const radius = Math.max(16, 120 - index * 9);
-  const isInnermost = index === layerColors.length - 1;
-
-  return (
-    <div
-      className="portal-layer-animate"
-      style={{
-        '--base-color': color,
-        '--layer-index': index,
-        borderRadius: `${radius}px ${radius}px 0 0`,
-        padding: '16px 16px 0 16px',
-        height: '100%',
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        boxShadow: index === 0 ? '0 30px 70px rgba(99,102,241,0.25)' : 'none',
-        animationDelay: `${index * 0.12}s`,
-        position: 'relative',
-      }}
-    >
-      {isInnermost ? (
-        <div className="portal-center-viewport">
-          <img
-            ref={imageRef}
-            src="/images/portal_landscape.png"
-            className="portal-landscape-image"
-            alt="Dreamy landscape with mountains, retro camper van, and antenna tower"
-          />
-        </div>
-      ) : (
-        <PortalLayer index={index + 1} imageRef={imageRef} />
-      )}
-    </div>
-  );
-}
-
-function PortalTunnel({ containerRef, layersRef, imageRef }) {
-  return (
-    <div ref={containerRef} className="portal-graphic-container">
-      <div ref={layersRef} style={{ width: '100%', height: '100%', transformOrigin: 'bottom center', willChange: 'transform' }}>
-        <PortalLayer index={0} imageRef={imageRef} />
-      </div>
-    </div>
-  );
-}
+import HeroSection from '../components/HeroSection';
 
 function ScrollSplashCard({ children }) {
   const [revealed, setRevealed] = useState(false);
@@ -111,112 +48,10 @@ function ScrollSplashCard({ children }) {
 }
 
 function HomePage() {
-  const heroScrollTrackRef = useRef(null);
-  const heroTextRef = useRef(null);
-  const portalContainerRef = useRef(null);
-  const portalLayersRef = useRef(null);
-  const portalImageRef = useRef(null);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!heroScrollTrackRef.current) return;
-
-      const track = heroScrollTrackRef.current;
-      const rect = track.getBoundingClientRect();
-      const trackHeight = rect.height;
-      const viewportHeight = window.innerHeight;
-
-      // Pin range is trackHeight minus 100vh
-      const totalScrollable = trackHeight - viewportHeight;
-      if (totalScrollable <= 0) return;
-
-      // Calculate progress (0 to 1) relative to scroll track
-      const scrolled = -rect.top;
-      const progress = Math.max(0, Math.min(1, scrolled / totalScrollable));
-
-      // NEW: animProgress maps scroll progress to a 75% timeline.
-      // At scroll progress = 75%, animProgress is 1 (fully zoomed).
-      // Between 75% and 100%, the image remains locked in full screen!
-      const animProgress = Math.min(progress / 0.75, 1);
-
-      // 1. Hero Text content: Fades out and translates up quickly (completed by 35% of animProgress)
-      if (heroTextRef.current) {
-        const textProgress = Math.min(animProgress / 0.35, 1);
-        heroTextRef.current.style.opacity = 1 - textProgress;
-        heroTextRef.current.style.transform = `translateY(${-textProgress * 120}px)`;
-        heroTextRef.current.style.pointerEvents = textProgress === 1 ? 'none' : 'auto';
-      }
-
-      // 2. Graphic Container Animation:
-      // Subtle power easing for immersive warp speed effect
-      const easeProgress = Math.pow(animProgress, 2.2);
-
-      if (portalContainerRef.current) {
-        // Increase scale factor to 2.1 to cover 100% viewport completely
-        const outerScale = 1 + easeProgress * 1.1; 
-        portalContainerRef.current.style.transform = `scale(${outerScale})`;
-        
-        // Performance fix: Stop updating borderRadius dynamically on scroll in JS
-        // to prevent compositor-paint storms and layout reflows!
-        
-        // Pass animProgress to CSS variable --scroll-glow
-        portalContainerRef.current.style.setProperty('--scroll-glow', animProgress);
-      }
-
-      // 3. Concentric colored arches zoom scaling:
-      // Scale extremely high (21x) so outer arch borders are blown off-screen
-      // and center landscape illustration occupies the entire screen boundaries.
-      if (portalLayersRef.current) {
-        const layersScale = 1 + easeProgress * 20;
-        portalLayersRef.current.style.transform = `scale(${layersScale})`;
-      }
-
-      // 4. Parallax Zoom & Fade-in of landscape image inside center viewport:
-      // Fades in from 5% to 55% of animProgress
-      if (portalImageRef.current) {
-        const imgOpacityProgress = Math.max(0, Math.min(1, (animProgress - 0.05) / 0.5));
-        portalImageRef.current.style.opacity = imgOpacityProgress;
-
-        const imgScale = 1 + animProgress * 0.6;
-        portalImageRef.current.style.transform = `scale(${imgScale})`;
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('resize', handleScroll, { passive: true });
-    handleScroll();
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleScroll);
-    };
-  }, []);
-
   return (
     <div className="page-wise">
-      {/* 1. HERO SECTION WITH STICKY SCROLL */}
-      <div ref={heroScrollTrackRef} className="portal-hero-track">
-        <section className="portal-hero-sticky">
-          <div className="portal-hero-content-wrapper">
-            <div ref={heroTextRef} className="portal-hero-text">
-              <h1 className="portal-hero-title">Progress is possible</h1>
-              <p className="portal-hero-copy">
-                Simple and powerful design systems that help modern brands grow faster.
-              </p>
-              <div style={{ marginBottom: '20px' }}>
-                <Link to="/contact" className="portal-hero-button">
-                  Let's Build
-                </Link>
-              </div>
-            </div>
-            <PortalTunnel
-              containerRef={portalContainerRef}
-              layersRef={portalLayersRef}
-              imageRef={portalImageRef}
-            />
-          </div>
-        </section>
-      </div>
+      {/* 1. HERO SECTION */}
+      <HeroSection />
 
       {/* 2. INTRO & MARQUEE */}
       <SectionWise bg="bg-white-tone" style={{ borderBottom: '1px solid rgba(13, 27, 61, 0.05)' }}>
