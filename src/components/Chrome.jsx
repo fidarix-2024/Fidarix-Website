@@ -21,8 +21,7 @@ function LogoMark() {
 
 function SiteHeader() {
   const [isOpen, setIsOpen] = useState(false);
-  const location = useLocation();
-  const isDarkPage = location.pathname === '/services';
+  const isDarkPage = true; // Always dark theme navbar
 
   const routes = useMemo(
     () => navItems.filter((item) => item.path !== '/home'),
@@ -63,9 +62,9 @@ function SiteHeader() {
   );
 }
 
-function SiteFooter() {
+function SiteFooter({ isDark }) {
   return (
-    <footer className="footer-wise">
+    <footer className={`footer-wise ${isDark ? 'is-dark' : ''}`}>
       <div className="site-frame">
         <div className="footer-grid">
           {/* Column 1: Logo and Pitch */}
@@ -95,7 +94,6 @@ function SiteFooter() {
           <div className="footer-col">
             <h4 className="footer-heading">Studio</h4>
             <Link to="/about" className="footer-link">About Us</Link>
-            <Link to="/portfolio" className="footer-link">Selected Works</Link>
             <Link to="/services#pricing" className="footer-link">Pricing Packages</Link>
             <Link to="/contact" className="footer-link">Contact Studio</Link>
           </div>
@@ -130,9 +128,9 @@ function SiteFooter() {
   );
 }
 
-export function PreFooter() {
+export function PreFooter({ isDark }) {
   return (
-    <section className="pre-footer-section">
+    <section className={`pre-footer-section ${isDark ? 'is-dark' : ''}`}>
       <div className="site-frame">
         <div className="pre-footer-grid">
           {/* Left Column: Headline */}
@@ -150,18 +148,18 @@ export function PreFooter() {
           <div className="pre-footer-right">
             <div className="circles-visual-wrapper">
               <svg className="circles-svg" viewBox="0 0 400 150">
-                <circle cx="75" cy="75" r="70" fill="none" stroke="rgba(13, 27, 61, 0.1)" strokeWidth="1.5" />
-                <circle cx="125" cy="75" r="70" fill="none" stroke="rgba(13, 27, 61, 0.12)" strokeWidth="1.5" />
-                <circle cx="175" cy="75" r="70" fill="none" stroke="rgba(13, 27, 61, 0.16)" strokeWidth="1.5" />
-                <circle cx="225" cy="75" r="70" fill="none" stroke="rgba(13, 27, 61, 0.2)" strokeWidth="1.5" />
-                <circle cx="275" cy="75" r="70" fill="none" stroke="rgba(13, 27, 61, 0.24)" strokeWidth="1.5" />
-                <circle cx="325" cy="75" r="70" fill="none" stroke="rgba(13, 27, 61, 0.28)" strokeWidth="1.5" />
+                <circle cx="75" cy="75" r="70" fill="none" stroke={isDark ? "rgba(255, 255, 255, 0.08)" : "rgba(13, 27, 61, 0.1)"} strokeWidth="1.5" />
+                <circle cx="125" cy="75" r="70" fill="none" stroke={isDark ? "rgba(255, 255, 255, 0.1)" : "rgba(13, 27, 61, 0.12)"} strokeWidth="1.5" />
+                <circle cx="175" cy="75" r="70" fill="none" stroke={isDark ? "rgba(255, 255, 255, 0.12)" : "rgba(13, 27, 61, 0.16)"} strokeWidth="1.5" />
+                <circle cx="225" cy="75" r="70" fill="none" stroke={isDark ? "rgba(255, 255, 255, 0.15)" : "rgba(13, 27, 61, 0.2)"} strokeWidth="1.5" />
+                <circle cx="275" cy="75" r="70" fill="none" stroke={isDark ? "rgba(255, 255, 255, 0.18)" : "rgba(13, 27, 61, 0.24)"} strokeWidth="1.5" />
+                <circle cx="325" cy="75" r="70" fill="none" stroke={isDark ? "rgba(255, 255, 255, 0.2)" : "rgba(13, 27, 61, 0.28)"} strokeWidth="1.5" />
                 
                 {/* Globe grid visual lines */}
-                <path d="M 200 5 A 70 70 0 0 1 200 145" fill="none" stroke="rgba(13, 27, 61, 0.12)" strokeWidth="1.5" />
-                <path d="M 200 5 A 35 70 0 0 1 200 145" fill="none" stroke="rgba(13, 27, 61, 0.15)" strokeWidth="1.5" />
-                <path d="M 200 5 A 15 70 0 0 1 200 145" fill="none" stroke="rgba(13, 27, 61, 0.18)" strokeWidth="1.5" />
-                <line x1="130" y1="75" x2="270" y2="75" stroke="rgba(13, 27, 61, 0.2)" strokeWidth="1.5" />
+                <path d="M 200 5 A 70 70 0 0 1 200 145" fill="none" stroke={isDark ? "rgba(255, 255, 255, 0.1)" : "rgba(13, 27, 61, 0.12)"} strokeWidth="1.5" />
+                <path d="M 200 5 A 35 70 0 0 1 200 145" fill="none" stroke={isDark ? "rgba(255, 255, 255, 0.12)" : "rgba(13, 27, 61, 0.15)"} strokeWidth="1.5" />
+                <path d="M 200 5 A 15 70 0 0 1 200 145" fill="none" stroke={isDark ? "rgba(255, 255, 255, 0.15)" : "rgba(13, 27, 61, 0.18)"} strokeWidth="1.5" />
+                <line x1="130" y1="75" x2="270" y2="75" stroke={isDark ? "rgba(255, 255, 255, 0.15)" : "rgba(13, 27, 61, 0.2)"} strokeWidth="1.5" />
               </svg>
             </div>
 
@@ -191,13 +189,16 @@ export function PreFooter() {
 }
 
 export function SiteChrome({ children }) {
+  const location = useLocation();
+  const isDarkPage = location.pathname === '/services';
+
   return (
     <div className="app-shell">
       <SiteHeader />
       <main className="site-main">{children}</main>
 
-      <PreFooter />
-      <SiteFooter />
+      <PreFooter isDark={isDarkPage} />
+      <SiteFooter isDark={isDarkPage} />
     </div>
   );
 }

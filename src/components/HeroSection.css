@@ -1,0 +1,690 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;500;700;800&family=Space+Grotesk:wght@400;700;900&family=Fira+Code:wght@400;500&display=swap');
+
+/* ═══════════════════════════════════════════════════════
+   HERO SECTION — ApeChain-style 3D Rotating Spindle
+   ═══════════════════════════════════════════════════════ */
+
+.hero-section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: #06060c;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Manrope', sans-serif;
+  color: #fff;
+  z-index: 1;
+}
+
+/* SVG filters */
+.hero-svg-filters {
+  position: absolute;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+/* Film Grain Overlay */
+.hero-grain {
+  position: absolute;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  z-index: 99;
+  pointer-events: none;
+  opacity: 0.035;
+  filter: url(#grain-filter);
+  mix-blend-mode: overlay;
+  animation: grain-shift 0.4s steps(6) infinite;
+}
+
+@keyframes grain-shift {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-5%, -10%); }
+  30% { transform: translate(3%, -15%); }
+  50% { transform: translate(10%, 5%); }
+  70% { transform: translate(5%, 2%); }
+  90% { transform: translate(-2%, 8%); }
+}
+
+/* ═══════════════════════════════════════════════════════
+   DYNAMIC NEON TOPOGRAPHIC BACKGROUND
+   ═══════════════════════════════════════════════════════ */
+.hero-topo-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 50%, #0c0d1b 0%, #06060c 100%);
+}
+
+.hero-topo-svg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0.28;
+  pointer-events: none;
+}
+
+.topo-group circle {
+  stroke: var(--active-neon);
+  stroke-opacity: 0.22;
+  transition: stroke 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: stroke;
+}
+
+/* Animated radial neon glow behind active card */
+.hero-neon-glow {
+  position: absolute;
+  width: 90vw;
+  height: 90vh;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    circle,
+    rgba(var(--active-neon-rgb), 0.16) 0%,
+    rgba(var(--active-neon-rgb), 0.05) 45%,
+    transparent 75%
+  );
+  filter: blur(60px);
+  pointer-events: none;
+  z-index: 2;
+  transition: background 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: background;
+}
+
+/* ═══════════════════════════════════════════════════════
+   INNER HEADER
+   ═══════════════════════════════════════════════════════ */
+.hero-inner-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 90px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 60px;
+  z-index: 50;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  background: linear-gradient(to bottom, rgba(6, 6, 12, 0.8) 0%, transparent 100%);
+  backdrop-filter: blur(10px);
+}
+
+.hero-header-logo {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: 2px;
+  color: #fff;
+}
+
+.hero-header-logo span {
+  color: var(--active-neon);
+  transition: color 0.8s ease;
+}
+
+.hero-header-nav {
+  display: flex;
+  gap: 32px;
+}
+
+.hero-header-nav .nav-link {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.hero-header-nav .nav-link:hover,
+.hero-header-nav .nav-link.active {
+  color: #fff;
+}
+
+.hero-header-nav .nav-link.active {
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+/* ═══════════════════════════════════════════════════════
+   3D SPINDLE CYLINDER VIEWPORT & RING
+   ═══════════════════════════════════════════════════════ */
+.hero-desktop-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.hero-spindle-viewport {
+  position: relative;
+  width: 100%;
+  height: 80vh;
+  perspective: 1400px;
+  perspective-origin: 50% 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0;
+}
+
+.hero-spindle-ring {
+  position: relative;
+  width: 400px;            /* ← landscape width */
+  height: 260px;           /* ← landscape height */
+  transform-style: preserve-3d;
+}
+
+/* ═══════════════════════════════════════════════════════
+   SPINDLE CARD & ACTIVE/INACTIVE TRANSITIONS
+   ═══════════════════════════════════════════════════════ */
+.hero-spindle-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  transform-style: preserve-3d;
+  transition:
+    opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, filter;
+  opacity: 0.65;
+  filter: brightness(0.7) contrast(1.05);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85);
+}
+
+.hero-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.hero-card-image-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.hero-card-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Dark gradient mask on the left for active text legibility */
+.hero-card-image-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.95) 0%,
+    rgba(0, 0, 0, 0.7) 40%,
+    rgba(0, 0, 0, 0.3) 70%,
+    transparent 90%
+  );
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Card glass reflections */
+.hero-card-reflection {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 40%);
+  z-index: 3;
+  pointer-events: none;
+}
+
+.hero-card-border-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  box-shadow: inset 0 0 25px rgba(255,255,255,0.02);
+  z-index: 4;
+  pointer-events: none;
+}
+
+/* Text Content Overlay — Compact to fit 260px height */
+.hero-card-content {
+  position: relative;
+  z-index: 10;
+  padding: 24px 28px;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: left;
+  opacity: 0;
+  transform: translateY(15px);
+  transition:
+    opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+.hero-card-tags {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.hero-tag-hot {
+  background: rgba(255, 60, 60, 0.14);
+  border: 1px solid rgba(255, 60, 60, 0.35);
+  color: #ff3b30;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  padding: 2.5px 7px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.hero-tag-pill {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  padding: 2.5px 7px;
+  border-radius: 5px;
+  text-transform: uppercase;
+}
+
+.hero-card-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2rem, 4.5vw, 3.4rem);   /* ← adjusted for 260px landscape cards */
+  font-weight: 400;
+  line-height: 0.85;
+  color: #fff;
+  margin: 0 0 8px;
+  letter-spacing: -0.01em;
+  text-shadow: 0 8px 30px rgba(0, 0, 0, 0.8);
+}
+
+.hero-card-desc {
+  font-family: 'Fira Code', monospace;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1.4;
+  margin: 0 0 16px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  max-width: 100%;
+}
+
+.hero-card-launch-btn {
+  background: #fff;
+  color: #000;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  padding: 10px 28px;
+  border-radius: 99px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.12);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, box-shadow;
+}
+
+.hero-card-launch-btn:hover {
+  background: #fff;
+  box-shadow: 0 0 20px var(--active-neon);
+  transform: scale(1.04);
+}
+
+/* Active Spindle Card (Pop Up state) */
+.hero-spindle-card.active {
+  opacity: 1;
+  filter: grayscale(0) brightness(1) contrast(1);
+  z-index: 10;
+}
+
+.hero-spindle-card.active .hero-card-content {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hero-spindle-card.active:hover .hero-card-image-wrap img {
+  transform: scale(1.06);
+}
+
+/* ═══════════════════════════════════════════════════════
+   BOTTOM CONTROLS BAR
+   ═══════════════════════════════════════════════════════ */
+.hero-controls-bar {
+  position: absolute;
+  bottom: 40px;
+  left: 60px;
+  right: 60px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 32px;
+  z-index: 30;
+}
+
+.hero-thumbs-row {
+  display: flex;
+  gap: 12px;
+}
+
+.hero-thumb-btn {
+  position: relative;
+  width: 60px;
+  height: 40px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, border-color, box-shadow;
+}
+
+.hero-thumb-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+}
+
+.hero-thumb-btn:hover img {
+  opacity: 0.85;
+}
+
+/* Glowing active state border */
+.hero-thumb-btn.active {
+  border-color: #fff;
+  box-shadow: 0 0 16px var(--thumb-neon);
+  transform: translateY(-2px);
+}
+
+.hero-thumb-btn.active img {
+  opacity: 1;
+}
+
+/* See All Apps text button */
+.hero-see-all {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.5);
+  text-decoration: none;
+  transition: color 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hero-see-all:hover {
+  color: #fff;
+}
+
+.hero-see-all .arrow-right {
+  font-size: 8px;
+  color: var(--active-neon);
+  transition: color 0.8s ease;
+}
+
+/* ═══════════════════════════════════════════════════════
+   LIGHTBOX MODAL & BACKDROP
+   ═══════════════════════════════════════════════════════ */
+.hero-lightbox-portal {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+.hero-lightbox-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(4, 4, 8, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  cursor: pointer;
+}
+
+.hero-lightbox-container {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 960px;
+  max-height: 80vh;
+  aspect-ratio: 16 / 10;
+  background: #000;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 
+    0 40px 120px rgba(0, 0, 0, 0.95),
+    0 0 80px rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-lightbox-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.hero-lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 20;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.hero-lightbox-close:hover {
+  background: #fff;
+  color: #000;
+  transform: rotate(90deg) scale(1.05);
+  border-color: #fff;
+}
+
+.hero-lightbox-title {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 24px 30px;
+  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 70%, transparent 100%);
+  color: #fff;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════════════════
+   MOBILE LAYOUT (Landscape swiper)
+   ═══════════════════════════════════════════════════════ */
+.hero-mobile-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: 100px;
+  box-sizing: border-box;
+}
+
+.hero-mobile-container .hero-headline-wrap {
+  text-align: center;
+  margin-bottom: 24px;
+  padding: 0 20px;
+}
+
+.hero-mobile-container .hero-eyebrow {
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.hero-mobile-container .hero-headline {
+  font-size: 28px;
+  font-weight: 800;
+  margin: 0;
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+}
+
+.hero-mobile-scroll {
+  display: flex;
+  gap: 20px;
+  padding: 0 40px 30px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.hero-mobile-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.hero-mobile-card-wrap {
+  flex-shrink: 0;
+  width: 80vw;
+  scroll-snap-align: center;
+}
+
+.hero-mobile-card {
+  position: relative;
+  width: 100%;
+  height: 220px;           /* ← landscape mobile card */
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.hero-mobile-card img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.hero-mobile-card-content {
+  position: relative;
+  z-index: 10;
+  padding: 16px 20px;
+  text-align: left;
+}
+
+.hero-mobile-card-content .hero-card-tags {
+  margin-bottom: 6px;
+}
+
+.hero-mobile-card-content .hero-card-title {
+  font-size: 1.8rem;
+  margin-bottom: 6px;
+}
+
+.hero-mobile-card-content .hero-card-desc {
+  font-size: 9px;
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+
+.hero-mobile-card-content .hero-card-launch-btn {
+  padding: 8px 24px;
+  font-size: 9.5px;
+}
+
+.hero-mobile-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.hero-dot-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  transition: all 0.5s ease;
+}
+
+/* ═══════════════════════════════════════════════════════
+   RESPONSIVE DESIGN BREAKPOINTS
+   ═══════════════════════════════════════════════════════ */
+
+@media (max-width: 1024px) {
+  .hero-inner-header {
+    padding: 0 32px;
+    height: 80px;
+  }
+  .hero-spindle-viewport {
+    perspective: 1200px;
+  }
+  .hero-spindle-ring {
+    width: 320px;
+    height: 208px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-inner-header {
+    display: none;
+  }
+}
