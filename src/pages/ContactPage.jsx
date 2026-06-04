@@ -25,27 +25,27 @@ function ContactPage() {
       </SectionWise>
 
       <section className="bg-white">
-        <div className="foundations-grid" style={{ background: '#eee' }}>
-          <div className="foundation-item" style={{ background: '#fff', color: '#000' }}>
+        <div className="foundations-grid" style={{ background: 'transparent' }}>
+          <div className="foundation-item" style={{ background: '#0a0d18', color: '#fff', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: 'var(--radius-xl)' }}>
             <p className="eyebrow" style={{ opacity: 0.6 }}>01 Start a Project</p>
-            <h3 className="display-huge" style={{ fontSize: '3rem', marginTop: 20 }}>Inquiry Form</h3>
+            <h3 className="display-huge" style={{ fontSize: '3rem', marginTop: 20, color: '#fff' }}>Inquiry Form</h3>
             <div style={{ marginTop: 40, display: 'grid', gap: 20 }}>
-              <input className="field" placeholder="Full name" style={{ border: 'none', borderBottom: '2px solid #eee', borderRadius: 0, padding: '20px 0', fontSize: '1.2rem' }} />
-              <input className="field" placeholder="Email address" style={{ border: 'none', borderBottom: '2px solid #eee', borderRadius: 0, padding: '20px 0', fontSize: '1.2rem' }} />
-              <textarea className="textarea" placeholder="What's on your mind?" style={{ border: 'none', borderBottom: '2px solid #eee', borderRadius: 0, padding: '20px 0', fontSize: '1.2rem', minHeight: '100px' }} />
-              <ButtonLink to="#" style={{ width: '100%', padding: '20px', background: '#000', color: '#fff', borderRadius: '999px', marginTop: 20 }}>Send Message</ButtonLink>
+              <input className="field" placeholder="Full name" style={{ border: 'none', borderBottom: '2px solid rgba(255, 255, 255, 0.15)', borderRadius: 0, padding: '20px 0', fontSize: '1.2rem', background: 'transparent', color: '#fff' }} />
+              <input className="field" placeholder="Email address" style={{ border: 'none', borderBottom: '2px solid rgba(255, 255, 255, 0.15)', borderRadius: 0, padding: '20px 0', fontSize: '1.2rem', background: 'transparent', color: '#fff' }} />
+              <textarea className="textarea" placeholder="What's on your mind?" style={{ border: 'none', borderBottom: '2px solid rgba(255, 255, 255, 0.15)', borderRadius: 0, padding: '20px 0', fontSize: '1.2rem', minHeight: '100px', background: 'transparent', color: '#fff' }} />
+              <ButtonLink to="#" style={{ width: '100%', padding: '20px', background: '#fff', color: '#000', borderRadius: '999px', marginTop: 20, textAlign: 'center', fontWeight: 'bold' }}>Send Message</ButtonLink>
             </div>
           </div>
-          <div className="foundation-item" style={{ background: 'var(--wise-yellow)', color: '#000' }}>
+          <div className="foundation-item" style={{ background: 'var(--wise-yellow)', color: '#000', borderRadius: 'var(--radius-xl)' }}>
             <p className="eyebrow" style={{ opacity: 0.6 }}>02 Direct Access</p>
-            <h3 className="display-huge" style={{ fontSize: '3rem', marginTop: 20 }}>Connect</h3>
+            <h3 className="display-huge" style={{ fontSize: '3rem', marginTop: 20, color: '#000' }}>Connect</h3>
             <div style={{ marginTop: 40, display: 'grid', gap: 30 }}>
               {contactLinks.map(link => (
-                <a key={link.label} href={link.href} style={{ fontSize: '1.5rem', fontWeight: 700, textDecoration: 'underline' }}>{link.label}</a>
+                <a key={link.label} href={link.href} style={{ fontSize: '1.5rem', fontWeight: 700, textDecoration: 'underline', color: '#000' }}>{link.label}</a>
               ))}
               <div style={{ marginTop: 40, display: 'flex', gap: 15, flexWrap: 'wrap' }}>
                 {socialLinks.map(social => (
-                  <a key={social.label} href={social.href} className="pill" style={{ background: '#000', color: '#fff', border: 'none' }}>{social.label}</a>
+                  <a key={social.label} href={social.href} className="pill" style={{ background: '#000', color: '#fff', border: 'none', padding: '10px 20px', textDecoration: 'none' }}>{social.label}</a>
                 ))}
               </div>
             </div>

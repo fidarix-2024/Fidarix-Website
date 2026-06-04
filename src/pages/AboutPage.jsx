@@ -144,7 +144,7 @@ function AboutPage() {
                 <div key="3" style={{ fontWeight: 800 }}>CANVA</div>
               ]} 
             />
-            <p className="eyebrow" style={{ marginTop: 20, color: '#000' }}>DESIGN</p>
+            <p className="eyebrow" style={{ marginTop: 20, color: '#fff' }}>DESIGN</p>
           </div>
           <div style={{ textAlign: 'center' }}>
             <Folder 
@@ -156,7 +156,7 @@ function AboutPage() {
                 <div key="3" style={{ fontWeight: 800 }}>GSAP</div>
               ]} 
             />
-            <p className="eyebrow" style={{ marginTop: 20, color: '#000' }}>DEV</p>
+            <p className="eyebrow" style={{ marginTop: 20, color: '#fff' }}>DEV</p>
           </div>
           <div style={{ textAlign: 'center' }}>
             <Folder 
@@ -168,7 +168,7 @@ function AboutPage() {
                 <div key="3" style={{ fontWeight: 800 }}>JIRA</div>
               ]} 
             />
-            <p className="eyebrow" style={{ marginTop: 20, color: '#000' }}>STRATEGY</p>
+            <p className="eyebrow" style={{ marginTop: 20, color: '#fff' }}>STRATEGY</p>
           </div>
         </div>
       </SectionWise>

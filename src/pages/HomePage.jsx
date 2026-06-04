@@ -4,6 +4,7 @@ import { Heart } from 'lucide-react';
 import { SectionWise, Marquee } from '../components/Chrome';
 import { services, projects } from '../data/site';
 import HeroSection from '../components/HeroSection';
+import InteractiveRoadmap from '../components/InteractiveRoadmap';
 
 function ScrollSplashCard({ children }) {
   const [revealed, setRevealed] = useState(false);
@@ -54,8 +55,8 @@ function HomePage() {
       <HeroSection />
 
       {/* 2. INTRO & MARQUEE */}
-      <SectionWise bg="bg-white-tone" style={{ borderBottom: '1px solid rgba(13, 27, 61, 0.05)' }}>
-        <h2 className="display-huge" style={{ textAlign: 'center', color: '#0d1b3d', marginBottom: 60 }}>
+      <SectionWise bg="bg-white-tone" style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
+        <h2 className="display-huge" style={{ textAlign: 'center', color: '#ffffff', marginBottom: 60 }}>
           Crafting for <br /> the global web
         </h2>
         <Marquee
@@ -79,12 +80,12 @@ function HomePage() {
               Logo polish, comprehensive color systems, and strict brand guidelines that feel premium, consistent, and memorable.
             </p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '20px' }}>
-              <span className="pill" style={{ background: '#f1f5f9', color: '#475569', fontSize: '0.78rem', padding: '4px 10px', borderRadius: '999px', fontWeight: 'bold' }}>Logo Polish</span>
-              <span className="pill" style={{ background: '#f1f5f9', color: '#475569', fontSize: '0.78rem', padding: '4px 10px', borderRadius: '999px', fontWeight: 'bold' }}>Color Systems</span>
-              <span className="pill" style={{ background: '#f1f5f9', color: '#475569', fontSize: '0.78rem', padding: '4px 10px', borderRadius: '999px', fontWeight: 'bold' }}>Guidelines</span>
+              <span className="pill" style={{ background: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.8)', fontSize: '0.78rem', padding: '4px 10px', borderRadius: '999px', fontWeight: 'bold' }}>Logo Polish</span>
+              <span className="pill" style={{ background: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.8)', fontSize: '0.78rem', padding: '4px 10px', borderRadius: '999px', fontWeight: 'bold' }}>Color Systems</span>
+              <span className="pill" style={{ background: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.8)', fontSize: '0.78rem', padding: '4px 10px', borderRadius: '999px', fontWeight: 'bold' }}>Guidelines</span>
             </div>
           </div>
-
+ 
           <ScrollSplashCard>
             {/* Dashboard Header */}
             <div className="dashboard-header">
@@ -109,14 +110,14 @@ function HomePage() {
             </p>
             <div className="chart-container" style={{ padding: 12, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <svg viewBox="0 0 400 110" width="100%">
-                <rect x="5" y="5" width="390" height="100" rx="12" fill="none" stroke="rgba(124,58,237,0.12)" strokeWidth="1.5" />
-                <line x1="120" y1="5" x2="120" y2="105" stroke="rgba(124,58,237,0.08)" />
-                <circle cx="62" cy="55" r="28" fill="none" stroke="rgba(124,58,237,0.16)" strokeWidth="3" />
-                <circle cx="62" cy="55" r="14" fill="none" stroke="rgba(124,58,237,0.08)" strokeWidth="2" strokeDasharray="3 3" />
-                <rect x="140" y="24" width="220" height="12" rx="4" fill="rgba(124,58,237,0.1)" />
-                <rect x="140" y="48" width="170" height="8" rx="3" fill="rgba(124,58,237,0.06)" />
-                <rect x="140" y="68" width="120" height="8" rx="3" fill="rgba(124,58,237,0.06)" />
-                <rect x="140" y="86" width="60" height="8" rx="3" fill="rgba(90,116,255,0.1)" />
+                <rect x="5" y="5" width="390" height="100" rx="12" fill="none" stroke="rgba(124,58,237,0.3)" strokeWidth="1.5" />
+                <line x1="120" y1="5" x2="120" y2="105" stroke="rgba(124,58,237,0.2)" />
+                <circle cx="62" cy="55" r="28" fill="none" stroke="rgba(124,58,237,0.4)" strokeWidth="3" />
+                <circle cx="62" cy="55" r="14" fill="none" stroke="rgba(124,58,237,0.2)" strokeWidth="2" strokeDasharray="3 3" />
+                <rect x="140" y="24" width="220" height="12" rx="4" fill="rgba(124,58,237,0.25)" />
+                <rect x="140" y="48" width="170" height="8" rx="3" fill="rgba(124,58,237,0.15)" />
+                <rect x="140" y="68" width="120" height="8" rx="3" fill="rgba(124,58,237,0.15)" />
+                <rect x="140" y="86" width="60" height="8" rx="3" fill="rgba(90,116,255,0.25)" />
               </svg>
             </div>
           </ScrollSplashCard>
@@ -163,12 +164,12 @@ function HomePage() {
               Keyword intent mapping, comprehensive on-page layouts, speed optimization, and strict index structures that turn visibility into search conversions.
             </p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '20px' }}>
-              <span className="pill" style={{ background: '#f1f5f9', color: '#475569', fontSize: '0.78rem', padding: '4px 10px', borderRadius: '999px', fontWeight: 'bold' }}>Keyword Maps</span>
-              <span className="pill" style={{ background: '#f1f5f9', color: '#475569', fontSize: '0.78rem', padding: '4px 10px', borderRadius: '999px', fontWeight: 'bold' }}>Speed Tuning</span>
-              <span className="pill" style={{ background: '#f1f5f9', color: '#475569', fontSize: '0.78rem', padding: '4px 10px', borderRadius: '999px', fontWeight: 'bold' }}>Indexing</span>
+              <span className="pill" style={{ background: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.8)', fontSize: '0.78rem', padding: '4px 10px', borderRadius: '999px', fontWeight: 'bold' }}>Keyword Maps</span>
+              <span className="pill" style={{ background: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.8)', fontSize: '0.78rem', padding: '4px 10px', borderRadius: '999px', fontWeight: 'bold' }}>Speed Tuning</span>
+              <span className="pill" style={{ background: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.8)', fontSize: '0.78rem', padding: '4px 10px', borderRadius: '999px', fontWeight: 'bold' }}>Indexing</span>
             </div>
           </div>
-
+ 
           {/* Row 3: Left Card (Static) | Right Card (Dynamic - Splash) */}
           <div className="dash-card">
             <div className="subtitle">
@@ -180,12 +181,12 @@ function HomePage() {
               Dedicated maintenance agreements, rapid priority troubleshooting support, package upgrades, database backups, and core security maintenance.
             </p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '20px' }}>
-              <span className="pill" style={{ background: '#f1f5f9', color: '#475569', fontSize: '0.78rem', padding: '4px 10px', borderRadius: '999px', fontWeight: 'bold' }}>Updates</span>
-              <span className="pill" style={{ background: '#f1f5f9', color: '#475569', fontSize: '0.78rem', padding: '4px 10px', borderRadius: '999px', fontWeight: 'bold' }}>Fixes</span>
-              <span className="pill" style={{ background: '#f1f5f9', color: '#475569', fontSize: '0.78rem', padding: '4px 10px', borderRadius: '999px', fontWeight: 'bold' }}>Backups</span>
+              <span className="pill" style={{ background: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.8)', fontSize: '0.78rem', padding: '4px 10px', borderRadius: '999px', fontWeight: 'bold' }}>Updates</span>
+              <span className="pill" style={{ background: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.8)', fontSize: '0.78rem', padding: '4px 10px', borderRadius: '999px', fontWeight: 'bold' }}>Fixes</span>
+              <span className="pill" style={{ background: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.8)', fontSize: '0.78rem', padding: '4px 10px', borderRadius: '999px', fontWeight: 'bold' }}>Backups</span>
             </div>
           </div>
-
+ 
           <ScrollSplashCard>
             {/* Dashboard Header */}
             <div className="dashboard-header">
@@ -220,7 +221,7 @@ function HomePage() {
                   <span className="chart-tooltip-badge" style={{ fontSize: '0.58rem', padding: '1px 3px' }}>+340</span>
                 </div>
               </div>
-
+ 
               <svg viewBox="0 0 500 170" width="100%" height="100%">
                 <defs>
                   <linearGradient id="grid-chart-grad" x1="0" y1="0" x2="0" y2="1">
@@ -230,10 +231,10 @@ function HomePage() {
                 </defs>
                 
                 {/* Grid Lines */}
-                <line x1="0" y1="30" x2="500" y2="30" stroke="rgba(13,27,61,0.03)" strokeDasharray="3 3" />
-                <line x1="0" y1="75" x2="500" y2="75" stroke="rgba(13,27,61,0.03)" strokeDasharray="3 3" />
-                <line x1="0" y1="120" x2="500" y2="120" stroke="rgba(13,27,61,0.03)" strokeDasharray="3 3" />
-                <line x1="0" y1="150" x2="500" y2="150" stroke="rgba(13,27,61,0.05)" />
+                <line x1="0" y1="30" x2="500" y2="30" stroke="rgba(255,255,255,0.06)" strokeDasharray="3 3" />
+                <line x1="0" y1="75" x2="500" y2="75" stroke="rgba(255,255,255,0.06)" strokeDasharray="3 3" />
+                <line x1="0" y1="120" x2="500" y2="120" stroke="rgba(255,255,255,0.06)" strokeDasharray="3 3" />
+                <line x1="0" y1="150" x2="500" y2="150" stroke="rgba(255,255,255,0.15)" />
 
                 {/* Axis Labels */}
                 <text x="10" y="164" fill="#a78bfa" fontSize="9" fontWeight="bold">Nov 8</text>
@@ -265,69 +266,15 @@ function HomePage() {
         </div>
       </SectionWise>
 
-      {/* 3. FOUNDATIONS GRID */}
-      <section className="bg-burgundy">
-        <div className="foundations-grid">
-          <div className="foundation-item">
-            <p className="eyebrow" style={{ color: 'rgba(255,255,255,0.5)' }}>01 Foundations</p>
-            <h3 className="display-huge" style={{ fontSize: '3rem', marginTop: 20 }}>Typography</h3>
-            <p className="body-copy" style={{ color: 'rgba(255,255,255,0.7)', marginTop: 20 }}>
-              Space Grotesk & Manrope. A pairing built for clarity and character across all digital surfaces.
-            </p>
-          </div>
-          <div className="foundation-item">
-            <p className="eyebrow" style={{ color: 'rgba(255,255,255,0.5)' }}>02 Foundations</p>
-            <h3 className="display-huge" style={{ fontSize: '3rem', marginTop: 20 }}>Color</h3>
-            <p className="body-copy" style={{ color: 'rgba(255,255,255,0.7)', marginTop: 20 }}>
-              The Fidarix Blue. A spectrum from deep violet to electric cyan, balanced with editorial whites.
-            </p>
-          </div>
-          <div className="foundation-item">
-            <p className="eyebrow" style={{ color: 'rgba(255,255,255,0.5)' }}>03 Foundations</p>
-            <h3 className="display-huge" style={{ fontSize: '3rem', marginTop: 20 }}>Interactions</h3>
-            <p className="body-copy" style={{ color: 'rgba(255,255,255,0.7)', marginTop: 20 }}>
-              Motion that matters. Masked reveals and smooth transitions that guide the user journey.
-            </p>
-          </div>
-          <div className="foundation-item">
-            <p className="eyebrow" style={{ color: 'rgba(255,255,255,0.5)' }}>04 Foundations</p>
-            <h3 className="display-huge" style={{ fontSize: '3rem', marginTop: 20 }}>Layout</h3>
-            <p className="body-copy" style={{ color: 'rgba(255,255,255,0.7)', marginTop: 20 }}>
-              Grid-based precision. A flexible system that scales from mobile screens to 4K displays.
-            </p>
-          </div>
-        </div>
-      </section>
 
-      {/* 4. SHOWCASE SECTION (Horizontal Scroll feel) */}
-      <SectionWise bg="bg-white">
-        <div style={{ display: 'flex', overflowX: 'auto', gap: 40, paddingBottom: 40, scrollSnapType: 'x mandatory' }}>
-          <div className="wise-card" style={{ background: 'var(--wise-yellow)', color: '#000', scrollSnapAlign: 'start' }}>
-            <h3 className="display-huge" style={{ fontSize: '4rem' }}>Digital <br /> Branding</h3>
-            <p className="body-copy">Visual identities that resonate in a digital-first world.</p>
-          </div>
-          <div className="wise-card" style={{ background: 'var(--wise-pink)', color: '#000', scrollSnapAlign: 'start' }}>
-            <h3 className="display-huge" style={{ fontSize: '4rem' }}>Product <br /> Design</h3>
-            <p className="body-copy">Interfaces built for utility and delight.</p>
-          </div>
-          <div className="wise-card" style={{ background: 'var(--wise-dark)', color: '#fff', scrollSnapAlign: 'start' }}>
-            <h3 className="display-huge" style={{ fontSize: '4rem' }}>Motion <br /> Systems</h3>
-            <p className="body-copy">Bringing brands to life through intentional movement.</p>
-          </div>
-        </div>
-      </SectionWise>
 
-      {/* 5. PHILOSOPHY */}
-      <SectionWise bg="bg-dark">
-        <div style={{ padding: '100px 0' }}>
-          <h2 className="display-huge" style={{ color: '#fff', textAlign: 'center' }}>
-            MAX IMPACT <br /> MIN FRICTION
-          </h2>
-          <p className="body-copy" style={{ textAlign: 'center', maxWidth: '600px', margin: '40px auto 0', color: 'rgba(255,255,255,0.6)' }}>
-            A new design system, made to disrupt old patterns. We don't just build websites; we build digital legacies.
-          </p>
-        </div>
-      </SectionWise>
+
+
+      {/* INTERACTIVE ROADMAP PROCESS CYCLE */}
+      <InteractiveRoadmap />
+
+
+
 
       {/* 6. FINAL CTA & FOOTER MARQUEE */}
     </div>

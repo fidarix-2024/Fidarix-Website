@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { navItems } from '../data/site';
+import TextPressure from './TextPressure';
 
 function LogoMark() {
   return (
@@ -112,6 +113,22 @@ function SiteFooter({ isDark }) {
           </div>
         </div>
 
+        {/* Giant Interactive Wordmark */}
+        <div style={{ position: 'relative', height: 'clamp(80px, 12vw, 180px)', width: '100%', margin: '40px 0' }}>
+          <TextPressure
+            text="FIDARIX"
+            flex
+            alpha={false}
+            stroke={false}
+            width
+            weight
+            italic
+            textColor="#ffffff"
+            strokeColor="#5227FF"
+            minFontSize={36}
+          />
+        </div>
+
         {/* Legal Bottom Bar */}
         <div className="footer-bottom">
           <span>&copy; 2026 Fidarix Studio. All rights reserved.</span>
@@ -154,7 +171,7 @@ export function PreFooter({ isDark }) {
                 <circle cx="225" cy="75" r="70" fill="none" stroke={isDark ? "rgba(255, 255, 255, 0.15)" : "rgba(13, 27, 61, 0.2)"} strokeWidth="1.5" />
                 <circle cx="275" cy="75" r="70" fill="none" stroke={isDark ? "rgba(255, 255, 255, 0.18)" : "rgba(13, 27, 61, 0.24)"} strokeWidth="1.5" />
                 <circle cx="325" cy="75" r="70" fill="none" stroke={isDark ? "rgba(255, 255, 255, 0.2)" : "rgba(13, 27, 61, 0.28)"} strokeWidth="1.5" />
-                
+
                 {/* Globe grid visual lines */}
                 <path d="M 200 5 A 70 70 0 0 1 200 145" fill="none" stroke={isDark ? "rgba(255, 255, 255, 0.1)" : "rgba(13, 27, 61, 0.12)"} strokeWidth="1.5" />
                 <path d="M 200 5 A 35 70 0 0 1 200 145" fill="none" stroke={isDark ? "rgba(255, 255, 255, 0.12)" : "rgba(13, 27, 61, 0.15)"} strokeWidth="1.5" />
