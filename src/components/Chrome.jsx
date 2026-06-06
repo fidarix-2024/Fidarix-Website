@@ -1,68 +1,6 @@
-import { useMemo, useState } from 'react';
-import { NavLink, Link, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
-import { navItems } from '../data/site';
+import { Link, useLocation } from 'react-router-dom';
+import SiteHeader, { LogoMark } from './Navbar';
 
-function LogoMark() {
-  return (
-    <svg className="logo-mark-svg" viewBox="0 0 96 96" aria-hidden="true">
-      <defs>
-        <linearGradient id="fidarix-brand" x1="16" y1="12" x2="86" y2="86" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#9b4dff" />
-          <stop offset="52%" stopColor="#5a74ff" />
-          <stop offset="100%" stopColor="#4cc3ff" />
-        </linearGradient>
-      </defs>
-      <path d="M18 24h46l14 14H32L18 24Z" fill="url(#fidarix-brand)" />
-      <path d="M18 52h46l14 14H32L18 52Z" fill="url(#fidarix-brand)" />
-    </svg>
-  );
-}
-
-function SiteHeader() {
-  const [isOpen, setIsOpen] = useState(false);
-  const isDarkPage = true; // Always dark theme navbar
-
-  const routes = useMemo(
-    () => navItems.filter((item) => item.path !== '/home'),
-    [],
-  );
-
-  return (
-    <header className="site-header">
-      <div className="site-frame">
-        <div className={`header-shell ${isDarkPage ? 'is-dark' : 'is-light'}`}>
-          <Link className="brand-link" to="/" onClick={() => setIsOpen(false)}>
-            <LogoMark />
-            <span className="brand-wordmark">
-              <span className="brand-name">Fidarix</span>
-            </span>
-          </Link>
-
-          <nav className={`nav-links ${isOpen ? 'is-open' : ''}`} style={{ flex: 1, justifyContent: 'center' }}>
-            {routes.map((item) => (
-              <NavLink
-                key={item.path}
-                to={item.path}
-                className={({ isActive }) => `nav-link ${isActive ? 'is-active' : ''}`}
-                style={{ fontSize: '0.9rem', letterSpacing: '0.02em' }}
-                onClick={() => setIsOpen(false)}
-              >
-                {item.label}
-              </NavLink>
-            ))}
-          </nav>
-
-          <div className="header-actions">
-            <button className="button button-ghost button-small" style={{ border: 'none', background: 'transparent' }}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-            </button>
-          </div>
-        </div>
-      </div>
-    </header>
-  );
-}
 
 function SiteFooter({ isDark }) {
   return (
@@ -130,59 +68,95 @@ function SiteFooter({ isDark }) {
   );
 }
 
-export function PreFooter({ isDark }) {
+export function PreFooter() {
   return (
-    <section className={`pre-footer-section ${isDark ? 'is-dark' : ''}`}>
-      <div className="site-frame">
-        <div className="pre-footer-grid">
-          {/* Left Column: Headline */}
-          <div className="pre-footer-left">
-            <span className="pre-footer-eyebrow">
-              <span className="eyebrow-dot" /> Contact
-            </span>
-            <h2 className="pre-footer-title">
-              LET’S WORK <br />
-              → TOGETHER
-            </h2>
+    <section className="pre-footer-section">
+      {/* Background elements */}
+      <div className="pf-orb pf-orb-1" />
+      <div className="pf-orb pf-orb-2" />
+      <div className="pf-orb pf-orb-3" />
+      <div className="pf-grid-texture" />
+
+      <div className="pf-inner">
+        {/* Left Column */}
+        <div className="pf-left">
+          <div className="pf-availability">
+            <span className="pf-pulse" />
+            <span>Available for new projects</span>
           </div>
 
-          {/* Right Column: concentric circles and contact info */}
-          <div className="pre-footer-right">
-            <div className="circles-visual-wrapper">
-              <svg className="circles-svg" viewBox="0 0 400 150">
-                <circle cx="75" cy="75" r="70" fill="none" stroke={isDark ? "rgba(255, 255, 255, 0.08)" : "rgba(13, 27, 61, 0.1)"} strokeWidth="1.5" />
-                <circle cx="125" cy="75" r="70" fill="none" stroke={isDark ? "rgba(255, 255, 255, 0.1)" : "rgba(13, 27, 61, 0.12)"} strokeWidth="1.5" />
-                <circle cx="175" cy="75" r="70" fill="none" stroke={isDark ? "rgba(255, 255, 255, 0.12)" : "rgba(13, 27, 61, 0.16)"} strokeWidth="1.5" />
-                <circle cx="225" cy="75" r="70" fill="none" stroke={isDark ? "rgba(255, 255, 255, 0.15)" : "rgba(13, 27, 61, 0.2)"} strokeWidth="1.5" />
-                <circle cx="275" cy="75" r="70" fill="none" stroke={isDark ? "rgba(255, 255, 255, 0.18)" : "rgba(13, 27, 61, 0.24)"} strokeWidth="1.5" />
-                <circle cx="325" cy="75" r="70" fill="none" stroke={isDark ? "rgba(255, 255, 255, 0.2)" : "rgba(13, 27, 61, 0.28)"} strokeWidth="1.5" />
-                
-                {/* Globe grid visual lines */}
-                <path d="M 200 5 A 70 70 0 0 1 200 145" fill="none" stroke={isDark ? "rgba(255, 255, 255, 0.1)" : "rgba(13, 27, 61, 0.12)"} strokeWidth="1.5" />
-                <path d="M 200 5 A 35 70 0 0 1 200 145" fill="none" stroke={isDark ? "rgba(255, 255, 255, 0.12)" : "rgba(13, 27, 61, 0.15)"} strokeWidth="1.5" />
-                <path d="M 200 5 A 15 70 0 0 1 200 145" fill="none" stroke={isDark ? "rgba(255, 255, 255, 0.15)" : "rgba(13, 27, 61, 0.18)"} strokeWidth="1.5" />
-                <line x1="130" y1="75" x2="270" y2="75" stroke={isDark ? "rgba(255, 255, 255, 0.15)" : "rgba(13, 27, 61, 0.2)"} strokeWidth="1.5" />
-              </svg>
-            </div>
+          <h2 className="pf-headline">
+            LET'S BUILD
+            <br />
+            <span className="pf-headline-accent">SOMETHING</span>
+            <br />
+            GREAT.
+          </h2>
 
-            <div className="pre-footer-divider" />
+          <p className="pf-subtext">
+            We partner with ambitious brands to craft digital experiences that convert, inspire, and endure. Ready when you are.
+          </p>
 
-            <div className="pre-footer-sub-grid">
-              <p className="pre-footer-text">
-                Feel free to reach out if you want to collaborate with us, or simply have a chat. We are always open to new digital sprint perspectives.
-              </p>
-              <div className="pre-footer-email-col">
-                <a href="mailto:hello@fidarix.com" className="pre-footer-email">
-                  hello@fidarix.com ↗
+          <Link to="/contact" className="pf-cta">
+            <span>Start a project</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </Link>
+        </div>
+
+        {/* Divider */}
+        <div className="pf-vdivider" />
+
+        {/* Right Column */}
+        <div className="pf-right">
+          <div className="pf-contact-block">
+            <span className="pf-label">WRITE TO US</span>
+            <a href="mailto:hello@fidarix.com" className="pf-email">
+              hello@fidarix.com
+            </a>
+          </div>
+
+          <div className="pf-contact-block">
+            <span className="pf-label">CALL US</span>
+            <a href="tel:+15550149900" className="pf-phone">+1 (555) 014-9900</a>
+          </div>
+
+          <div className="pf-hdivider" />
+
+          <div className="pf-contact-block">
+            <span className="pf-label">FOLLOW US</span>
+            <div className="pf-socials">
+              {[
+                { label: 'Instagram', href: 'https://instagram.com' },
+                { label: 'LinkedIn', href: 'https://linkedin.com' },
+                { label: 'X / Twitter', href: 'https://x.com' },
+                { label: 'YouTube', href: 'https://youtube.com' },
+              ].map(({ label, href }) => (
+                <a key={label} href={href} target="_blank" rel="noreferrer" className="pf-social-link">
+                  {label} ↗
                 </a>
-              </div>
+              ))}
             </div>
+          </div>
 
-            <div style={{ marginTop: '40px', textAlign: 'left' }}>
-              <Link to="/contact" className="pre-footer-btn">
-                GO TO THE CONTACT PAGE →
-              </Link>
-            </div>
+          {/* Decorative arc graphic */}
+          <div className="pf-arc-wrapper">
+            <svg viewBox="0 0 260 260" fill="none" className="pf-arc-svg">
+              <defs>
+                <linearGradient id="arcGrad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stopColor="#9b4dff" stopOpacity="0.6" />
+                  <stop offset="100%" stopColor="#4cc3ff" stopOpacity="0.6" />
+                </linearGradient>
+              </defs>
+              <circle cx="130" cy="130" r="120" stroke="url(#arcGrad)" strokeWidth="1" strokeDasharray="6 6" />
+              <circle cx="130" cy="130" r="88" stroke="rgba(155,77,255,0.25)" strokeWidth="1" />
+              <circle cx="130" cy="130" r="56" stroke="rgba(76,195,255,0.2)" strokeWidth="1" />
+              <circle cx="130" cy="130" r="24" fill="rgba(155,77,255,0.15)" stroke="rgba(155,77,255,0.4)" strokeWidth="1" />
+              <circle cx="130" cy="10" r="4" fill="#9b4dff" />
+              <circle cx="250" cy="130" r="4" fill="#4cc3ff" />
+              <circle cx="130" cy="250" r="4" fill="#5a74ff" />
+            </svg>
           </div>
         </div>
       </div>
@@ -193,13 +167,14 @@ export function PreFooter({ isDark }) {
 export function SiteChrome({ children }) {
   const location = useLocation();
   const isDarkPage = location.pathname === '/services';
+  const isContactPage = location.pathname === '/contact';
 
   return (
     <div className="app-shell">
       <SiteHeader />
       <main className="site-main">{children}</main>
 
-      <PreFooter isDark={isDarkPage} />
+      {!isContactPage && <PreFooter />}
       <SiteFooter isDark={isDarkPage} />
     </div>
   );

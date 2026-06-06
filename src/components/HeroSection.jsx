@@ -3,9 +3,6 @@ import { Link } from 'react-router-dom'
 import { motion, useMotionValue, AnimatePresence, animate } from 'framer-motion'
 import './HeroSection.css'
 
-/* ═══════════════════════════════════════════════════════
-   PREMIUM PROJECT SHOWCASE CARDS (3D SPINDLE + NEON BG)
-   ═══════════════════════════════════════════════════════ */
 const profiles = [
   {
     name: 'CLUTCH MARKET',
