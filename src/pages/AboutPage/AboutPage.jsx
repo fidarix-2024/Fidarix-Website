@@ -2,6 +2,7 @@ import { ButtonLink, ImpactHero, SectionWise, Marquee } from '../../components/c
 import Folder from '../../components/Folder';
 import { team, techStack, aboutTimeline, founders } from '../../data/site';
 import Hyperspeed from '../../components/Hyperspeed';
+import './AboutPage.css';
 
 function AboutPage() {
   const hyperspeedOptions = {

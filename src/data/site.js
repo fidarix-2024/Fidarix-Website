@@ -212,23 +212,23 @@ export const pricingPlans = [
 export const faqs = [
   {
     question: 'How much does a Fidarix website cost?',
-    answer: 'Pricing depends on scope, but most projects start with a clear package and optional add-ons.',
+    answer: 'Our pricing is customized based on the scope and requirements of your project. We offer different packages that cater to startups and enterprises alike. Contact us for a detailed quote.',
   },
   {
     question: 'How long does delivery take?',
-    answer: 'A simple launch site can be done in about 10 days; larger builds usually take 2-6 weeks.',
+    answer: 'Project timelines vary depending on complexity. A standard website typically takes 2-4 weeks from start to finish, while custom web applications may require 4-8 weeks or more.',
   },
   {
     question: 'Do you handle hosting?',
-    answer: 'Yes, we guide setup and can support hosting and deployment handoff.',
+    answer: 'Yes, we provide end-to-end solutions including hosting setup, server configuration, and deployment on platforms like Vercel, AWS, or your preferred provider.',
   },
   {
     question: 'How many revisions are included?',
-    answer: 'Each package includes a revision allowance, with premium plans offering more flexibility.',
+    answer: 'We believe in collaborative design. Most of our packages include 2-3 major revision rounds during the design phase to ensure the final product perfectly aligns with your vision.',
   },
   {
     question: 'Can you improve SEO too?',
-    answer: 'Yes, SEO structure, metadata, speed, and content guidance are part of the workflow.',
+    answer: 'Absolutely. All our websites are built with technical SEO best practices in mind, including optimized metadata, fast loading speeds, and clean semantic HTML structure.',
   },
 ];
 

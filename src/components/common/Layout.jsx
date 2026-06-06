@@ -1,84 +1,7 @@
-import { useMemo, useState } from 'react';
-import { NavLink, Link, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
-import { navItems } from '../../data/site';
+import { Link, useLocation } from 'react-router-dom';
+import SiteHeader, { LogoMark } from '../Navbar';
 import TextPressure from './TextPressure';
-
-function LogoMark() {
-  return (
-    <svg className="w-9 h-9 object-contain block" viewBox="0 0 96 96" aria-hidden="true">
-      <defs>
-        <linearGradient id="fidarix-brand" x1="16" y1="12" x2="86" y2="86" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#9b4dff" />
-          <stop offset="52%" stopColor="#5a74ff" />
-          <stop offset="100%" stopColor="#4cc3ff" />
-        </linearGradient>
-      </defs>
-      <path d="M18 24h46l14 14H32L18 24Z" fill="url(#fidarix-brand)" />
-      <path d="M18 52h46l14 14H32L18 52Z" fill="url(#fidarix-brand)" />
-    </svg>
-  );
-}
-
-function SiteHeader() {
-  const [isOpen, setIsOpen] = useState(false);
-  const isDarkPage = true; // Always dark theme navbar
-
-  const routes = useMemo(
-    () => navItems.filter((item) => item.path !== '/home'),
-    [],
-  );
-
-  return (
-    <header className="absolute top-0 left-0 right-0 z-50 pt-6 translate-z-[9999px]">
-      <div className={`w-[min(1180px,calc(100%-32px))] mx-auto flex items-center justify-between gap-[18px] px-[18px] py-4 border rounded-full backdrop-blur-[18px] shadow-[0_18px_50px_rgba(0,0,0,0.4)] transition-all ${
-        isDarkPage 
-          ? 'border-white/8 bg-black/76 text-white' 
-          : 'border-black/8 bg-white/76 text-black'
-      }`}>
-        <Link className="inline-flex items-center gap-3 min-w-0" to="/" onClick={() => setIsOpen(false)}>
-          <LogoMark />
-          <span className="flex flex-col line-height-1">
-            <span className="font-['Space_Grotesk'] font-medium text-base tracking-[0.26em] uppercase">Fidarix</span>
-          </span>
-        </Link>
-
-        {/* Mobile menu trigger */}
-        <button 
-          className="md:hidden p-2 text-white hover:text-primary transition-colors"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          {isOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-
-        <nav className={`nav-links flex-1 md:flex items-center justify-center gap-1 flex-wrap ${
-          isOpen 
-            ? 'absolute top-[85px] left-4 right-4 flex flex-col items-center bg-black/95 border border-white/10 rounded-3xl p-6 gap-4 z-50' 
-            : 'hidden md:flex'
-        }`}>
-          {routes.map((item) => (
-            <NavLink
-              key={item.path}
-              to={item.path}
-              className={({ isActive }) => `px-3.5 py-2.5 rounded-full font-semibold text-[0.9rem] tracking-[0.02em] transition-all hover:bg-primary/8 hover:text-white ${
-                isActive ? 'bg-primary/12 text-white' : 'text-white/60'
-              }`}
-              onClick={() => setIsOpen(false)}
-            >
-              {item.label}
-            </NavLink>
-          ))}
-        </nav>
-
-        <div className="hidden md:flex items-center gap-2.5">
-          <button className="inline-flex items-center justify-center gap-2.5 min-h-[42px] px-4 rounded-full border border-white/8 text-white font-bold text-[0.92rem] tracking-[-0.01em] transition-all bg-transparent hover:-translate-y-0.5">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-          </button>
-        </div>
-      </div>
-    </header>
-  );
-}
+import './Layout.css';
 
 export function SiteFooter({ isDark }) {
   return (
@@ -196,9 +119,18 @@ export function PageHero({ eyebrow, title, copy, actions, panel, children }) {
   );
 }
 
-export function ImpactHero({ lines, copy, actions, children }) {
+export function ImpactHero({ 
+  lines, 
+  copy, 
+  actions, 
+  children,
+  minHeight = 'min-h-[80vh]',
+  titleSize = 'text-[clamp(2.8rem,7vw,5.5rem)]',
+  py = 'py-20 md:py-28',
+  leadingClass = 'leading-[0.95]'
+}) {
   return (
-    <section className={`min-h-screen flex flex-col justify-center items-center text-center px-6 py-[120px] rounded-none bg-black text-white relative overflow-hidden z-10`}>
+    <section className={`${minHeight} flex flex-col justify-center items-center text-center px-6 ${py} rounded-none bg-black text-white relative overflow-hidden z-10`}>
       {children && (
         <div className="absolute inset-0 z-0 opacity-60 pointer-events-none">
           {children}
@@ -210,10 +142,10 @@ export function ImpactHero({ lines, copy, actions, children }) {
       <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-[radial-gradient(circle,rgba(155,77,255,0.4)_0%,transparent_70%)] pointer-events-none filter blur-[80px]" />
 
       <div className="relative z-10 flex flex-col items-center">
-        <h1 className="text-white text-[clamp(4.2rem,15vw,10rem)] leading-[0.85] font-extrabold uppercase tracking-tight flex flex-col items-center mb-8">
+        <h1 className={`text-white ${titleSize} ${leadingClass} font-extrabold font-['Space_Grotesk'] uppercase tracking-tight flex flex-col items-center mb-8`}>
           {lines.map((line, i) => (
-            <span key={i} className="block overflow-hidden h-[1.15em] -mt-[0.05em]">
-              <span className="block animate-[slideUp_1s_cubic-bezier(0.16,1,0.3,1)_forwards] translate-y-[110%]" style={{ animationDelay: `${i * 0.15}s` }}>
+            <span key={i} className="block overflow-hidden py-1.5 -my-1.5">
+              <span className="reveal-text" style={{ animationDelay: `${i * 0.15}s` }}>
                 {line}
               </span>
             </span>
@@ -229,19 +161,9 @@ export function ImpactHero({ lines, copy, actions, children }) {
 }
 
 export function SectionWise({ children, className = '', bg = '', style }) {
-  const getBgClass = () => {
-    switch (bg) {
-      case 'bg-burgundy': return 'bg-wise-burgundy text-white';
-      case 'bg-dark': return 'bg-wise-dark text-white';
-      case 'bg-primary': return 'bg-primary text-white';
-      case 'bg-white': return 'bg-black text-white'; // Consistent dark theme support
-      default: return 'bg-transparent text-white';
-    }
-  };
-
   return (
-    <section className={`py-[120px] overflow-hidden ${getBgClass()} ${className}`} style={style}>
-      <div className="w-[min(1180px,calc(100%-32px))] mx-auto">
+    <section className={`section-wise ${bg} ${className}`} style={style}>
+      <div className="site-frame">
         {children}
       </div>
     </section>
@@ -250,14 +172,13 @@ export function SectionWise({ children, className = '', bg = '', style }) {
 
 export function Marquee({ items, speed = '30s' }) {
   return (
-    <div className="overflow-hidden whitespace-nowrap py-10 w-full">
-      <div className="inline-flex gap-[60px] animate-[marquee_linear_infinite]" style={{ animationDuration: speed }}>
+    <div className="marquee-container">
+      <div className="marquee-content" style={{ animationDuration: speed }}>
         {items.map((item, i) => (
-          <span key={i} className="text-white font-['Space_Grotesk'] text-[clamp(1.5rem,4vw,2.5rem)] font-bold">{item}</span>
+          <span key={i}>{item}</span>
         ))}
-        {/* Duplicate for seamless loop */}
         {items.map((item, i) => (
-          <span key={`dup-${i}`} className="text-white font-['Space_Grotesk'] text-[clamp(1.5rem,4vw,2.5rem)] font-bold">{item}</span>
+          <span key={`dup-${i}`}>{item}</span>
         ))}
       </div>
     </div>

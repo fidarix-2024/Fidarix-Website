@@ -1,11 +1,9 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useMotionValue, AnimatePresence, animate } from 'framer-motion';
+import Hyperspeed from '../Hyperspeed';
 import './HeroSection.css';
 
-/* ═══════════════════════════════════════════════════════
-   PREMIUM PROJECT SHOWCASE CARDS (3D SPINDLE + NEON BG)
-   ═══════════════════════════════════════════════════════ */
 const profiles = [
   {
     name: 'CLUTCH MARKET',
@@ -64,29 +62,51 @@ const RADIUS = 440;          // translateZ distance from center
 const ROTATION_SPEED = 0.08; // default auto-spin degrees per frame at 60fps
 
 /* ═══════════════════════════════════════
-   TOPOGRAPHIC BACKGROUND
+   HYPERSPEED BACKGROUND WRAPPER
    ═══════════════════════════════════════ */
-function TopoBackground() {
+function HyperspeedBackground() {
   return (
-    <div className="hero-topo-bg" aria-hidden="true">
-      <svg className="hero-topo-svg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
-        <defs>
-          <filter id="topo-warp">
-            <feTurbulence type="fractalNoise" baseFrequency="0.005" numOctaves="3" result="noise" />
-            <feDisplacementMap in="SourceGraphic" in2="noise" scale="100" xChannelSelector="R" yChannelSelector="G" />
-          </filter>
-        </defs>
-        <g filter="url(#topo-warp)" fill="none" stroke="var(--active-neon)" strokeWidth="1.5" className="topo-group">
-          <circle cx="720" cy="450" r="160" />
-          <circle cx="720" cy="450" r="280" />
-          <circle cx="720" cy="450" r="400" />
-          <circle cx="720" cy="450" r="520" />
-          <circle cx="720" cy="450" r="640" />
-          <circle cx="720" cy="450" r="760" />
-          <circle cx="720" cy="450" r="880" />
-          <circle cx="720" cy="450" r="1000" />
-        </g>
-      </svg>
+    <div className="hero-hyperspeed-bg" aria-hidden="true">
+      <Hyperspeed
+        effectOptions={{
+          onSpeedUp: () => {},
+          onSlowDown: () => {},
+          distortion: 'turbulentDistortion',
+          length: 400,
+          roadWidth: 10,
+          islandWidth: 2,
+          lanesPerRoad: 4,
+          fov: 90,
+          fovSpeedUp: 150,
+          speedUp: 2,
+          carLightsFade: 0.4,
+          totalSideLightSticks: 20,
+          lightPairsPerRoadWay: 40,
+          shoulderLinesWidthPercentage: 0.05,
+          brokenLinesWidthPercentage: 0.1,
+          brokenLinesLengthPercentage: 0.5,
+          lightStickWidth: [0.12, 0.5],
+          lightStickHeight: [1.3, 1.7],
+          movingAwaySpeed: [60, 80],
+          movingCloserSpeed: [-120, -160],
+          carLightsLength: [400 * 0.03, 400 * 0.2],
+          carLightsRadius: [0.05, 0.14],
+          carWidthPercentage: [0.3, 0.5],
+          carShiftX: [-0.8, 0.8],
+          carFloorSeparation: [0, 5],
+          colors: {
+            roadColor: 0x080808,
+            islandColor: 0x0a0a0a,
+            background: 0x000000,
+            shoulderLines: 0xffffff,
+            brokenLines: 0xffffff,
+            leftCars: [0xd856bf, 0x6750a2, 0xc247ac],
+            rightCars: [0x03b3c3, 0x0e5ea5, 0x324555],
+            sticks: 0x03b3c3,
+          },
+        }}
+      />
+      <div className="hero-hyperspeed-overlay" />
       <div className="hero-neon-glow" />
     </div>
   );
@@ -297,8 +317,8 @@ export default function HeroSection() {
         </filter>
       </svg>
 
-      {/* Dynamic Topographic Grid Background */}
-      <TopoBackground />
+      {/* Hyperspeed Highway Background */}
+      <HyperspeedBackground />
 
       {/* ═══ MOBILE VIEW ═══ */}
       {isMobile ? (

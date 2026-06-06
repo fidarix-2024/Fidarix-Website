@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Heart } from 'lucide-react';
-import { SectionWise, Marquee } from '../../components/common/Layout';
+import { SectionWise, Marquee, ImpactHero, ButtonLink } from '../../components/common/Layout';
 import { services, projects, testimonials } from '../../data/site';
-import HeroSection from '../../components/HeroSection';
+import Hyperspeed from '../../components/Hyperspeed';
 import InteractiveRoadmap from '../../components/InteractiveRoadmap';
+import './HomePage.css';
 
 function ScrollSplashCard({ children }) {
   const [revealed, setRevealed] = useState(false);
@@ -57,7 +58,20 @@ function HomePage() {
   return (
     <div className="min-h-screen bg-black text-white flex flex-col">
       {/* 1. HERO SECTION */}
-      <HeroSection />
+      <ImpactHero
+        lines={['We Build', 'Digital', 'Legacies']}
+        copy="A focused studio built around good taste, clear systems, and measurable outcomes. Design, development, and strategy — all under one roof."
+        actions={[
+          <ButtonLink key="work" to="/services" style={{ padding: '20px 40px', fontSize: '1.2rem' }}>
+            Our Services
+          </ButtonLink>,
+          <ButtonLink key="contact" to="/contact" variant="ghost" style={{ padding: '20px 40px', fontSize: '1.2rem' }}>
+            Get In Touch
+          </ButtonLink>,
+        ]}
+      >
+        <Hyperspeed />
+      </ImpactHero>
 
       {/* 2. INTRO & MARQUEE */}
       <SectionWise bg="bg-dark" style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.1)', backgroundColor: '#000000' }}>

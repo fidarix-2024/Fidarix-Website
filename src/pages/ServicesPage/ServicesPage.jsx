@@ -5,6 +5,7 @@ import { Check } from 'lucide-react';
 import { GridScan } from '../../components/GridScan';
 import DomeGallery from '../../components/DomeGallery';
 import '../../components/GridScan/ServicesPageAnimations.css';
+import './ServicesPage.css';
 
 const infiniteItems = [
   { image: 'https://picsum.photos/300/300?grayscale', link: 'https://google.com/', title: '', description: '' },
