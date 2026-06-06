@@ -70,6 +70,13 @@ export default function InteractiveRoadmap() {
   const [activeIndex, setActiveIndex] = useState(0);
   const progressTargetRef = useRef(0);
   const rafRef = useRef(null);
+  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Scroll handler
   useEffect(() => {
@@ -116,12 +123,6 @@ export default function InteractiveRoadmap() {
   const maxIdx = steps.length - 1;
   const phase = smoothProgress * maxIdx; // continuous 0 → 5
 
-  // Diagonal text movement:
-  // Each item occupies ~130px vertically. We translate the whole block upward as scroll progresses.
-  const ITEM_HEIGHT = 130; // approximate height per item
-  const totalTextHeight = steps.length * ITEM_HEIGHT;
-  const translateY = -phase * ITEM_HEIGHT;
-
   // Click to scroll to a specific step
   const scrollToStep = useCallback((idx) => {
     if (!trackRef.current) return;
@@ -149,33 +150,61 @@ export default function InteractiveRoadmap() {
         {/* Fade masks (top + bottom) */}
         <div className="roadmap-fade-mask" />
 
-        {/* ===== DIAGONAL TEXT ===== */}
-        <div className="roadmap-diagonal-container">
-          <div
-            className="roadmap-diagonal-inner"
-            style={{
-              transform: `translateY(${translateY}px) rotate(-32deg)`,
-            }}
-          >
-            {steps.map((step, idx) => {
-              const dist = Math.abs(idx - phase);
-              const isActive = dist < 0.5;
-              const isNear = dist >= 0.5 && dist < 1.5;
+        {/* ===== ROTATING CIRCLE WHEEL ===== */}
+        {(() => {
+          const isMobile = windowWidth < 768;
+          const isTablet = windowWidth >= 768 && windowWidth < 1024;
+          const R = isMobile ? 300 : (isTablet ? 480 : 620);
+          const angleStep = isMobile ? 26 : 22;
+          return (
+            <div className="roadmap-circle-container">
+              <div
+                className="roadmap-circle-wheel"
+                style={{
+                  transform: `rotate(${-phase * angleStep}deg)`,
+                  width: `${2 * R}px`,
+                  height: `${2 * R}px`,
+                  left: isMobile ? `-${R * 0.9}px` : `-${R * 1.3}px`,
+                  top: `calc(50% - ${R}px)`
+                }}
+              >
+                {steps.map((step, idx) => {
+                  const itemAngle = idx * angleStep;
+                  const rad = (itemAngle * Math.PI) / 180;
+                  const left = R + R * Math.cos(rad);
+                  const top = R + R * Math.sin(rad);
 
-              return (
-                <div
-                  key={step.id}
-                  className={`roadmap-diagonal-item ${isActive ? 'is-active' : ''} ${isNear ? 'is-near' : ''}`}
-                  style={{
-                    opacity: isActive ? 0.92 : Math.max(0.05, 0.5 - dist * 0.15),
-                  }}
-                >
-                  {step.title}
-                </div>
-              );
-            })}
-          </div>
-        </div>
+                  const dist = Math.abs(idx - phase);
+                  const isActive = dist < 0.5;
+                  const isNear = dist >= 0.5 && dist < 1.5;
+
+                  const scale = Math.max(0.65, 1.25 - dist * 0.12);
+                  const opacity = isActive ? 0.98 : Math.max(0.08, 0.55 - dist * 0.15);
+                  const textColor = isActive ? step.color : (isNear ? 'rgba(255, 255, 255, 0.45)' : 'rgba(255, 255, 255, 0.08)');
+                  const textShadow = isActive ? `0 0 50px ${step.color}, 0 2px 4px rgba(0, 0, 0, 0.5)` : 'none';
+
+                  return (
+                    <div
+                      key={step.id}
+                      className={`roadmap-circle-item ${isActive ? 'is-active' : ''} ${isNear ? 'is-near' : ''}`}
+                      style={{
+                        left: `${left}px`,
+                        top: `${top}px`,
+                        transform: `translate(-50%, -50%) rotate(${itemAngle}deg) scale(${scale})`,
+                        opacity: opacity,
+                        color: textColor,
+                        textShadow: textShadow,
+                      }}
+                      onClick={() => scrollToStep(idx)}
+                    >
+                      {step.title}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })()}
 
         {/* ===== SIDEBAR NAV (left edge) ===== */}
         <div className="roadmap-sidebar-nav">
@@ -186,7 +215,7 @@ export default function InteractiveRoadmap() {
               onClick={() => scrollToStep(idx)}
             >
               <span className="roadmap-sidebar-line" />
-              {activeIndex === idx ? `They trust us` : step.num}
+              {step.num}
             </button>
           ))}
         </div>

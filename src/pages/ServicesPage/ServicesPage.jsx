@@ -1,10 +1,10 @@
 import { useRef, useEffect, useCallback, useState } from 'react';
-import { ButtonLink, SectionWise } from '../components/Chrome';
-import { services, pricingPlans } from '../data/site';
+import { ButtonLink, SectionWise } from '../../components/common/Layout';
+import { services, pricingPlans } from '../../data/site';
 import { Check } from 'lucide-react';
-import { GridScan } from '../components/GridScan';
-import DomeGallery from '../components/DomeGallery';
-import '../components/ServicesPageAnimations.css';
+import { GridScan } from '../../components/GridScan';
+import DomeGallery from '../../components/DomeGallery';
+import '../../components/GridScan/ServicesPageAnimations.css';
 
 const infiniteItems = [
   { image: 'https://picsum.photos/300/300?grayscale', link: 'https://google.com/', title: '', description: '' },
@@ -23,7 +23,6 @@ function useScrollReveal() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('revealed');
-            // Also reveal staggered children
             const children = entry.target.querySelectorAll('.reveal-child');
             children.forEach((child, i) => {
               setTimeout(() => child.classList.add('revealed'), i * 120);
@@ -106,20 +105,16 @@ function ServicesDiagonalScrollingShowcase() {
       const rect = containerRef.current.getBoundingClientRect();
       const trackHeight = rect.height;
       const viewportHeight = window.innerHeight;
-      
       const totalScrollable = trackHeight - viewportHeight;
       if (totalScrollable <= 0) return;
-      
       const scrolled = -rect.top;
       const rawProgress = scrolled / totalScrollable;
       const progress = Math.max(0, Math.min(1, rawProgress));
       scrollProgressTargetRef.current = progress;
     };
-
     window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', handleScroll, { passive: true });
     handleScroll();
-
     return () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleScroll);
@@ -128,27 +123,17 @@ function ServicesDiagonalScrollingShowcase() {
 
   useEffect(() => {
     let frameId;
-
     const animate = () => {
       setScrollProgress((current) => {
         const target = scrollProgressTargetRef.current;
         const delta = target - current;
-
-        if (Math.abs(delta) < 0.001) {
-          return target;
-        }
-
+        if (Math.abs(delta) < 0.001) return target;
         return current + delta * 0.08;
       });
-
       frameId = window.requestAnimationFrame(animate);
     };
-
     frameId = window.requestAnimationFrame(animate);
-
-    return () => {
-      window.cancelAnimationFrame(frameId);
-    };
+    return () => { window.cancelAnimationFrame(frameId); };
   }, []);
 
   useEffect(() => {
@@ -156,20 +141,13 @@ function ServicesDiagonalScrollingShowcase() {
     setActiveIndex(idx);
   }, [scrollProgress, maxIndex]);
 
-  // Card parameters: sliding cards diagonally (entering from bottom-right, exiting top-left)
   const getCardStyle = (index) => {
     const activeProgressIndex = scrollProgress * maxIndex;
     const delta = index - activeProgressIndex;
-    
-    // Diagonal offset path (tx = horizontal shift, ty = vertical shift)
-    const tx = delta * 220; // slides from right to center to left
-    const ty = delta * 150; // slides from bottom to center to top
-    
+    const tx = delta * 220;
+    const ty = delta * 150;
     const scale = 1 - Math.abs(delta) * 0.08;
-    
-    // Flatter opacity curve so cards overlap and never leave a blank screen
     const opacity = Math.max(0, Math.min(1, 1.25 - Math.abs(delta) * 1.1));
-
     return {
       transform: `translate3d(${tx}px, ${ty}px, 0) scale(${scale})`,
       opacity,
@@ -181,10 +159,8 @@ function ServicesDiagonalScrollingShowcase() {
   const getTextStyle = (index) => {
     const activeProgressIndex = scrollProgress * maxIndex;
     const delta = index - activeProgressIndex;
-    
     const opacity = Math.max(0, Math.min(1, 1.3 - Math.abs(delta) * 1.5));
-    const ty = delta * 20; // subtle vertical shift
-
+    const ty = delta * 20;
     return {
       opacity,
       transform: `translate3d(0, ${ty}px, 0)`,
@@ -195,10 +171,8 @@ function ServicesDiagonalScrollingShowcase() {
   const getNumStyle = (index) => {
     const activeProgressIndex = scrollProgress * maxIndex;
     const delta = index - activeProgressIndex;
-    
     const opacity = Math.max(0, Math.min(1, 1.3 - Math.abs(delta) * 1.5));
     const ty = delta * 30;
-
     return {
       opacity,
       transform: `translate3d(0, ${ty}px, 0)`,
@@ -208,9 +182,7 @@ function ServicesDiagonalScrollingShowcase() {
   return (
     <div ref={containerRef} className="diagonal-scroll-track">
       <div className="diagonal-scroll-sticky">
-        {/* Diagonal Showcase Layout */}
         <div className="diagonal-slide-layout">
-          {/* Left Column: Sidebar Nav with dynamic dynamic numbering expanding */}
           <div className="diagonal-slide-nav">
             <div className="diagonal-slide-nav-links">
               {servicesDiagonalSlides.map((slide, idx) => (
@@ -231,8 +203,6 @@ function ServicesDiagonalScrollingShowcase() {
                 </div>
               ))}
             </div>
-
-            {/* Massive Numbers placed at the bottom of the navigation column */}
             <div className="diagonal-slide-num-container">
               {servicesDiagonalSlides.map((slide, idx) => (
                 <div
@@ -251,7 +221,6 @@ function ServicesDiagonalScrollingShowcase() {
             </div>
           </div>
 
-          {/* Center Column: Sliding Cards */}
           <div className="diagonal-slide-cards-wrapper">
             {servicesDiagonalSlides.map((slide, idx) => (
               <div
@@ -268,7 +237,6 @@ function ServicesDiagonalScrollingShowcase() {
             ))}
           </div>
 
-          {/* Right Column: Sliding Texts */}
           <div className="diagonal-slide-texts-wrapper">
             {servicesDiagonalSlides.map((slide, idx) => (
               <div
@@ -356,13 +324,12 @@ function WebGLRippleCanvas({ transitionIndex, transitionProgress, rippleIntensit
     }
     glRef.current = gl;
 
-    // Shader sources
     const vsSource = `
       attribute vec2 position;
       varying vec2 vUv;
       void main() {
         vUv = position * 0.5 + 0.5;
-        vUv.y = 1.0 - vUv.y; // Correctly flip vertical UV mapping
+        vUv.y = 1.0 - vUv.y;
         gl_Position = vec4(position, 0.0, 1.0);
       }
     `;
@@ -383,15 +350,11 @@ function WebGLRippleCanvas({ transitionIndex, transitionProgress, rippleIntensit
         vec2 toCenter = uv - center;
         toCenter.x *= uAspect;
         float dist = length(toCenter);
-        
-        // Concentric displacement wave
         float wave = sin(dist * 35.0 - uTime * 6.0) * 0.035 * sin(uProgress * 3.14159) * (uRippleIntensity + 0.15);
         vec2 distortedUv = uv + normalize(uv - center) * wave;
         distortedUv = clamp(distortedUv, 0.0, 1.0);
-        
         vec4 colorCurrent = texture2D(uTexCurrent, distortedUv);
         vec4 colorNext = texture2D(uTexNext, distortedUv);
-        
         gl_FragColor = mix(colorCurrent, colorNext, uProgress);
       }
     `;
@@ -410,7 +373,6 @@ function WebGLRippleCanvas({ transitionIndex, transitionProgress, rippleIntensit
 
     const vs = compileShader(vsSource, gl.VERTEX_SHADER);
     const fs = compileShader(fsSource, gl.FRAGMENT_SHADER);
-    
     const program = gl.createProgram();
     gl.attachShader(program, vs);
     gl.attachShader(program, fs);
@@ -421,14 +383,10 @@ function WebGLRippleCanvas({ transitionIndex, transitionProgress, rippleIntensit
     }
     programRef.current = program;
 
-    const vertices = new Float32Array([
-      -1, -1,  1, -1, -1,  1,
-      -1,  1,  1, -1,  1,  1
-    ]);
+    const vertices = new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]);
     const buffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
     gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
-
     const posAttr = gl.getAttribLocation(program, "position");
     gl.enableVertexAttribArray(posAttr);
     gl.vertexAttribPointer(posAttr, 2, gl.FLOAT, false, 0, 0);
@@ -436,15 +394,11 @@ function WebGLRippleCanvas({ transitionIndex, transitionProgress, rippleIntensit
     const textures = recentWorksData.map(work => {
       const texture = gl.createTexture();
       gl.bindTexture(gl.TEXTURE_2D, texture);
-      
-      // Temporary placeholder
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 0, 255]));
-      
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-      
       const img = new Image();
       img.crossOrigin = "anonymous";
       img.onload = () => {
@@ -473,26 +427,19 @@ function WebGLRippleCanvas({ transitionIndex, transitionProgress, rippleIntensit
     const draw = () => {
       timeRef.current += 0.025;
       smoothedIntensityRef.current = smoothedIntensityRef.current * 0.93 + rippleIntensityRef.current * 0.07;
-
       gl.useProgram(program);
-
       const activeIdx = transitionIndexRef.current;
       const transP = transitionProgressRef.current;
-
       gl.activeTexture(gl.TEXTURE0);
       gl.bindTexture(gl.TEXTURE_2D, texturesRef.current[activeIdx] || texturesRef.current[0]);
       gl.uniform1i(gl.getUniformLocation(program, "uTexCurrent"), 0);
-
       gl.activeTexture(gl.TEXTURE1);
       gl.bindTexture(gl.TEXTURE_2D, texturesRef.current[Math.min(4, activeIdx + 1)] || texturesRef.current[0]);
       gl.uniform1i(gl.getUniformLocation(program, "uTexNext"), 1);
-
       gl.uniform1f(gl.getUniformLocation(program, "uProgress"), transP);
       gl.uniform1f(gl.getUniformLocation(program, "uTime"), timeRef.current);
       gl.uniform1f(gl.getUniformLocation(program, "uRippleIntensity"), smoothedIntensityRef.current);
-
       gl.drawArrays(gl.TRIANGLES, 0, 6);
-
       requestRef.current = requestAnimationFrame(draw);
     };
     draw();
@@ -507,9 +454,7 @@ function WebGLRippleCanvas({ transitionIndex, transitionProgress, rippleIntensit
     };
   }, [imagesLoaded]);
 
-  return (
-    <canvas ref={canvasRef} className="works-ripple-canvas" />
-  );
+  return <canvas ref={canvasRef} className="works-ripple-canvas" />;
 }
 
 function RecentWorksRippleShowcase() {
@@ -525,21 +470,11 @@ function RecentWorksRippleShowcase() {
 
   useEffect(() => {
     let loadedCount = 0;
-    const images = recentWorksData.map(work => {
+    recentWorksData.map(work => {
       const img = new Image();
       img.crossOrigin = "anonymous";
-      img.onload = () => {
-        loadedCount++;
-        if (loadedCount === recentWorksData.length) {
-          setImagesLoaded(true);
-        }
-      };
-      img.onerror = () => {
-        loadedCount++;
-        if (loadedCount === recentWorksData.length) {
-          setImagesLoaded(true);
-        }
-      };
+      img.onload = () => { loadedCount++; if (loadedCount === recentWorksData.length) setImagesLoaded(true); };
+      img.onerror = () => { loadedCount++; if (loadedCount === recentWorksData.length) setImagesLoaded(true); };
       img.src = work.image;
       return img;
     });
@@ -554,29 +489,17 @@ function RecentWorksRippleShowcase() {
     const handleScroll = () => {
       if (!containerRef.current) return;
       const rect = containerRef.current.getBoundingClientRect();
-      const trackHeight = rect.height;
-      const viewportHeight = window.innerHeight;
-
-      // Calculate total scrollable height dynamically based on the actual track height
-      const totalScrollable = trackHeight - viewportHeight;
+      const totalScrollable = rect.height - window.innerHeight;
       if (totalScrollable <= 0) return;
-
       const scrolled = Math.max(0, -rect.top);
-      const rawProgress = scrolled / totalScrollable;
-      const progress = Math.max(0, Math.min(1, rawProgress));
-
-      // Map progress (0..1) to a phase covering indices 0..(recentWorksData.length-1)
+      const progress = Math.max(0, Math.min(1, scrolled / totalScrollable));
       scrollProgressTargetRef.current = progress;
-
       const now = performance.now();
       const deltaT = Math.max(1, now - lastTime);
       const deltaP = Math.abs(progress - lastProgress);
-      
       const curSpeed = deltaP / deltaT * 1000.0;
       speed = speed * 0.82 + curSpeed * 0.18;
-      
       rippleIntensityTargetRef.current = Math.min(1.5, speed * 2.2);
-
       lastProgress = progress;
       lastTime = now;
     };
@@ -589,24 +512,17 @@ function RecentWorksRippleShowcase() {
       setScrollProgress((current) => {
         const target = scrollProgressTargetRef.current;
         const delta = target - current;
-        if (Math.abs(delta) < 0.001) {
-          return target;
-        }
+        if (Math.abs(delta) < 0.001) return target;
         return current + delta * 0.08;
       });
-
       setRippleIntensity((current) => {
         const target = rippleIntensityTargetRef.current;
         const delta = target - current;
-        if (Math.abs(delta) < 0.001) {
-          return target;
-        }
+        if (Math.abs(delta) < 0.001) return target;
         return current + delta * 0.07;
       });
-
       frameId = window.requestAnimationFrame(animate);
     };
-
     frameId = window.requestAnimationFrame(animate);
 
     return () => {
@@ -621,7 +537,6 @@ function RecentWorksRippleShowcase() {
     const transIdx = Math.min(Math.max(0, Math.floor(phase)), Math.max(0, recentWorksData.length - 2));
     const transP = phase - transIdx;
     const actIdx = Math.max(0, Math.min(recentWorksData.length - 1, Math.round(phase)));
-
     setActiveIndex(actIdx);
     setTransitionIndex(transIdx);
     setTransitionProgress(transP);
@@ -645,11 +560,7 @@ function RecentWorksRippleShowcase() {
             <span className="works-ripple-eyebrow">Featured work</span>
             <div className="works-ripple-title-wrap">
               {recentWorksData.map((work, idx) => (
-                <h3
-                  key={work.title}
-                  className="works-ripple-title"
-                  style={getSlideStyle(idx)}
-                >
+                <h3 key={work.title} className="works-ripple-title" style={getSlideStyle(idx)}>
                   {work.title}
                 </h3>
               ))}
@@ -666,20 +577,12 @@ function RecentWorksRippleShowcase() {
           </div>
 
           <div className="works-ripple-info-container">
-            <span className="works-ripple-category">
-              {recentWorksData[activeIndex]?.category}
-            </span>
+            <span className="works-ripple-category">{recentWorksData[activeIndex]?.category}</span>
             <div className="works-ripple-roles-wrap">
               {recentWorksData.map((work, idx) => (
-                <ul
-                  key={work.title + "-roles"}
-                  className="works-ripple-roles"
-                  style={getSlideStyle(idx)}
-                >
+                <ul key={work.title + "-roles"} className="works-ripple-roles" style={getSlideStyle(idx)}>
                   {work.roles.map(role => (
-                     <li key={role} className="works-ripple-role">
-                      {role}
-                     </li>
+                    <li key={role} className="works-ripple-role">{role}</li>
                   ))}
                 </ul>
               ))}
@@ -718,61 +621,12 @@ function ServicesPage() {
   const worksRef = useScrollReveal();
   const pricingRef = useScrollReveal();
 
-  // Dynamically query service details from data/site.js to ensure data integrity
-  const branding = services.find(s => s.title.toLowerCase().includes('branding')) || {
-    subtitle: 'Identity systems that feel premium, memorable, and consistent.',
-    price: 'From $800',
-    timeline: '1-2 weeks',
-    features: ['Logo polish', 'Color systems', 'Brand guidelines']
-  };
-
-  const uiux = services.find(s => s.title.toLowerCase().includes('ui/ux') || s.title.toLowerCase().includes('design')) || {
-    subtitle: 'Clear information architecture and bold visual systems.',
-    price: 'From $900',
-    timeline: '1-2 weeks',
-    features: ['Wireframes', 'Design systems', 'Prototype handoff']
-  };
-
-  const webDev = services.find(s => s.title.toLowerCase().includes('web development') || s.title.toLowerCase().includes('development')) || {
-    title: 'Web Development',
-    subtitle: 'High-conversion sites built on a modern stack.',
-    price: 'From $1,500',
-    timeline: '2-4 weeks',
-    features: ['Marketing sites', 'Landing pages', 'Custom React builds']
-  };
-
-  const customApps = services.find(s => s.title.toLowerCase().includes('app') || s.title.toLowerCase().includes('custom web')) || {
-    subtitle: 'Operational tools and dashboards tailored to your workflows.',
-    price: 'Custom quote',
-    timeline: '4-8 weeks',
-    features: ['Dashboards', 'Automation', 'API integrations']
-  };
-
-  const seo = services.find(s => s.title.toLowerCase().includes('seo')) || {
-    subtitle: 'Technical foundations that help pages rank and convert.',
-    price: 'From $600',
-    timeline: '1 week',
-    features: ['Keyword mapping', 'On-page SEO', 'Performance fixes']
-  };
-
-  const maintenance = services.find(s => s.title.toLowerCase().includes('maintenance')) || {
-    subtitle: 'Ongoing care for updates, improvements, and uptime.',
-    price: 'From $250/mo',
-    timeline: 'Monthly',
-    features: ['Updates', 'Fixes', 'Backup support']
-  };
-
   return (
     <div className="page-wise services-page-dark">
-      {/* 1. HERO SECTION (INTERACTIVE DYNAMIC WEBGL GRIDSCAN DARK BACKGROUND & GLOWING TYPOGRAPHY) */}
-      <section 
-        ref={heroRef}
-        className="services-hero-dark" 
-        style={{ position: 'relative' }}
-      >
-        {/* Dynamic Three.js WebGL GridScan background using brand glow spectrum */}
+      {/* 1. HERO SECTION */}
+      <section ref={heroRef} className="services-hero-dark" style={{ position: 'relative' }}>
         <div className="services-hero-dark-canvas-container">
-          <GridScan 
+          <GridScan
             sensitivity={0.65}
             linesColor="#0d0e12"
             scanColor="#9b4dff"
@@ -798,30 +652,19 @@ function ServicesPage() {
             style={{ width: '100%', height: '100%' }}
           />
         </div>
-
-        {/* Dotted vertical timelines matching Monopo layout */}
-        <div className="hero-vertical-guide left">
-          <span className="hero-guide-arrow" />
-        </div>
-        <div className="hero-vertical-guide right">
-          <span className="hero-guide-arrow" />
-        </div>
-        
-        {/* Bouncing scroll indicator arrow at bottom right */}
+        <div className="hero-vertical-guide left"><span className="hero-guide-arrow" /></div>
+        <div className="hero-vertical-guide right"><span className="hero-guide-arrow" /></div>
         <div className="hero-scroll-arrow">↓</div>
-
         <div className="services-hero-content-monopo">
           <h1 className="services-hero-title-monopo">
             <span className="hero-line-left">We build</span>
             <span className="hero-line-right">expressive brands</span>
           </h1>
-          <p className="services-hero-mono-sub">
-            [ ACROSS BRANDING, COMMUNICATIONS AND DIGITAL. ]
-          </p>
+          <p className="services-hero-mono-sub">[ ACROSS BRANDING, COMMUNICATIONS AND DIGITAL. ]</p>
         </div>
       </section>
 
-      {/* 2. SERVICES PROVIDED GRID (01, 02, 03 PILLARS) */}
+      {/* 2. SERVICES PROVIDED */}
       <SectionWise bg="bg-transparent" style={{ borderBottom: 'none', paddingTop: '40px', paddingBottom: 0, marginBottom: 0 }}>
         <div style={{ textAlign: 'left', marginBottom: 0 }}>
           <span className="eyebrow">capabilities</span>
@@ -835,7 +678,7 @@ function ServicesPage() {
 
       <RecentWorksRippleShowcase />
 
-      {/* 5. PARTNERSHIPS — INTERACTIVE 3D DOME GALLERY (full viewport) */}
+      {/* 3. PARTNERSHIPS — DOME GALLERY */}
       <section className="partnerships-section" style={{ padding: '0 0 0' }}>
         <div className="site-frame" style={{ marginBottom: 24 }}>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
@@ -849,7 +692,6 @@ function ServicesPage() {
             </p>
           </div>
         </div>
-        {/* Full-viewport gallery — exactly matches the reference App usage */}
         <div style={{ width: '100vw', height: '100vh', position: 'relative', background: '#000', marginLeft: 'calc(50% - 50vw)' }}>
           <DomeGallery
             fit={0.8}
@@ -867,10 +709,7 @@ function ServicesPage() {
         </div>
       </section>
 
-        {/* Infinite Menu Section */}
-        {/* InfiniteMenu removed */}
-
-      {/* 6. COMBINED PRICING PLANS SECTION (4-COLUMN GLASS GRID WITH LOW PACKAGES FOR TIGHT TEAMS) */}
+      {/* 4. PRICING */}
       <section id="pricing" ref={pricingRef} className="pricing-section scroll-reveal">
         <div className="site-frame">
           <div style={{ textAlign: 'center', marginBottom: 60 }}>
@@ -888,11 +727,8 @@ function ServicesPage() {
               <div key={plan.name} className={`pricing-card ${plan.popular ? 'popular' : ''}`}>
                 <p className="pricing-card-delivery">{plan.delivery} • {plan.revisions}</p>
                 <h3 className="pricing-card-title">{plan.name}</h3>
-                {plan.tagline && (
-                  <p className="pricing-card-tagline">{plan.tagline}</p>
-                )}
+                {plan.tagline && <p className="pricing-card-tagline">{plan.tagline}</p>}
                 <p className="pricing-card-price">{plan.price}</p>
-                
                 <ul className="pricing-card-features">
                   {plan.features.map((feature) => (
                     <li key={feature} className="pricing-card-feature">
@@ -900,19 +736,13 @@ function ServicesPage() {
                     </li>
                   ))}
                 </ul>
-
-                <ButtonLink 
-                  to="/contact" 
-                  variant={plan.popular ? 'primary' : 'ghost'} 
-                  className="pricing-card-button"
-                >
+                <ButtonLink to="/contact" variant={plan.popular ? 'primary' : 'ghost'} className="pricing-card-button">
                   Choose {plan.name}
                 </ButtonLink>
               </div>
             ))}
           </div>
 
-          {/* Custom Scope Sub-cta */}
           <div style={{ textAlign: 'center', marginTop: '60px', paddingTop: '40px', borderTop: '1px solid rgba(255, 255, 255, 0.05)' }}>
             <h3 style={{ fontSize: '1.6rem', fontWeight: 800, margin: '0 0 10px' }}>Custom Scope Needed?</h3>
             <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.96rem', margin: '0 0 24px' }}>

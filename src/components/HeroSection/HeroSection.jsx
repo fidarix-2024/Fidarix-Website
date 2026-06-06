@@ -1,7 +1,7 @@
-import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
-import { Link } from 'react-router-dom'
-import { motion, useMotionValue, AnimatePresence, animate } from 'framer-motion'
-import './HeroSection.css'
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { Link } from 'react-router-dom';
+import { motion, useMotionValue, AnimatePresence, animate } from 'framer-motion';
+import './HeroSection.css';
 
 /* ═══════════════════════════════════════════════════════
    PREMIUM PROJECT SHOWCASE CARDS (3D SPINDLE + NEON BG)
@@ -55,14 +55,13 @@ const profiles = [
     neon: '#ff007f',
     neonRgb: '255, 0, 127',
   },
-]
+];
 
 /* ── Landscape card dimensions on spindle ring ── */
-const CARD_W = 400          // ← wider width
-const CARD_H = 260          // ← shorter height (landscape aspect ratio)
-const RADIUS = 440          // translateZ distance from center
-const ROTATION_SPEED = 0.08 // default auto-spin degrees per frame at 60fps
-const EXPO_OUT = [0.16, 1, 0.3, 1]
+const CARD_W = 400;          // ← wider width
+const CARD_H = 260;          // ← shorter height (landscape aspect ratio)
+const RADIUS = 440;          // translateZ distance from center
+const ROTATION_SPEED = 0.08; // default auto-spin degrees per frame at 60fps
 
 /* ═══════════════════════════════════════
    TOPOGRAPHIC BACKGROUND
@@ -90,14 +89,14 @@ function TopoBackground() {
       </svg>
       <div className="hero-neon-glow" />
     </div>
-  )
+  );
 }
 
 /* ═══════════════════════════════════════
    SPINDLE CARD — single card on the cylinder
    ═══════════════════════════════════════ */
 function SpindleCard({ profile, index, total, isActive, onClick, onImageClick }) {
-  const angle = (360 / total) * index
+  const angle = (360 / total) * index;
 
   return (
     <div
@@ -140,8 +139,8 @@ function SpindleCard({ profile, index, total, isActive, onClick, onImageClick })
           <button
             className="hero-card-launch-btn"
             onClick={(e) => {
-              e.stopPropagation()
-              onImageClick(profile.image, profile.name)
+              e.stopPropagation();
+              onImageClick(profile.image, profile.name);
             }}
           >
             LAUNCH
@@ -149,136 +148,136 @@ function SpindleCard({ profile, index, total, isActive, onClick, onImageClick })
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 /* ═══════════════════════════════════════
    HERO SECTION — Main export
    ═══════════════════════════════════════ */
 export default function HeroSection() {
-  const containerRef = useRef(null)
-  const rotationY = useMotionValue(0)
-  const [activeIndex, setActiveIndex] = useState(0)
-  const [paused, setPaused] = useState(false)
-  const [tiltX, setTiltX] = useState(0)
-  const [tiltY, setTiltY] = useState(0)
-  const [preview, setPreview] = useState(null) // { src, name }
-  const [isMobile, setIsMobile] = useState(false)
+  const containerRef = useRef(null);
+  const rotationY = useMotionValue(0);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const [tiltX, setTiltX] = useState(0);
+  const [tiltY, setTiltY] = useState(0);
+  const [preview, setPreview] = useState(null); // { src, name }
+  const [isMobile, setIsMobile] = useState(false);
 
-  const isSpinning = useRef(false)
-  const activeIndexRef = useRef(0)
-  const rafRef = useRef(null)
-  const lastTime = useRef(performance.now())
-  const resumeTimeoutRef = useRef(null)
-  const activeProfile = profiles[activeIndex]
+  const isSpinning = useRef(false);
+  const activeIndexRef = useRef(0);
+  const rafRef = useRef(null);
+  const lastTime = useRef(performance.now());
+  const resumeTimeoutRef = useRef(null);
+  const activeProfile = profiles[activeIndex];
 
   /* ── Responsive detection ── */
   useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768)
-    check()
-    window.addEventListener('resize', check)
-    return () => window.removeEventListener('resize', check)
-  }, [])
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
   /* ── Auto-rotation Loop via RAF ── */
   useEffect(() => {
-    if (isMobile) return
+    if (isMobile) return;
 
     const loop = (now) => {
-      const dt = now - lastTime.current
-      lastTime.current = now
+      const dt = now - lastTime.current;
+      lastTime.current = now;
 
       // Rotate slowly (0.02) on hover, normally at ROTATION_SPEED (0.08)
       // Only pause rotation during an active click-spin animation
       if (!isSpinning.current) {
-        const speed = paused ? 0.02 : ROTATION_SPEED
-        const step = speed * (dt / 16)
-        const nextRot = rotationY.get() + step
-        rotationY.set(nextRot)
+        const speed = paused ? 0.02 : ROTATION_SPEED;
+        const step = speed * (dt / 16);
+        const nextRot = rotationY.get() + step;
+        rotationY.set(nextRot);
 
         // Calculate which card is currently facing the front
-        const anglePerCard = 360 / profiles.length
+        const anglePerCard = 360 / profiles.length;
         // Subtract target rotation since ring rotates opposite to index sequence
-        const rawIndex = -nextRot / anglePerCard
-        const activeIdx = ((Math.round(rawIndex) % profiles.length) + profiles.length) % profiles.length
+        const rawIndex = -nextRot / anglePerCard;
+        const activeIdx = ((Math.round(rawIndex) % profiles.length) + profiles.length) % profiles.length;
 
         if (activeIdx !== activeIndexRef.current) {
-          activeIndexRef.current = activeIdx
-          setActiveIndex(activeIdx)
+          activeIndexRef.current = activeIdx;
+          setActiveIndex(activeIdx);
         }
       }
 
-      rafRef.current = requestAnimationFrame(loop)
-    }
+      rafRef.current = requestAnimationFrame(loop);
+    };
 
-    rafRef.current = requestAnimationFrame(loop)
-    return () => cancelAnimationFrame(rafRef.current)
-  }, [paused, rotationY, isMobile])
+    rafRef.current = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(rafRef.current);
+  }, [paused, rotationY, isMobile]);
 
   /* Close preview on escape */
   useEffect(() => {
-    if (!preview) return
-    const onKey = (e) => e.key === 'Escape' && setPreview(null)
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [preview])
+    if (!preview) return;
+    const onKey = (e) => e.key === 'Escape' && setPreview(null);
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [preview]);
 
   /* ── Mouse tilt interaction ── */
   const handleMouseMove = useCallback((e) => {
-    if (isMobile) return
-    const rect = containerRef.current?.getBoundingClientRect()
-    if (!rect) return
-    const mx = ((e.clientX - rect.left) / rect.width - 0.5) * 2
-    const my = ((e.clientY - rect.top) / rect.height - 0.5) * 2
-    setTiltX(my * -3) // Reduced from -8 to -3 for subtle vertical tilt
-    setTiltY(mx * 4)  // Reduced from 10 to 4 for subtle horizontal tilt
-  }, [isMobile])
+    if (isMobile) return;
+    const rect = containerRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    const mx = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+    const my = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+    setTiltX(my * -3); // Subtle vertical tilt
+    setTiltY(mx * 4);  // Subtle horizontal tilt
+  }, [isMobile]);
 
   const handleMouseLeave = useCallback(() => {
-    setTiltX(0)
-    setTiltY(0)
-    setPaused(false)
-  }, [])
+    setTiltX(0);
+    setTiltY(0);
+    setPaused(false);
+  }, []);
 
   /* ── Shortest-path spin animation to target card ── */
   const spinToCard = useCallback((index) => {
-    if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current)
-    isSpinning.current = true
-    setPaused(true)
+    if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current);
+    isSpinning.current = true;
+    setPaused(true);
 
-    const anglePerCard = 360 / profiles.length
-    const targetAngle = -anglePerCard * index
+    const anglePerCard = 360 / profiles.length;
+    const targetAngle = -anglePerCard * index;
 
-    const currentAngle = rotationY.get()
-    const diff = ((targetAngle - currentAngle + 180) % 360 + 360) % 360 - 180
-    const finalTarget = currentAngle + diff
+    const currentAngle = rotationY.get();
+    const diff = ((targetAngle - currentAngle + 180) % 360 + 360) % 360 - 180;
+    const finalTarget = currentAngle + diff;
 
     animate(rotationY, finalTarget, {
       type: 'spring',
       stiffness: 90,
       damping: 18,
       onComplete: () => {
-        setActiveIndex(index)
-        activeIndexRef.current = index
-        isSpinning.current = false
+        setActiveIndex(index);
+        activeIndexRef.current = index;
+        isSpinning.current = false;
         // Resume auto-rotation after 1.5s idle
         resumeTimeoutRef.current = setTimeout(() => {
-          lastTime.current = performance.now()
-          setPaused(false)
-        }, 1500)
+          lastTime.current = performance.now();
+          setPaused(false);
+        }, 1500);
       }
-    })
-  }, [rotationY])
+    });
+  }, [rotationY]);
 
   /* ── Mobile scroll listener to update neon bg ── */
   const handleMobileScroll = (e) => {
-    const scrollLeft = e.currentTarget.scrollLeft
-    const cardWidth = e.currentTarget.clientWidth * 0.7
-    const newIndex = Math.round(scrollLeft / cardWidth)
+    const scrollLeft = e.currentTarget.scrollLeft;
+    const cardWidth = e.currentTarget.clientWidth * 0.7;
+    const newIndex = Math.round(scrollLeft / cardWidth);
     if (newIndex >= 0 && newIndex < profiles.length && newIndex !== activeIndex) {
-      setActiveIndex(newIndex)
+      setActiveIndex(newIndex);
     }
-  }
+  };
 
   return (
     <section
@@ -362,7 +361,7 @@ export default function HeroSection() {
               style={{
                 rotateY: rotationY,
                 rotateX: tiltX,
-                rotateZ: -12, // ← diagonal tilt axis rotation for tilted movement!
+                rotateZ: -12,
               }}
             >
               {profiles.map((profile, i) => (
@@ -433,5 +432,5 @@ export default function HeroSection() {
         )}
       </AnimatePresence>
     </section>
-  )
+  );
 }

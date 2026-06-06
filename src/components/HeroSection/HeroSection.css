@@ -175,7 +175,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 0;
+  margin-top: 90px;
 }
 
 .hero-spindle-ring {
@@ -316,7 +316,7 @@
 
 .hero-card-title {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(2rem, 4.5vw, 3.4rem);   /* ← adjusted for 260px landscape cards */
+  font-size: clamp(2rem, 4.5vw, 3.4rem);
   font-weight: 400;
   line-height: 0.85;
   color: #fff;
@@ -676,6 +676,7 @@
   }
   .hero-spindle-viewport {
     perspective: 1200px;
+    margin-top: 70px;
   }
   .hero-spindle-ring {
     width: 320px;
