@@ -18,40 +18,35 @@ export function SiteFooter({ isDark }) {
                 <span className="font-['Space_Grotesk'] font-medium text-base tracking-[0.26em] uppercase">Fidarix</span>
               </span>
             </Link>
-            <p className="text-white/60 text-[0.92rem] leading-[1.6] m-0 max-w-[240px]">
-              High-performance editorial websites built with calm aesthetics, modular structures, and absolute precision.
+            <p className="text-white/60 text-[0.92rem] leading-[1.6] m-0 max-w-[280px]">
+              We craft premium digital experiences that refuse to blend in. Combining striking design, flawless engineering, and strategic growth for ambitious brands.
             </p>
           </div>
 
-          {/* Column 2: Services */}
+          {/* Column 2: Navigation */}
+          <div className="flex flex-col gap-3.5">
+            <h4 className="font-['Space_Grotesk'] text-[0.8rem] font-extrabold text-white uppercase tracking-[0.12em] m-0 mb-2.5 border-b border-white/8 pb-2.5">Navigation</h4>
+            <Link to="/" className="text-white/60 text-[0.94rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">Home</Link>
+            <Link to="/about" className="text-white/60 text-[0.94rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">About</Link>
+            <Link to="/services" className="text-white/60 text-[0.94rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">Services</Link>
+            <Link to="/contact" className="text-white/60 text-[0.94rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">Contact</Link>
+          </div>
+
+          {/* Column 3: Services */}
           <div className="flex flex-col gap-3.5">
             <h4 className="font-['Space_Grotesk'] text-[0.8rem] font-extrabold text-white uppercase tracking-[0.12em] m-0 mb-2.5 border-b border-white/8 pb-2.5">Services</h4>
+            <Link to="/services" className="text-white/60 text-[0.94rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">Web Development</Link>
             <Link to="/services" className="text-white/60 text-[0.94rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">Web Design</Link>
-            <Link to="/services" className="text-white/60 text-[0.94rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">Development</Link>
+            <Link to="/services" className="text-white/60 text-[0.94rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">SEO Optimization</Link>
             <Link to="/services" className="text-white/60 text-[0.94rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">Branding</Link>
-            <Link to="/services" className="text-white/60 text-[0.94rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">Motion Systems</Link>
-            <Link to="/services" className="text-white/60 text-[0.94rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">Custom Apps</Link>
           </div>
 
-          {/* Column 3: Studio */}
+          {/* Column 4: Connect */}
           <div className="flex flex-col gap-3.5">
-            <h4 className="font-['Space_Grotesk'] text-[0.8rem] font-extrabold text-white uppercase tracking-[0.12em] m-0 mb-2.5 border-b border-white/8 pb-2.5">Studio</h4>
-            <Link to="/about" className="text-white/60 text-[0.94rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">About Us</Link>
-            <Link to="/services#pricing" className="text-white/60 text-[0.94rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">Pricing Packages</Link>
-            <Link to="/contact" className="text-white/60 text-[0.94rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">Contact Studio</Link>
-          </div>
-
-          {/* Column 4: Resources */}
-          <div className="flex flex-col gap-3.5">
-            <h4 className="font-['Space_Grotesk'] text-[0.8rem] font-extrabold text-white uppercase tracking-[0.12em] m-0 mb-2.5 border-b border-white/8 pb-2.5">Resources</h4>
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-white/60 text-[0.94rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">GitHub</a>
+            <h4 className="font-['Space_Grotesk'] text-[0.8rem] font-extrabold text-white uppercase tracking-[0.12em] m-0 mb-2.5 border-b border-white/8 pb-2.5">Connect</h4>
             <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-white/60 text-[0.94rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">LinkedIn</a>
-            <a href="https://dribbble.com" target="_blank" rel="noopener noreferrer" className="text-white/60 text-[0.94rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">Dribbble</a>
-            <div style={{ marginTop: '6px' }}>
-              <Link to="/contact" className="bg-white/5 border border-white/12 px-2.5 py-1 rounded-full text-[0.76rem] font-bold text-white inline-flex items-center gap-1 transition-all hover:scale-105" style={{ textDecoration: 'none' }}>
-                👋 We're Hiring
-              </Link>
-            </div>
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-white/60 text-[0.94rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">Instagram</a>
+            <Link to="/contact" className="text-white/60 text-[0.94rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">Email Us</Link>
           </div>
         </div>
 
@@ -72,15 +67,8 @@ export function SiteFooter({ isDark }) {
         </div>
 
         {/* Legal Bottom Bar */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4 border-t border-white/8 pt-6 text-[0.84rem] text-white/50">
-          <span>&copy; 2026 Fidarix Studio. All rights reserved.</span>
-          <div className="flex items-center gap-3">
-            <Link to="/contact" className="hover:text-white transition-colors">Privacy Policy</Link>
-            <span style={{ opacity: 0.3 }}>•</span>
-            <Link to="/contact" className="hover:text-white transition-colors">Terms of Service</Link>
-            <span style={{ opacity: 0.3 }}>•</span>
-            <Link to="/contact" className="hover:text-white transition-colors">Security</Link>
-          </div>
+        <div className="flex flex-col md:flex-row justify-center items-center gap-4 border-t border-white/8 pt-6 text-[0.84rem] text-white/50">
+          <span>&copy; 2024 Fidarix. All rights reserved.</span>
         </div>
       </div>
     </footer>

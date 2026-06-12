@@ -93,6 +93,8 @@ export const reasons = [
   { title: 'Modern tech stack', text: 'React, Vite, clean component systems, and practical tooling.' },
   { title: 'Responsive design', text: 'Every layout is designed to hold up on mobile first.' },
   { title: 'Affordable pricing', text: 'Flexible packages for lean teams and growing brands.' },
+  { title: 'SEO Optimized', text: 'Built with search engines in mind from day one.' },
+  { title: 'Ongoing Support', text: 'Reliable maintenance to keep your site fast and secure.' },
 ];
 
 export const processSteps = [
@@ -233,22 +235,21 @@ export const faqs = [
 ];
 
 export const aboutTimeline = [
-  { year: '2018', title: 'Agency foundation', text: 'We started designing and building for small businesses.' },
-  { year: '2020', title: 'Systems focus', text: 'We moved toward repeatable, component-driven builds.' },
-  { year: '2023', title: 'Conversion strategy', text: 'More emphasis on messaging, speed, and lead generation.' },
-  { year: '2026', title: 'Fidarix rebrand', text: 'A sharper visual system for premium digital experiences.' },
+  { year: '2024', title: 'The Genesis', text: 'Fidarix is born. We spent our early days strategizing, defining our core vision, and planning our approach to the digital space.' },
+  { year: '2025', title: 'First Partnerships', text: 'We officially launched our services and successfully delivered high-end digital experiences for our first two major clients.' },
+  { year: '2026', title: 'Expanding Horizons', text: 'Scaling operations and expanding our global network to establish Fidarix as the premier partner for ambitious founders.' },
 ];
 
 export const founders = [
   { 
     name: 'Dishi Gautam', 
-    role: 'Co-founder',
+    role: 'Founder',
     bio: 'Driving the visual language and strategic direction of Fidarix with a focus on premium aesthetics.',
     image: '/images/dishi.png'
   },
   { 
     name: 'Yash Raj', 
-    role: 'Co-founder',
+    role: 'Co-Founder',
     bio: 'Architecting high-performance digital experiences and ensuring technical excellence across all builds.',
     image: '/images/yash.png'
   },
