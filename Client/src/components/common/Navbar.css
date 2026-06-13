@@ -155,6 +155,7 @@
   padding-top: 0 !important;
   background: transparent !important; /* Initial transparent bg */
   backdrop-filter: none !important; /* Pure transparent */
+  -webkit-backdrop-filter: none !important; /* Pure transparent Safari */
   border-bottom: 1px solid transparent !important;
   box-shadow: none !important;
   transition: background-color 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
@@ -166,6 +167,7 @@
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.06) !important;
   border-bottom: 1px solid rgba(13, 27, 61, 0.05) !important;
   backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
 
 .header-shell,
@@ -173,10 +175,11 @@
 .header-shell.is-dark {
   background: transparent !important;
   backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
   border: none !important;
   box-shadow: none !important;
   border-radius: 0 !important;
-  padding: 4px 0 !important; /* Reduced padding to reduce height */
+  padding: 4px 40px !important; /* Horizontal padding for extreme left, low vertical padding for height */
   margin-top: 0 !important; /* No margin */
   display: flex;
   align-items: center;
