@@ -153,23 +153,23 @@
   right: 0 !important;
   z-index: 100 !important;
   padding-top: 0 !important;
-  background: transparent !important; /* Fully transparent */
-  backdrop-filter: none !important; /* No blur/backdrop */
-  border-bottom: none !important; /* No border */
-  box-shadow: none !important; /* No shadow */
+  background: rgba(255, 255, 255, 0.08) !important; /* light white frosted bg */
+  backdrop-filter: blur(16px) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1) !important;
   transition: background-color 0.3s ease;
 }
 
 .header-shell,
 .header-shell.is-light,
 .header-shell.is-dark {
-  background: rgba(255, 255, 255, 0.1) !important; /* light white frosted bg */
-  backdrop-filter: blur(16px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2) !important;
-  border-radius: 20px !important;
-  padding: 12px 24px !important; 
-  margin-top: 20px !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  padding: 12px 0 !important; /* reduced padding */
+  margin-top: 0 !important; /* no margin */
 }
 
 /* Align and color text elements inside the header */
