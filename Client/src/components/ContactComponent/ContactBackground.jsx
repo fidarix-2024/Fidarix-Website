@@ -7,7 +7,7 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { PerspectiveCamera } from '@react-three/drei';
 import { degToRad } from 'three/src/math/MathUtils.js';
 
-import './Beams.css';
+import './ContactBackground.css';
 
 function extendMaterial(BaseMaterial, cfg) {
   const physical = THREE.ShaderLib.physical;
@@ -141,7 +141,7 @@ float cnoise(vec3 P){
 }
 `;
 
-const Beams = ({
+const ContactBackground = ({
   beamWidth = 2,
   beamHeight = 15,
   beamNumber = 12,
@@ -305,4 +305,4 @@ const DirLight = ({ position, color }) => {
   return <directionalLight ref={dir} color={color} intensity={1} position={position} />;
 };
 
-export default Beams;
+export default ContactBackground;

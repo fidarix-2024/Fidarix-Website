@@ -40,7 +40,7 @@ const DEFAULT_EFFECT_OPTIONS = {
   }
 };
 
-const Hyperspeed = ({ effectOptions = DEFAULT_EFFECT_OPTIONS }) => {
+const HomeHero = ({ effectOptions = DEFAULT_EFFECT_OPTIONS }) => {
   const hyperspeed = useRef(null);
   const appRef = useRef(null);
 
@@ -1202,4 +1202,4 @@ const Hyperspeed = ({ effectOptions = DEFAULT_EFFECT_OPTIONS }) => {
   return <div className="w-full h-full" ref={hyperspeed} style={{ display: 'block' }}></div>;
 };
 
-export default Hyperspeed;
+export default HomeHero;

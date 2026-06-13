@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import { navItems } from '../data/site';
+import { navItems } from '../../data/site';
 import './Navbar.css';
 
 export function LogoMark() {
   return (
-    <img src="/images/logo.png" alt="Logo" className="logo-mark-img" />
+    <img src="/images/common/logo.png" alt="Logo" className="logo-mark-img" />
   );
 }
 

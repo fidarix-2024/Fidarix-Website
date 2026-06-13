@@ -64,7 +64,7 @@ const steps = [
   }
 ];
 
-export default function InteractiveRoadmap() {
+export default function Roadmap() {
   const trackRef = useRef(null);
   const [smoothProgress, setSmoothProgress] = useState(0);
   const [activeIndex, setActiveIndex] = useState(0);

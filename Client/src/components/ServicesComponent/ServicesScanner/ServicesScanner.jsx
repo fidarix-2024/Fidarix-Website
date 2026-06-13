@@ -270,7 +270,7 @@ void main(){
 
 const MAX_SCANS = 8;
 
-export const GridScan = ({
+export const ServicesScanner = ({
   sensitivity = 0.55,
   lineThickness = 1,
   linesColor = '#2F293A',

@@ -2,9 +2,9 @@ import { useRef, useEffect, useCallback, useState } from 'react';
 import { ButtonLink, SectionWise } from '../../components/common/Layout';
 import { services, pricingPlans } from '../../data/site';
 import { Check } from 'lucide-react';
-import { GridScan } from '../../components/GridScan';
-import DomeGallery from '../../components/DomeGallery';
-import '../../components/GridScan/ServicesPageAnimations.css';
+import { ServicesScanner } from '../../components/ServicesComponent/ServicesScanner';
+import ServicesGallery from '../../components/ServicesComponent/ServicesGallery';
+import '../../components/ServicesComponent/ServicesScanner/ServicesPageAnimations.css';
 import './ServicesPage.css';
 
 const infiniteItems = [
@@ -626,8 +626,8 @@ function ServicesPage() {
     <div className="page-wise services-page-dark">
       {/* 1. HERO SECTION */}
       <section ref={heroRef} className="services-hero-dark" style={{ position: 'relative' }}>
-        <div className="services-hero-dark-canvas-container">
-          <GridScan
+        <div className="fixed inset-0 z-0 opacity-20 pointer-events-none mix-blend-screen">
+        <ServicesScanner 
             sensitivity={0.65}
             linesColor="#0d0e12"
             scanColor="#9b4dff"
@@ -726,6 +726,9 @@ function ServicesPage() {
           <div className="pricing-plans-grid">
             {pricingPlans.map((plan) => (
               <div key={plan.name} className={`pricing-card ${plan.popular ? 'popular' : ''}`}>
+                <div className="absolute inset-0 z-0 opacity-60 mix-blend-screen group-hover:opacity-100 transition-opacity duration-700">
+                  <ServicesGallery />
+                </div>
                 <p className="pricing-card-delivery">{plan.delivery} • {plan.revisions}</p>
                 <h3 className="pricing-card-title">{plan.name}</h3>
                 {plan.tagline && <p className="pricing-card-tagline">{plan.tagline}</p>}

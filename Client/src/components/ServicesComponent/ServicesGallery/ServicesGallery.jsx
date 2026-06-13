@@ -105,7 +105,7 @@ function computeItemBaseRotation(offsetX, offsetY, sizeX, sizeY, segments) {
   return { rotateX, rotateY };
 }
 
-export default function DomeGallery({
+export default function ServicesGallery({
   images = DEFAULT_IMAGES,
   fit = 0.5,
   fitBasis = 'auto',

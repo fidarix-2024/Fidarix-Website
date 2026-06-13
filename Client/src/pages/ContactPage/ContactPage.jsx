@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { SectionWise, Marquee } from '../../components/common/Layout';
 import { faqs } from '../../data/site';
-import Beams from '../../components/Beams';
+import ContactBackground from '../../components/ContactComponent/ContactBackground';
 import './ContactPage.css';
 
 function ContactPage() {
@@ -26,7 +26,9 @@ function ContactPage() {
         </div>
 
         {/* Gradient vignette overlay so text pops */}
-        <div className="contact-hero-overlay" />
+        <div className="absolute inset-0 z-0 opacity-40 mix-blend-screen pointer-events-none overflow-hidden h-[60vh] max-h-[800px] bg-gradient-to-b from-transparent to-black">
+          <ContactBackground />
+        </div>
 
         {/* Centered content */}
         <div className="contact-hero-content">

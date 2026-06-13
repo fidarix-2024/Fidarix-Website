@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { team, techStack, aboutTimeline, founders, reasons } from '../../data/site';
-import Lightfall from '../../components/Lightfall';
-import ChromaGrid from '../../components/ChromaGrid';
-import DomainAccordion from '../../components/DomainAccordion';
+import AboutHeroBackground from '../../components/AboutComponent/AboutHeroBackground';
+import AboutGridBackground from '../../components/AboutComponent/AboutGridBackground';
+import DomainAccordion from '../../components/AboutComponent/DomainAccordion';
 import { Link } from 'react-router-dom';
 import { ArrowRight, CheckCircle2, Zap, Code, Smartphone, Tag, TrendingUp, LifeBuoy, PenTool, Sparkles, Rocket } from 'lucide-react';
 import './AboutPage.css';
@@ -19,7 +19,7 @@ function AboutPage() {
       {/* 1. HERO SECTION WITH LIGHTFALL */}
       <section className="relative w-full h-[85vh] min-h-[600px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <Lightfall
+          <AboutHeroBackground
             colors={['#A6C8FF', '#5227FF', '#FF9FFC']}
             backgroundColor="#050505"
             speed={0.5}
@@ -243,7 +243,7 @@ function AboutPage() {
             {/* Background Image filling the entire box */}
             <div 
               className="absolute inset-0 bg-cover bg-center transition-transform duration-[1200ms] group-hover:scale-105"
-              style={{ backgroundImage: "url('/images/real_cta_contact.png')" }}
+              style={{ backgroundImage: "url('/images/AboutPage/contact_cta_background.png')" }}
             ></div>
             
             {/* Dark Overlays to ensure text readability */}

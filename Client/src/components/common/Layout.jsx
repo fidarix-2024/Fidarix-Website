@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import SiteHeader, { LogoMark } from '../Navbar';
+import SiteHeader, { LogoMark } from './Navbar';
 import TextPressure from './TextPressure';
 import './Layout.css';
 

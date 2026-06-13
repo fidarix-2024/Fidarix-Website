@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState } from 'react';
 import { gsap } from 'gsap';
 
-const ChromaGrid = ({ items, className = '', radius = 300, damping = 0.45, fadeOut = 0.6, ease = 'power3.out' }) => {
+const AboutGridBackground = ({ items, className = '', radius = 300, damping = 0.45, fadeOut = 0.6, ease = 'power3.out' }) => {
   const rootRef = useRef(null);
   const fadeRef = useRef(null);
   const setX = useRef(null);
@@ -186,4 +186,4 @@ const ChromaGrid = ({ items, className = '', radius = 300, damping = 0.45, fadeO
   );
 };
 
-export default ChromaGrid;
+export default AboutGridBackground;

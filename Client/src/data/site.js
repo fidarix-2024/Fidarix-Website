@@ -245,13 +245,13 @@ export const founders = [
     name: 'Dishi Gautam', 
     role: 'Founder',
     bio: 'Driving the visual language and strategic direction of Fidarix with a focus on premium aesthetics.',
-    image: '/images/dishi.png'
+    image: '/images/AboutPage/dishi.png'
   },
   { 
     name: 'Yash Raj', 
     role: 'Co-Founder',
     bio: 'Architecting high-performance digital experiences and ensuring technical excellence across all builds.',
-    image: '/images/yash.png'
+    image: '/images/AboutPage/yash.png'
   },
 ];
 

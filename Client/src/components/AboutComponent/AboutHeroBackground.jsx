@@ -165,7 +165,7 @@ void main() {
 }
 `;
 
-const Lightfall = ({
+const AboutHeroBackground = ({
   className,
   dpr,
   paused = false,
@@ -358,4 +358,4 @@ const Lightfall = ({
   );
 };
 
-export default Lightfall;
+export default AboutHeroBackground;

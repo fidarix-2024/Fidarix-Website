@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { Heart } from 'lucide-react';
 import { SectionWise, Marquee, ImpactHero, ButtonLink } from '../../components/common/Layout';
 import { services, projects, testimonials } from '../../data/site';
-import Hyperspeed from '../../components/Hyperspeed';
-import InteractiveRoadmap from '../../components/InteractiveRoadmap';
+import HomeHero from '../../components/HomeComponent/HomeHero';
+import Roadmap from '../../components/HomeComponent/Roadmap';
 import './HomePage.css';
 
 function ScrollSplashCard({ children }) {
@@ -70,7 +70,7 @@ function HomePage() {
           </ButtonLink>,
         ]}
       >
-        <Hyperspeed />
+        <HomeHero />
       </ImpactHero>
 
       {/* 2. INTRO & MARQUEE */}
@@ -366,7 +366,7 @@ function HomePage() {
       </SectionWise>
 
       {/* INTERACTIVE ROADMAP PROCESS CYCLE */}
-      <InteractiveRoadmap />
+      <Roadmap />
     </div>
   );
 }

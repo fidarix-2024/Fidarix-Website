@@ -3,11 +3,11 @@ import { Code, PenTool, Sparkles, TrendingUp, Rocket } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const domains = [
-  { id: 1, title: 'Web Development', desc: 'Lightning-fast, highly scalable React architectures and robust code foundations.', icon: Code, img: '/images/real_domain_web_dev.png' },
-  { id: 2, title: 'Web Design', desc: 'Award-winning, glassmorphic interfaces that convert visitors into clients.', icon: PenTool, img: '/images/real_domain_web_design.png' },
-  { id: 3, title: 'Branding', desc: 'Premium, luxury positioning and identity for modern digital brands.', icon: Sparkles, img: '/images/real_domain_branding.png' },
-  { id: 4, title: 'SEO Optimization', desc: 'Data-driven visibility strategies that dominate search engine rankings.', icon: TrendingUp, img: '/images/real_domain_seo.png' },
-  { id: 5, title: 'Product Building', desc: 'End-to-end product strategy, prototyping, and execution for startups.', icon: Rocket, img: '/images/real_domain_product.png' }
+  { id: 1, title: 'Web Development', desc: 'Lightning-fast, highly scalable React architectures and robust code foundations.', icon: Code, img: '/images/AboutPage/domain_web_development.png' },
+  { id: 2, title: 'Web Design', desc: 'Award-winning, glassmorphic interfaces that convert visitors into clients.', icon: PenTool, img: '/images/AboutPage/domain_web_design.png' },
+  { id: 3, title: 'Branding', desc: 'Premium, luxury positioning and identity for modern digital brands.', icon: Sparkles, img: '/images/AboutPage/domain_branding.png' },
+  { id: 4, title: 'SEO Optimization', desc: 'Data-driven visibility strategies that dominate search engine rankings.', icon: TrendingUp, img: '/images/AboutPage/domain_seo.png' },
+  { id: 5, title: 'Product Building', desc: 'End-to-end product strategy, prototyping, and execution for startups.', icon: Rocket, img: '/images/AboutPage/domain_product_building.png' }
 ];
 
 export default function DomainAccordion() {
