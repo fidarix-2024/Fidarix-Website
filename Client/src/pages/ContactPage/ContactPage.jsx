@@ -27,7 +27,7 @@ function ContactPage() {
       });
 
       if (response.ok) {
-        toast.success("Thank you for trusting us!! We'll get back to you :)");
+        toast.success("Thank you for trusting us!! pusWe'll get back to you :)");
         formRef.current.reset();
       } else {
         const data = await response.json();

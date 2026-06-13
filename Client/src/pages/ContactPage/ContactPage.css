@@ -459,6 +459,7 @@
   text-align: center;
   padding: 0 24px;
   max-width: 800px;
+  margin-top: 86px; /* 80px navbar + 6px extra gap */
 }
 
 /* Pill badge — matches the "NEW" pill in the screenshot */
