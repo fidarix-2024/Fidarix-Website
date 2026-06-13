@@ -1,13 +1,24 @@
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { Check, ArrowRight, Zap, HelpCircle } from 'lucide-react';
 import { pricingPlans, optionalAddOns } from '../../data/site';
 import { ButtonLink } from '../../components/common/Layout';
 import PrismaticBurst from '../../components/common/PrismaticBurst';
 import BlurText from '../../components/common/BlurText';
+import TiltedCard from '../../components/common/TiltedCard';
 import './PricingPage.css';
 
 export default function PricingPage() {
   const plansRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleScrollToPlans = () => {
     plansRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -71,58 +82,82 @@ export default function PricingPage() {
         </div>
 
         <div className="pricing-grid">
-          {pricingPlans.map((plan) => (
-            <div 
-              key={plan.name} 
-              className={`pricing-plan-card ${plan.popular ? 'is-popular' : ''}`}
-            >
-              {plan.popular && (
-                <div className="popular-badge">
-                  <Zap className="w-3.5 h-3.5" /> Popular Choice
+          {pricingPlans.map((plan) => {
+            const cardContent = (
+              <div 
+                className={`pricing-plan-card w-full h-full select-none ${plan.popular ? 'is-popular' : ''}`}
+                style={{ transition: isMobile ? undefined : 'none' }}
+              >
+                {plan.popular && (
+                  <div className="popular-badge">
+                    <Zap className="w-3.5 h-3.5" /> Popular Choice
+                  </div>
+                )}
+                
+                <div className="plan-header">
+                  <h3 className="plan-name">{plan.name}</h3>
+                  <p className="plan-tagline">{plan.tagline}</p>
+                  <div className="plan-price-wrap">
+                    <span className="plan-price">{plan.price}</span>
+                  </div>
+                  <div className="plan-meta">
+                    <span>Delivery: <strong>{plan.delivery}</strong></span>
+                    <span className="dot-divider">•</span>
+                    <span>{plan.revisions}</span>
+                  </div>
                 </div>
-              )}
-              
-              <div className="plan-header">
-                <h3 className="plan-name">{plan.name}</h3>
-                <p className="plan-tagline">{plan.tagline}</p>
-                <div className="plan-price-wrap">
-                  <span className="plan-price">{plan.price}</span>
+
+                <div className="plan-divider" />
+
+                <div className="plan-body">
+                  <span className="features-title">What's included:</span>
+                  <ul className="plan-features">
+                    {plan.features.map((feature, idx) => (
+                      <li key={idx} className="feature-item">
+                        <Check className="w-4.5 h-4.5 feature-check" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <div className="plan-meta">
-                  <span>Delivery: <strong>{plan.delivery}</strong></span>
-                  <span className="dot-divider">•</span>
-                  <span>{plan.revisions}</span>
+
+                <div className="plan-footer">
+                  <div className="best-for-box">
+                    <strong>Best for:</strong> {plan.bestFor}
+                  </div>
+                  <ButtonLink 
+                    to="/contact" 
+                    variant={plan.popular ? 'primary' : 'ghost'} 
+                    className="plan-cta-button"
+                  >
+                    Choose {plan.name}
+                  </ButtonLink>
                 </div>
               </div>
+            );
 
-              <div className="plan-divider" />
-
-              <div className="plan-body">
-                <span className="features-title">What's included:</span>
-                <ul className="plan-features">
-                  {plan.features.map((feature, idx) => (
-                    <li key={idx} className="feature-item">
-                      <Check className="w-4.5 h-4.5 feature-check" />
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
+            return isMobile ? (
+              <div key={plan.name} className="h-full">
+                {cardContent}
               </div>
-
-              <div className="plan-footer">
-                <div className="best-for-box">
-                  <strong>Best for:</strong> {plan.bestFor}
-                </div>
-                <ButtonLink 
-                  to="/contact" 
-                  variant={plan.popular ? 'primary' : 'ghost'} 
-                  className="plan-cta-button"
-                >
-                  Choose {plan.name}
-                </ButtonLink>
-              </div>
-            </div>
-          ))}
+            ) : (
+              <TiltedCard
+                key={plan.name}
+                altText={`${plan.name} pricing plan`}
+                captionText={`Fidarix - ${plan.name} Plan`}
+                containerHeight="720px"
+                containerWidth="100%"
+                imageHeight="100%"
+                imageWidth="100%"
+                rotateAmplitude={8}
+                scaleOnHover={1.02}
+                showMobileWarning={false}
+                showTooltip={true}
+                displayOverlayContent={true}
+                overlayContent={cardContent}
+              />
+            );
+          })}
         </div>
       </section>
 

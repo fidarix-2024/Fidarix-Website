@@ -347,10 +347,45 @@
     padding: 40px 0;
   }
 
+  .marquee-container:hover .marquee-content {
+    animation-play-state: paused;
+  }
+
   .marquee-content {
     display: inline-flex;
-    gap: 60px;
+    align-items: center;
+    gap: 0;
     animation: marquee 30s linear infinite;
+  }
+
+  .marquee-content span {
+    padding: 0 40px;
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.45);
+    cursor: default;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+    position: relative;
+  }
+
+  .marquee-content span::after {
+    content: '●';
+    position: absolute;
+    right: -2px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.3rem;
+    color: rgba(255, 255, 255, 0.15);
+  }
+
+  .marquee-content span:hover {
+    color: #c084fc;
+    text-shadow:
+      0 0 12px rgba(167, 90, 255, 0.8),
+      0 0 28px rgba(124, 58, 237, 0.5),
+      0 0 50px rgba(124, 58, 237, 0.25);
   }
 
   @keyframes marquee {

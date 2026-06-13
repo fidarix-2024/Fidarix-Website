@@ -1,7 +1,6 @@
 import { useRef, useEffect, useCallback, useState } from 'react';
 import { ButtonLink, SectionWise } from '../../components/common/Layout';
-import { services, pricingPlans } from '../../data/site';
-import { Check } from 'lucide-react';
+import { services } from '../../data/site';
 import { ServicesScanner } from '../../components/ServicesComponent/ServicesScanner';
 import ServicesGallery from '../../components/ServicesComponent/ServicesGallery';
 import RippleGrid from '../../components/common/RippleGrid';
@@ -274,36 +273,15 @@ const recentWorksData = [
     num: "01",
     category: "▸ PORTAL & WEB APP",
     title: "MISSION ENGINEERING",
-    image: "/images/real_domain_web_dev.png",
+    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=85",
     roles: ["Fullstack Portal", "Lateral Entry Test Engine", "UI Architecture", "Performance Optimization"]
   },
   {
     num: "02",
     category: "▸ BRAND & CONVERSION",
     title: "AARAV ACADEMY",
-    image: "/images/aarav_academy.png",
+    image: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=800&q=85",
     roles: ["UI/UX Design", "Vite Frontend", "High-conversion Copywriting", "SEO Optimization"]
-  },
-  {
-    num: "03",
-    category: "▸ SAAS PRODUCT",
-    title: "FIDARIX PLATFORM",
-    image: "/images/real_domain_product.png",
-    roles: ["Product Strategy", "Dashboard Engineering", "Interaction Design", "API Integrations"]
-  },
-  {
-    num: "04",
-    category: "▸ SEO & PERFORMANCE",
-    title: "SEO AUDIT ENGINE",
-    image: "/images/real_domain_seo.png",
-    roles: ["Technical SEO", "Speed Optimization", "Structured Data Schema", "Conversion Audit"]
-  },
-  {
-    num: "05",
-    category: "▸ BRAND IDENTITY",
-    title: "IDENTITY DESIGN SYSTEM",
-    image: "/images/real_domain_branding.png",
-    roles: ["Visual Identity", "Typography Systems", "Logo Guidelines", "Creative Direction"]
   }
 ];
 
@@ -448,7 +426,7 @@ function WebGLRippleCanvas({ transitionIndex, transitionProgress, rippleIntensit
       gl.bindTexture(gl.TEXTURE_2D, texturesRef.current[activeIdx] || texturesRef.current[0]);
       gl.uniform1i(gl.getUniformLocation(program, "uTexCurrent"), 0);
       gl.activeTexture(gl.TEXTURE1);
-      gl.bindTexture(gl.TEXTURE_2D, texturesRef.current[Math.min(4, activeIdx + 1)] || texturesRef.current[0]);
+      gl.bindTexture(gl.TEXTURE_2D, texturesRef.current[Math.min(recentWorksData.length - 1, activeIdx + 1)] || texturesRef.current[0]);
       gl.uniform1i(gl.getUniformLocation(program, "uTexNext"), 1);
       gl.uniform1f(gl.getUniformLocation(program, "uProgress"), transP);
       gl.uniform1f(gl.getUniformLocation(program, "uTime"), timeRef.current);
@@ -649,31 +627,30 @@ function RecentWorksRippleShowcase() {
 function ServicesPage() {
   const heroRef = useRef(null);
   const worksRef = useScrollReveal();
-  const pricingRef = useRef(null);
 
   return (
     <div className="page-wise services-page-dark">
       {/* 1. HERO SECTION */}
       <section ref={heroRef} className="services-hero-dark" style={{ position: 'relative' }}>
-        <div className="fixed inset-0 z-0 opacity-20 pointer-events-none mix-blend-screen">
+        <div style={{ position: 'absolute', inset: 0, zIndex: 0, opacity: 0.85, pointerEvents: 'none' }}>
         <ServicesScanner 
             sensitivity={0.65}
-            linesColor="#0d0e12"
+            linesColor="#2a1060"
             scanColor="#9b4dff"
-            scanOpacity={0.6}
+            scanOpacity={0.9}
             gridScale={0.13}
             lineStyle="solid"
-            lineThickness={1.8}
+            lineThickness={2.2}
             lineJitter={0.06}
             scanDirection="pingpong"
             enablePost={true}
-            bloomIntensity={1.8}
-            bloomThreshold={0.2}
-            bloomSmoothing={0.8}
-            chromaticAberration={0.0035}
-            noiseIntensity={0.012}
-            scanGlow={0.6}
-            scanSoftness={2.2}
+            bloomIntensity={2.8}
+            bloomThreshold={0.1}
+            bloomSmoothing={0.6}
+            chromaticAberration={0.003}
+            noiseIntensity={0.008}
+            scanGlow={0.9}
+            scanSoftness={2.5}
             scanPhaseTaper={0.85}
             scanDuration={2.4}
             scanDelay={1.8}
@@ -686,6 +663,7 @@ function ServicesPage() {
         <div className="hero-vertical-guide right"><span className="hero-guide-arrow" /></div>
         <div className="hero-scroll-arrow">↓</div>
         <div className="services-hero-content-monopo">
+          <p className="services-hero-eyebrow-tag">FIDARIX DIGITAL AGENCY</p>
           <h1 className="services-hero-title-monopo">
             <span className="hero-line-left">
               <BlurText text="Our" delay={80} animateBy="words" direction="top" className="inline-block" />
@@ -695,6 +673,22 @@ function ServicesPage() {
             </span>
           </h1>
           <p className="services-hero-mono-sub">[ FROM QUICK LAUNCH WEBSITES TO BRAND IDENTITY SYSTEMS. ]</p>
+          <div className="services-hero-stats">
+            <div className="services-hero-stat">
+              <span className="stat-num">7+</span>
+              <span className="stat-label">Services Offered</span>
+            </div>
+            <div className="services-hero-stat-divider" />
+            <div className="services-hero-stat">
+              <span className="stat-num">2</span>
+              <span className="stat-label">Projects Delivered</span>
+            </div>
+            <div className="services-hero-stat-divider" />
+            <div className="services-hero-stat">
+              <span className="stat-num">100%</span>
+              <span className="stat-label">Client Satisfaction</span>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -726,7 +720,7 @@ function ServicesPage() {
             </p>
           </div>
         </div>
-        <div style={{ width: '100vw', height: '100vh', position: 'relative', background: '#000', marginLeft: 'calc(50% - 50vw)' }}>
+        <div style={{ width: '100vw', height: '70vh', position: 'relative', background: '#000', marginLeft: 'calc(50% - 50vw)' }}>
           <ServicesGallery
             fit={0.8}
             minRadius={600}
@@ -740,55 +734,6 @@ function ServicesPage() {
             openedImageWidth="300px"
             openedImageHeight="380px"
           />
-        </div>
-      </section>
-
-      {/* 4. PRICING */}
-      <section id="pricing" ref={pricingRef} className="pricing-section scroll-reveal">
-        <div className="site-frame">
-          <div style={{ textAlign: 'center', marginBottom: 60 }}>
-            <span className="eyebrow">pricing packages</span>
-            <h2 className="display-huge" style={{ fontSize: 'clamp(2.5rem, 5vw, 4.2rem)', marginTop: 12 }}>
-              Simple Packaging
-            </h2>
-            <p style={{ color: 'rgba(255,255,255,0.6)', maxWidth: '600px', margin: '20px auto 0', fontSize: '1.05rem', lineHeight: '1.6' }}>
-              Clear packages, clean deliverables, and room for custom scope. Select a plan below or request a bespoke quote.
-            </p>
-          </div>
-
-          <div className="pricing-plans-grid">
-            {pricingPlans.map((plan) => (
-              <div key={plan.name} className={`pricing-card ${plan.popular ? 'popular' : ''}`}>
-                <div className="absolute inset-0 z-0 opacity-60 mix-blend-screen group-hover:opacity-100 transition-opacity duration-700">
-                  <ServicesGallery />
-                </div>
-                <p className="pricing-card-delivery">{plan.delivery} • {plan.revisions}</p>
-                <h3 className="pricing-card-title">{plan.name}</h3>
-                {plan.tagline && <p className="pricing-card-tagline">{plan.tagline}</p>}
-                <p className="pricing-card-price">{plan.price}</p>
-                <ul className="pricing-card-features">
-                  {plan.features.map((feature) => (
-                    <li key={feature} className="pricing-card-feature">
-                      <Check /> <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                <ButtonLink to="/contact" variant={plan.popular ? 'primary' : 'ghost'} className="pricing-card-button">
-                  Choose {plan.name}
-                </ButtonLink>
-              </div>
-            ))}
-          </div>
-
-          <div style={{ textAlign: 'center', marginTop: '60px', paddingTop: '40px', borderTop: '1px solid rgba(255, 255, 255, 0.05)' }}>
-            <h3 style={{ fontSize: '1.6rem', fontWeight: 800, margin: '0 0 10px' }}>Custom Scope Needed?</h3>
-            <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.96rem', margin: '0 0 24px' }}>
-              We build specialized dashboards, operational portals, advanced SEO retainers, and branding networks.
-            </p>
-            <ButtonLink to="/contact" variant="ghost" style={{ borderRadius: '999px', padding: '16px 36px', fontSize: '0.88rem' }}>
-              REQUEST BESPOKE QUOTE →
-            </ButtonLink>
-          </div>
         </div>
       </section>
     </div>

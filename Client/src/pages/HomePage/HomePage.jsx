@@ -585,6 +585,7 @@ function HomePage() {
       </SectionWise>
 
       {/* 7. CLIENT TESTIMONIALS SECTION */}
+
       <SectionWise bg="bg-transparent" style={{ paddingTop: '80px', paddingBottom: '100px', backgroundColor: '#000000', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
         <div style={{ textAlign: 'left', marginBottom: '60px' }}>
           <span className="text-xs font-extrabold text-green-400 uppercase tracking-[0.22em] flex items-center gap-2">

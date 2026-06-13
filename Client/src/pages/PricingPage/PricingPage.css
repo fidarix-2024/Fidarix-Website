@@ -110,15 +110,15 @@
 
 /* 2. PLANS SECTION */
 .pricing-plans-section {
-  padding: 100px 4vw;
-  max-width: 1440px;
+  padding: 80px 3vw;
+  max-width: 1600px;
   margin: 0 auto;
   position: relative;
 }
 
 .pricing-section-header {
   text-align: center;
-  margin-bottom: 80px;
+  margin-bottom: 50px;
 }
 
 .section-tag {
@@ -152,7 +152,7 @@
 .pricing-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
+  gap: 16px;
   align-items: stretch;
 }
 
@@ -172,8 +172,8 @@
 .pricing-plan-card {
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 24px;
-  padding: 40px 28px;
+  border-radius: 20px;
+  padding: 32px 24px;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -196,42 +196,44 @@
 
 .popular-badge {
   position: absolute;
-  top: -14px;
+  top: -13px;
   left: 50%;
   transform: translateX(-50%);
-  background: linear-gradient(135deg, #7c3aed 0%, #3b82f6 100%);
-  color: #ffffff;
-  font-size: 0.72rem;
+  background: rgba(10, 6, 20, 0.95);
+  border: 1px solid rgba(124, 58, 237, 0.7);
+  color: #b48aff;
+  font-size: 0.68rem;
   font-weight: 800;
-  letter-spacing: 0.08em;
-  padding: 5px 16px;
+  letter-spacing: 0.12em;
+  padding: 5px 14px;
   border-radius: 99px;
   display: flex;
   align-items: center;
   gap: 6px;
-  box-shadow: 0 6px 20px rgba(124, 58, 237, 0.35);
+  white-space: nowrap;
+  box-shadow: 0 0 14px rgba(124, 58, 237, 0.35), inset 0 0 8px rgba(124, 58, 237, 0.08);
   text-transform: uppercase;
 }
 
 .plan-header {
-  margin-bottom: 24px;
+  margin-bottom: 18px;
 }
 
 .plan-name {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 1.8rem;
+  font-size: 1.4rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: -0.01em;
-  margin: 0 0 10px;
+  margin: 0 0 6px;
 }
 
 .plan-tagline {
-  font-size: 0.86rem;
-  line-height: 1.4;
+  font-size: 0.8rem;
+  line-height: 1.3;
   color: rgba(255, 255, 255, 0.5);
-  min-height: 48px;
-  margin: 0 0 20px;
+  min-height: unset;
+  margin: 0 0 12px;
 }
 
 .plan-price-wrap {
@@ -240,9 +242,9 @@
 
 .plan-price {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: clamp(2rem, 3vw, 2.5rem);
+  font-size: clamp(1.6rem, 2.2vw, 2rem);
   font-weight: 900;
-  color: #10b981; /* Lime/green value for package cost */
+  color: #10b981;
   letter-spacing: -0.02em;
 }
 
@@ -261,11 +263,12 @@
 .plan-divider {
   height: 1px;
   background: rgba(255, 255, 255, 0.06);
-  margin-bottom: 24px;
+  margin-bottom: 18px;
 }
 
 .plan-body {
-  margin-bottom: 36px;
+  margin-bottom: 20px;
+  flex: 1;
 }
 
 .features-title {
@@ -284,14 +287,14 @@
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .feature-item {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
-  font-size: 0.88rem;
+  gap: 9px;
+  font-size: 0.84rem;
   color: rgba(255, 255, 255, 0.85);
   line-height: 1.4;
 }
@@ -306,7 +309,7 @@
   margin-top: auto;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 14px;
 }
 
 .best-for-box {
