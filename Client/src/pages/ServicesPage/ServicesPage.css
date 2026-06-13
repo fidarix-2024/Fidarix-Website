@@ -1,5 +1,5 @@
 
-  .services-hero-light {
+  .services-hero-monopo {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -10,16 +10,10 @@
     --mouse-y: 50%;
     --mouse-x-inv: 50%;
     --mouse-y-inv: 50%;
-    /* Elegant dynamic gradient centered on cursor tracking that reflects the brand logo colors (purple, blue, cyan) on white background */
-    background: 
-      radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(90, 116, 255, 0.16) 0%, transparent 45%),
-      radial-gradient(circle at var(--mouse-x-inv) var(--mouse-y-inv), rgba(155, 77, 255, 0.12) 0%, transparent 45%),
-      radial-gradient(circle at var(--mouse-y) var(--mouse-x), rgba(76, 195, 255, 0.08) 0%, transparent 50%),
-      #ffffff;
-    border-bottom: 1px solid rgba(13, 27, 61, 0.05);
+    background: #050505;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     position: relative;
     overflow: hidden;
-    transition: background 0.1s ease-out; /* performant dampening */
   }
 
   .services-hero-content-monopo {
@@ -39,7 +33,7 @@
     font-weight: 800;
     line-height: 0.92;
     letter-spacing: -0.06em;
-    color: #0d1b3d;
+    color: #ffffff;
     text-transform: uppercase;
     display: flex;
     flex-direction: column;
@@ -62,7 +56,7 @@
     font-family: monospace;
     font-size: clamp(0.74rem, 1.2vw, 0.95rem);
     font-weight: 700;
-    color: rgba(13, 27, 61, 0.7);
+    color: rgba(255, 255, 255, 0.7);
     letter-spacing: 0.06em;
     margin: 0 0 0 20%; /* align with the indented second line */
     background: transparent;
@@ -83,7 +77,7 @@
     top: 8%;
     bottom: 8%;
     width: 1px;
-    border-left: 2px dotted rgba(13, 27, 61, 0.18);
+    border-left: 2px dotted rgba(255, 255, 255, 0.18);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -102,8 +96,8 @@
   .hero-guide-arrow {
     width: 8px;
     height: 8px;
-    border-top: 2px solid rgba(13, 27, 61, 0.45);
-    border-right: 2px solid rgba(13, 27, 61, 0.45);
+    border-top: 2px solid rgba(255, 255, 255, 0.45);
+    border-right: 2px solid rgba(255, 255, 255, 0.45);
     transform: rotate(45deg);
   }
 
@@ -120,7 +114,7 @@
     bottom: 40px;
     right: 4vw;
     font-size: 1.5rem;
-    color: rgba(13, 27, 61, 0.5);
+    color: rgba(255, 255, 255, 0.5);
     animation: bounceSlow 2s infinite;
     pointer-events: none;
     z-index: 2;
@@ -132,7 +126,7 @@
   }
 
   @media (max-width: 768px) {
-    .services-hero-light {
+    .services-hero-monopo {
       min-height: 75vh;
       padding: 100px 0;
     }
