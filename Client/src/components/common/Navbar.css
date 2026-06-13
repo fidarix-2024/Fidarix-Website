@@ -163,12 +163,13 @@
 .header-shell,
 .header-shell.is-light,
 .header-shell.is-dark {
-  background: transparent !important;
-  backdrop-filter: none !important;
-  border: none !important;
-  box-shadow: none !important;
-  border-radius: 0 !important;
-  padding: 16px 0 !important; /* compact padding */
+  background: rgba(255, 255, 255, 0.1) !important; /* light white frosted bg */
+  backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2) !important;
+  border-radius: 20px !important;
+  padding: 12px 24px !important; 
+  margin-top: 20px !important;
 }
 
 /* Align and color text elements inside the header */
