@@ -1,14 +1,52 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { SectionWise, Marquee } from '../../components/common/Layout';
 import { faqs } from '../../data/site';
 import ContactBackground from '../../components/ContactComponent/ContactBackground';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './ContactPage.css';
 
 function ContactPage() {
   const [openFaq, setOpenFaq] = useState(null);
+  const formRef = useRef(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    const formData = new FormData(formRef.current);
+    
+    try {
+      const response = await fetch("https://formspree.io/f/xrevowek", {
+        method: "POST",
+        body: formData,
+        headers: {
+          Accept: "application/json",
+        },
+      });
+
+      if (response.ok) {
+        toast.success("We'll get back to you :)");
+        formRef.current.reset();
+      } else {
+        const data = await response.json();
+        if (data.errors) {
+          toast.error(data.errors.map(error => error.message).join(", "));
+        } else {
+          toast.error("Oops! There was a problem submitting your form");
+        }
+      }
+    } catch (error) {
+      toast.error("Oops! There was a problem submitting your form");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div className="page-wise contact-page">
+      <ToastContainer position="bottom-right" theme="dark" />
       {/* ── Full-viewport Contact Hero ── */}
       <section className="contact-hero">
         {/* Beams WebGL fills the entire section */}
@@ -85,22 +123,24 @@ function ContactPage() {
           </div>
 
           <div className="contact-form-area">
-            <form id="contact-form" className="contact-form" onSubmit={(e) => e.preventDefault()}>
+            <form ref={formRef} id="contact-form" className="contact-form" onSubmit={handleSubmit}>
               <div className="row two-cols">
-                <input placeholder="First Name *" className="field" />
-                <input placeholder="Last Name *" className="field" />
+                <input name="firstName" required placeholder="First Name *" className="field" />
+                <input name="lastName" required placeholder="Last Name *" className="field" />
               </div>
 
               <div className="row two-cols">
-                <input placeholder="Email *" className="field" />
-                <input placeholder="Phone Number *" className="field" />
+                <input name="email" type="email" required placeholder="Email *" className="field" />
+                <input name="phone" placeholder="Phone Number" className="field" />
               </div>
 
-              <input placeholder="Subject *" className="field" />
+              <input name="subject" required placeholder="Subject *" className="field" />
 
-              <textarea placeholder="Message *" className="textarea large" />
+              <textarea name="message" required placeholder="Message *" className="textarea large" />
 
-              <button className="send-btn">SEND MESSAGE</button>
+              <button type="submit" disabled={isSubmitting} className="send-btn" style={{ opacity: isSubmitting ? 0.7 : 1 }}>
+                {isSubmitting ? 'SENDING...' : 'SEND MESSAGE'}
+              </button>
             </form>
           </div>
 

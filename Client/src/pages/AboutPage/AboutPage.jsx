@@ -37,12 +37,12 @@ function AboutPage() {
             mouseRadius={1.2}
           />
         </div>
-        
+
         {/* Overlay gradient to ensure text readability */}
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#050505]/40 to-[#050505] z-10 pointer-events-none"></div>
-        
+
         <div className="relative z-20 text-center px-6 max-w-[900px] mx-auto mt-20">
-          
+
           <h1 className="text-[clamp(3.5rem,8vw,7rem)] font-extrabold tracking-tighter leading-[0.9] text-white mb-6 font-['Space_Grotesk']">
             We Build <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#A6C8FF] via-[#FF9FFC] to-[#5227FF]">Digital Trust.</span>
@@ -70,7 +70,7 @@ function AboutPage() {
             {/* Fade edges */}
             <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#080808] to-transparent z-10 pointer-events-none"></div>
             <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#080808] to-transparent z-10 pointer-events-none"></div>
-            
+
             <div className="flex w-max animate-marquee gap-8 py-20 px-4 items-center">
               {[...reasons, ...reasons, ...reasons, ...reasons].map((reason, i) => {
                 let Icon = CheckCircle2;
@@ -85,26 +85,27 @@ function AboutPage() {
                 // reasons.length is typically 6. We use it to calculate the phase.
                 const period = reasons.length;
                 const phase = (i / period) * Math.PI * 2;
-                
+
                 // Y offset for the wave (up and down)
                 const yOffset = Math.sin(phase) * 60; // 60px wave amplitude
-                
+
                 // Rotation for the cards to follow the path of the curve (derivative of sin is cos)
                 const rotation = Math.cos(phase) * 8; // 8 degrees max rotation
 
                 return (
-                <div 
-                  key={i} 
-                  className="bg-white hover:bg-gray-50 p-8 rounded-[2rem] shadow-xl hover:shadow-2xl transition-all duration-300 group w-[350px] flex-shrink-0 flex flex-col"
-                  style={{ transform: `translateY(${yOffset}px) rotate(${rotation}deg)` }}
-                >
-                  <div className="w-12 h-12 rounded-full bg-black/5 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 group-hover:bg-primary/10">
-                    <Icon className="text-black group-hover:text-primary transition-colors duration-300 w-6 h-6" />
+                  <div
+                    key={i}
+                    className="bg-white hover:bg-gray-50 p-8 rounded-[2rem] shadow-xl hover:shadow-2xl transition-all duration-300 group w-[350px] flex-shrink-0 flex flex-col"
+                    style={{ transform: `translateY(${yOffset}px) rotate(${rotation}deg)` }}
+                  >
+                    <div className="w-12 h-12 rounded-full bg-black/5 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 group-hover:bg-primary/10">
+                      <Icon className="text-black group-hover:text-primary transition-colors duration-300 w-6 h-6" />
+                    </div>
+                    <h3 className="text-xl font-bold text-black mb-3 font-['Space_Grotesk'] tracking-tight">{reason.title}</h3>
+                    <p className="text-black/70 text-sm leading-[1.6]">{reason.text}</p>
                   </div>
-                  <h3 className="text-xl font-bold text-black mb-3 font-['Space_Grotesk'] tracking-tight">{reason.title}</h3>
-                  <p className="text-black/70 text-sm leading-[1.6]">{reason.text}</p>
-                </div>
-              )})}
+                )
+              })}
             </div>
           </div>
         </div>
@@ -114,7 +115,7 @@ function AboutPage() {
       <section className="py-32 px-6 relative z-20 overflow-hidden">
         {/* Abstract background glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] max-w-[800px] max-h-[800px] bg-[#5227FF]/10 rounded-full blur-[120px] pointer-events-none"></div>
-        
+
         <div className="max-w-[1200px] mx-auto relative z-10">
           <div className="text-center mb-20">
             <h2 className="text-[clamp(3rem,6vw,5.5rem)] font-extrabold tracking-tight leading-[1] mb-4 font-['Space_Grotesk']">The Founders</h2>
@@ -126,7 +127,7 @@ function AboutPage() {
           <div className="flex flex-col md:flex-row justify-center gap-12 md:gap-16 items-center">
             {/* Dishi: Image */}
             <div className="w-full max-w-[340px] h-[500px] flex justify-center">
-              <AboutGridBackground 
+              <AboutGridBackground
                 items={[
                   {
                     image: founders[0].image,
@@ -151,7 +152,7 @@ function AboutPage() {
 
             {/* Yash: Image */}
             <div className="w-full max-w-[340px] h-[500px] flex justify-center">
-              <AboutGridBackground 
+              <AboutGridBackground
                 items={[
                   {
                     image: founders[1].image,
@@ -181,7 +182,7 @@ function AboutPage() {
       <section className="py-32 px-6 relative z-20 bg-white border-t border-black/5">
         <div className="max-w-[900px] mx-auto">
           <h2 className="text-[clamp(2.5rem,5vw,4.5rem)] font-extrabold tracking-tight leading-[1] mb-20 text-center font-['Space_Grotesk'] text-gray-900">Our Journey</h2>
-          
+
           <div className="relative">
             {/* Vertical Line */}
             <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-px bg-black/10 md:-translate-x-1/2">
@@ -190,8 +191,8 @@ function AboutPage() {
 
             <div className="space-y-16">
               {aboutTimeline.map((item, idx) => (
-                <motion.div 
-                  key={item.year} 
+                <motion.div
+                  key={item.year}
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: false, margin: "-100px" }}
@@ -201,15 +202,15 @@ function AboutPage() {
                   }}
                   className={`relative flex flex-col md:flex-row items-start ${idx % 2 === 0 ? 'md:flex-row-reverse' : ''}`}
                 >
-                  <motion.div 
+                  <motion.div
                     variants={{
                       hidden: { scale: 0, opacity: 0 },
                       visible: { scale: 1, opacity: 1, transition: { type: "spring", stiffness: 200, damping: 10 } }
                     }}
                     className="absolute left-0 md:left-1/2 w-4 h-4 rounded-full bg-primary -translate-x-[7.5px] md:-translate-x-1/2 mt-2 ring-4 ring-white z-10 shadow-[0_0_15px_rgba(82,39,255,0.4)]"
                   ></motion.div>
-                  
-                  <motion.div 
+
+                  <motion.div
                     variants={{
                       hidden: { opacity: 0, y: 50 },
                       visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
@@ -233,7 +234,7 @@ function AboutPage() {
       {/* 7. PREMIUM CTA SECTION */}
       <section className="relative z-20 overflow-hidden bg-[#020202]">
         <div className="w-full relative z-10">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -241,36 +242,32 @@ function AboutPage() {
             className="w-full relative overflow-hidden group border-y border-white/10 transition-all duration-700 aspect-auto min-h-[500px] md:min-h-[700px] flex items-center"
           >
             {/* Background Image filling the entire box */}
-            <div 
+            <div
               className="absolute inset-0 bg-cover bg-center transition-transform duration-[1200ms] group-hover:scale-105"
               style={{ backgroundImage: "url('/images/AboutPage/contact_cta_background.png')" }}
             ></div>
-            
+
             {/* Dark Overlays to ensure text readability */}
             <div className="absolute inset-0 bg-black/60 group-hover:bg-black/40 transition-colors duration-700"></div>
             <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-transparent"></div>
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 md:from-transparent to-transparent"></div>
-            
+
             {/* Noise overlay */}
             <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E')] opacity-20 mix-blend-overlay pointer-events-none"></div>
 
             {/* Text & Button Overlay Container */}
             <div className="relative z-10 w-full max-w-[1400px] mx-auto p-8 md:p-16 lg:p-24 flex flex-col items-start justify-center text-left transform group-hover:translate-x-2 transition-transform duration-500">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 backdrop-blur-md mb-8">
-                <span className="w-2 h-2 rounded-full bg-[#FF9FFC] animate-pulse"></span>
-                <span className="text-xs font-bold tracking-[0.2em] uppercase text-white/90">Start a Project</span>
-              </div>
-              
+
               <h2 className="text-[clamp(3.5rem,8vw,7rem)] font-extrabold tracking-tighter leading-[0.95] text-white mb-6 font-['Space_Grotesk'] max-w-[800px]">
                 Ready to <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF9FFC] via-[#A6C8FF] to-white">upgrade?</span>
               </h2>
-              
+
               <p className="text-white/80 text-xl md:text-2xl max-w-[600px] font-medium leading-[1.6] mb-10">
                 Stop blending in. Let's build a digital experience that reflects the true value and ambition of your brand.
               </p>
-              
-              <Link 
-                to="/contact" 
+
+              <Link
+                to="/contact"
                 className="inline-flex items-center gap-4 px-10 py-5 rounded-full bg-primary text-white font-bold text-lg hover:bg-white hover:text-black hover:scale-105 transition-all duration-500 shadow-[0_0_40px_rgba(82,39,255,0.4)] hover:shadow-[0_0_60px_rgba(255,255,255,0.5)]"
               >
                 Let's Talk
