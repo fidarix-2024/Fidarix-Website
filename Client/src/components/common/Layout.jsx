@@ -84,7 +84,7 @@ export function SiteFooter({ isDark }) {
         </div>
 
         {/* Legal Bottom Bar */}
-        <div className="flex flex-col md:flex-row justify-center items-center gap-4 border-t border-white/8 pt-6 text-[0.84rem] text-white/50">
+        <div className="flex flex-col md:flex-row justify-center items-center gap-4 border-t border-white/8 pt-6 text-[1rem] text-white">
           <span>&copy; 2024 Fidarix. All rights reserved.</span>
         </div>
       </div>
