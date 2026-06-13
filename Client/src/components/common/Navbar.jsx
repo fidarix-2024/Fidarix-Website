@@ -29,28 +29,26 @@ export default function SiteHeader() {
 
   return (
     <header className={`site-header ${isScrolled ? 'is-scrolled' : ''}`}>
-      <div className="site-frame">
-        <div className="header-shell">
-          <Link className="brand-link" to="/">
-            <LogoMark />
-            <span className="brand-wordmark">
-              <span className="brand-name">Fidarix</span>
-            </span>
-          </Link>
+      <div className="header-shell" style={{ width: '100%', padding: '0 40px', position: 'relative' }}>
+        <Link className="brand-link" to="/">
+          <LogoMark />
+          <span className="brand-wordmark">
+            <span className="brand-name">Fidarix</span>
+          </span>
+        </Link>
 
-          <nav className="nav-links" style={{ flex: 1, justifyContent: 'center' }}>
-            {routes.map((item) => (
-              <NavLink
-                key={item.path}
-                to={item.path}
-                className={({ isActive }) => `nav-link ${isActive ? 'is-active' : ''}`}
-                style={{ fontSize: '0.9rem', letterSpacing: '0.02em' }}
-              >
-                {item.label}
-              </NavLink>
-            ))}
-          </nav>
-        </div>
+        <nav className="nav-links" style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: '16px' }}>
+          {routes.map((item) => (
+            <NavLink
+              key={item.path}
+              to={item.path}
+              className={({ isActive }) => `nav-link ${isActive ? 'is-active' : ''}`}
+              style={{ fontSize: '1.15rem', letterSpacing: '0.02em', padding: '10px 16px' }}
+            >
+              {item.label}
+            </NavLink>
+          ))}
+        </nav>
       </div>
     </header>
   );
