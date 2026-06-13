@@ -252,7 +252,7 @@ function AboutPage() {
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 md:from-transparent to-transparent"></div>
             
             {/* Noise overlay */}
-            <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay pointer-events-none"></div>
+            <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E')] opacity-20 mix-blend-overlay pointer-events-none"></div>
 
             {/* Text & Button Overlay Container */}
             <div className="relative z-10 w-full max-w-[1400px] mx-auto p-8 md:p-16 lg:p-24 flex flex-col items-start justify-center text-left transform group-hover:translate-x-2 transition-transform duration-500">

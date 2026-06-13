@@ -694,7 +694,7 @@ function ServicesPage() {
           </div>
         </div>
         <div style={{ width: '100vw', height: '100vh', position: 'relative', background: '#000', marginLeft: 'calc(50% - 50vw)' }}>
-          <DomeGallery
+          <ServicesGallery
             fit={0.8}
             minRadius={600}
             maxVerticalRotationDeg={0}
