@@ -7,6 +7,7 @@ import HomeHero from '../../components/HomeComponent/HomeHero';
 import Roadmap from '../../components/HomeComponent/Roadmap';
 import FlowingMenu from '../../components/common/FlowingMenu';
 import TiltedCard from '../../components/common/TiltedCard';
+import PixelCard from '../../components/common/PixelCard';
 import './HomePage.css';
 
 function ScrollSplashCard({ children }) {
@@ -453,6 +454,60 @@ function HomePage() {
           <ButtonLink to="/services" style={{ padding: '16px 36px', fontSize: '1.1rem' }}>
             Explore Services
           </ButtonLink>
+        </div>
+      </SectionWise>
+
+      {/* 3.5 TEMPLATES: Four sample ProfileCard templates */}
+      <SectionWise bg="bg-black" style={{ paddingTop: '60px', paddingBottom: '60px', backgroundColor: '#000000', borderBottom: '1px solid rgba(255, 255, 255, 0.04)' }}>
+        <div style={{ textAlign: 'left', marginBottom: '30px' }}>
+          <span className="text-xs font-extrabold text-primary-2 uppercase tracking-[0.22em] flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-primary-2 inline-block"></span>
+            templates
+          </span>
+          <h2 className="text-[clamp(1.6rem,3.5vw,2.5rem)] font-extrabold text-white mt-3 mb-5 uppercase tracking-tight font-['Space_Grotesk']">
+            Ready-made Templates
+          </h2>
+          <p style={{ color: 'rgba(255,255,255,0.6)', maxWidth: '720px', fontSize: '1rem' }}>
+            Four starter templates tailored for agencies, coaching, restaurants and startups — preview styles and imagery.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
+          <PixelCard variant="pink" className="bg-transparent">
+            <div className="relative z-10 w-full h-full flex items-center justify-center">
+              <div className="text-center px-4">
+                <h3 className="text-white font-bold text-2xl">Agencies</h3>
+                <p className="text-white/70 text-sm mt-2">Modern agency starter template</p>
+              </div>
+            </div>
+          </PixelCard>
+
+          <PixelCard variant="blue" className="bg-transparent">
+            <div className="relative z-10 w-full h-full flex items-center justify-center">
+              <div className="text-center px-4">
+                <h3 className="text-white font-bold text-2xl">Coaching</h3>
+                <p className="text-white/70 text-sm mt-2">Trust-focused coaching layout</p>
+              </div>
+            </div>
+          </PixelCard>
+
+          <PixelCard variant="yellow" className="bg-transparent">
+            <div className="relative z-10 w-full h-full flex items-center justify-center">
+              <div className="text-center px-4">
+                <h3 className="text-white font-bold text-2xl">Restaurants</h3>
+                <p className="text-white/70 text-sm mt-2">Menu-first, reservation-ready</p>
+              </div>
+            </div>
+          </PixelCard>
+
+          <PixelCard variant="default" className="bg-transparent">
+            <div className="relative z-10 w-full h-full flex items-center justify-center">
+              <div className="text-center px-4">
+                <h3 className="text-white font-bold text-2xl">Startups</h3>
+                <p className="text-white/70 text-sm mt-2">Lean landing structure</p>
+              </div>
+            </div>
+          </PixelCard>
         </div>
       </SectionWise>
 
