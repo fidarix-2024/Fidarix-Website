@@ -29,7 +29,9 @@
   }
 
   .logo-mark-img {
-    height: 120px; /* Increased logo size */
+    height: 50px; /* Reduced physical height so it doesn't push the navbar */
+    transform: scale(1.6); /* Scaled up visually */
+    margin-left: 14px; /* Offset for the scale expansion */
     width: auto;
     object-fit: contain;
   }
@@ -179,8 +181,9 @@
   border: none !important;
   box-shadow: none !important;
   border-radius: 0 !important;
-  padding: 4px 40px !important; /* Horizontal padding for extreme left, low vertical padding for height */
-  margin-top: 0 !important; /* No margin */
+  padding: 0 40px !important; /* Zero vertical padding to minimize gap */
+  height: 80px; /* Fixed smaller height */
+  margin-top: 0 !important;
   display: flex;
   align-items: center;
   justify-content: space-between;
