@@ -13,13 +13,38 @@ export default function SiteHeader() {
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+    let scrollThreshold = 50; // fallback
+
+    const updateThreshold = () => {
+      // Find the first section on the page which is typically the hero
+      const hero = document.querySelector('main section:first-of-type') || 
+                   document.querySelector('.contact-hero') || 
+                   document.querySelector('main > div:first-child');
+                   
+      if (hero) {
+        // Trigger right when the hero section is crossed (minus navbar height)
+        scrollThreshold = Math.max(hero.offsetHeight - 80, 50);
+      } else {
+        scrollThreshold = window.innerHeight * 0.7; // default to 70vh if no hero found
+      }
     };
+
+    // Use a slight delay to ensure DOM is fully rendered before calculating
+    setTimeout(updateThreshold, 100);
+    window.addEventListener('resize', updateThreshold, { passive: true });
+
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > scrollThreshold);
+    };
+    
     window.addEventListener('scroll', handleScroll, { passive: true });
     // Trigger initially
     handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+    
+    return () => {
+      window.removeEventListener('resize', updateThreshold);
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   const routes = useMemo(
