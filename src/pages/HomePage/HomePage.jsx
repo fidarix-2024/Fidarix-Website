@@ -2,9 +2,11 @@ import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Heart } from 'lucide-react';
 import { SectionWise, Marquee, ImpactHero, ButtonLink } from '../../components/common/Layout';
-import { services, projects, testimonials } from '../../data/site';
+import { services, projects, testimonials, pricingPlans } from '../../data/site';
 import Hyperspeed from '../../components/Hyperspeed';
 import InteractiveRoadmap from '../../components/InteractiveRoadmap';
+import FlowingMenu from '../../components/FlowingMenu';
+import TiltedCard from '../../components/TiltedCard';
 import './HomePage.css';
 
 function ScrollSplashCard({ children }) {
@@ -54,240 +56,403 @@ function ScrollSplashCard({ children }) {
   );
 }
 
+function InteractiveProjectCard({ project, index = 0 }) {
+  const cardRef = useRef(null);
+  const [coords, setCoords] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+  const [revealed, setRevealed] = useState(false);
+
+  useEffect(() => {
+    const el = cardRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => setRevealed(true), index * 180);
+          observer.unobserve(el);
+        }
+      },
+      { threshold: 0.12 }
+    );
+    observer.observe(el);
+    return () => observer.unobserve(el);
+  }, [index]);
+
+  const handleMouseMove = (e) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    setCoords({ x, y });
+  };
+
+  const handleMouseEnter = () => setIsHovered(true);
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    setCoords({ x: 0, y: 0 });
+  };
+
+  const tiltX = isHovered ? coords.y * -10 : 0;
+  const tiltY = isHovered ? coords.x * 10 : 0;
+  const glowX = isHovered ? (coords.x + 0.5) * 100 : 50;
+  const glowY = isHovered ? (coords.y + 0.5) * 100 : 50;
+
+  return (
+    <a
+      href={project.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className="group relative border border-white/8 rounded-[48px] overflow-hidden bg-white/[0.03] flex flex-col justify-between p-[clamp(24px,4vw,40px)] shadow-[0_28px_80px_rgba(0,0,0,0.6)] min-h-[500px] duration-300 ease-out"
+      style={{
+        transform: `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(${isHovered ? 1.02 : 1})`,
+        transformStyle: 'preserve-3d',
+        opacity: revealed ? 1 : 0,
+        translate: revealed ? '0 0' : '0 60px',
+        filter: revealed ? 'blur(0px)' : 'blur(8px)',
+        transition: 'opacity 0.9s cubic-bezier(0.16,1,0.3,1), translate 0.9s cubic-bezier(0.16,1,0.3,1), filter 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.3s ease-out, box-shadow 0.3s ease-out',
+      }}
+    >
+      {/* Dynamic Glow Spotlight */}
+      <div
+        className="absolute pointer-events-none inset-0 opacity-0 transition-opacity duration-500 z-10"
+        style={{
+          opacity: isHovered ? 0.25 : 0,
+          background: `radial-gradient(circle 250px at ${glowX}% ${glowY}%, var(--primary-3), transparent)`,
+          mixBlendMode: 'screen',
+        }}
+      />
+
+      {/* Background overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/75 to-black z-10" />
+
+      {/* Project Image */}
+      <div className="absolute inset-0 z-0 overflow-hidden opacity-30 group-hover:opacity-45 transition-opacity duration-700">
+        <img
+          src={project.image}
+          alt={project.name}
+          className="w-full h-full object-cover transition-transform duration-[4000ms] ease-out group-hover:scale-110"
+        />
+      </div>
+
+      {/* Mac Browser Mockup header */}
+      <div className="relative z-20 flex items-center justify-between w-full border-b border-white/10 pb-4 mb-4" style={{ transform: 'translateZ(30px)' }}>
+        <div className="flex items-center gap-1.5">
+          <span className="w-2.5 h-2.5 rounded-full bg-[#ff5f56]" />
+          <span className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]" />
+          <span className="w-2.5 h-2.5 rounded-full bg-[#27c93f]" />
+        </div>
+        <div className="bg-white/5 border border-white/8 rounded-full px-4 py-0.5 text-[0.68rem] text-white/60 font-mono tracking-tight max-w-[180px] truncate">
+          {project.url.replace('https://', '')}
+        </div>
+        <div className="w-8" />
+      </div>
+
+      {/* Main Content Info */}
+      <div className="relative z-20 flex flex-col justify-end h-full text-left mt-auto" style={{ transform: 'translateZ(40px)' }}>
+        <div>
+          <span className="text-[0.7rem] font-extrabold text-primary-3 uppercase tracking-[0.22em] bg-white/5 px-3 py-1 rounded-full border border-white/8">
+            {project.industry}
+          </span>
+          <h3 className="font-['Space_Grotesk'] font-bold text-2xl md:text-3xl tracking-tight text-white mt-4 mb-2">
+            {project.name}
+          </h3>
+          <p className="text-white/60 text-[0.98rem] leading-[1.6] m-0">
+            {project.problem}
+          </p>
+        </div>
+
+        {/* Specs revealed on hover */}
+        <div className="max-h-0 opacity-0 overflow-hidden transition-all duration-500 group-hover:max-h-40 group-hover:opacity-100 flex flex-col gap-3 border-t border-white/10 pt-4 mt-4">
+          <div className="flex flex-col gap-0.5">
+            <span className="text-[0.62rem] font-extrabold text-white/40 uppercase tracking-[0.1em]">Stack</span>
+            <span className="text-[0.82rem] text-white/80 font-mono">{project.stack}</span>
+          </div>
+          <div className="flex flex-col gap-0.5">
+            <span className="text-[0.62rem] font-extrabold text-[#00ff66] uppercase tracking-[0.1em]">Result</span>
+            <span className="text-[0.88rem] text-[#00ff66] font-bold">{project.result}</span>
+          </div>
+        </div>
+
+        <div className="flex items-center justify-between mt-6 pt-4 border-t border-white/5">
+          <span className="text-xs font-bold text-white/40 group-hover:text-white transition-colors flex items-center gap-1.5">
+            Visit Live Site
+            <svg className="w-3 h-3 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </span>
+          <span className="text-xs text-white/30 font-mono">LIVE ↗</span>
+        </div>
+      </div>
+    </a>
+  );
+}
+
+function TiltTestimonialCard({ testimonial, index = 0 }) {
+  const cardRef = useRef(null);
+  const [coords, setCoords] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+  const [revealed, setRevealed] = useState(false);
+
+  useEffect(() => {
+    const el = cardRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => setRevealed(true), index * 200);
+          observer.unobserve(el);
+        }
+      },
+      { threshold: 0.12 }
+    );
+    observer.observe(el);
+    return () => observer.unobserve(el);
+  }, [index]);
+
+  const handleMouseMove = (e) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    setCoords({ x, y });
+  };
+
+  const handleMouseEnter = () => setIsHovered(true);
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    setCoords({ x: 0, y: 0 });
+  };
+
+  const tiltX = isHovered ? coords.y * -12 : 0;
+  const tiltY = isHovered ? coords.x * 12 : 0;
+  const glowX = isHovered ? (coords.x + 0.5) * 100 : 50;
+  const glowY = isHovered ? (coords.y + 0.5) * 100 : 50;
+
+  return (
+    <div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className="relative rounded-[40px] border border-white/8 bg-white/[0.02] p-8 flex flex-col justify-between overflow-hidden shadow-[0_28px_80px_rgba(0,0,0,0.6)] duration-300 ease-out text-left"
+      style={{
+        transform: `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(${isHovered ? 1.02 : 1})`,
+        transformStyle: 'preserve-3d',
+        minHeight: '480px',
+        opacity: revealed ? 1 : 0,
+        translate: revealed ? '0 0' : '0 60px',
+        filter: revealed ? 'blur(0px)' : 'blur(8px)',
+        transition: 'opacity 0.9s cubic-bezier(0.16,1,0.3,1), translate 0.9s cubic-bezier(0.16,1,0.3,1), filter 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.3s ease-out, box-shadow 0.3s ease-out',
+      }}
+    >
+      {/* Spotlight glow */}
+      <div
+        className="absolute pointer-events-none inset-0 opacity-0 transition-opacity duration-500 z-0"
+        style={{
+          opacity: isHovered ? 0.18 : 0,
+          background: `radial-gradient(circle 200px at ${glowX}% ${glowY}%, var(--primary-2), transparent)`,
+          mixBlendMode: 'screen',
+        }}
+      />
+
+      {/* Quote text */}
+      <div className="relative z-10" style={{ transform: 'translateZ(30px)' }}>
+        <span className="font-serif text-[5.5rem] leading-none text-purple-500/20 block -mt-4 -ml-2 select-none">“</span>
+        <p className="text-white/90 text-[1.05rem] leading-[1.65] m-0 italic -mt-8 font-medium">
+          {testimonial.quote}
+        </p>
+      </div>
+
+      {/* Author and image */}
+      <div className="relative z-10 mt-8" style={{ transform: 'translateZ(40px)' }}>
+        <div className="mb-4">
+          <h4 className="font-bold text-white text-lg m-0">{testimonial.name}</h4>
+          <p className="text-white/40 text-xs tracking-widest uppercase m-0 mt-0.5">{testimonial.role}</p>
+        </div>
+
+        {/* Portrait image */}
+        <div className="w-full aspect-[4/3] rounded-2xl overflow-hidden border border-white/10 bg-black/40 relative group/img">
+          <img
+            src={testimonial.image}
+            alt={testimonial.name}
+            className="w-full h-full object-cover grayscale transition-all duration-700 group-hover/img:scale-105 group-hover/img:grayscale-0"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-90" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const whyChooseItems = [
+  { link: '#', text: 'Fast Turnaround', image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&auto=format&fit=crop&q=80' },
+  { link: '#', text: 'Transparent Pricing', image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=600&auto=format&fit=crop&q=80' },
+  { link: '#', text: 'Mobile-First Approach', image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&auto=format&fit=crop&q=80' },
+  { link: '#', text: 'SEO Ready', image: 'https://images.unsplash.com/photo-1432821596592-e2c18b78144f?w=600&auto=format&fit=crop&q=80' },
+  { link: '#', text: 'Conversion Focused', image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=600&auto=format&fit=crop&q=80' },
+  { link: '#', text: 'Ongoing Support', image: 'https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=600&auto=format&fit=crop&q=80' }
+];
+
 function HomePage() {
   return (
     <div className="min-h-screen bg-black text-white flex flex-col">
       {/* 1. HERO SECTION */}
       <ImpactHero
-        lines={['We Build', 'Digital', 'Legacies']}
-        copy="A focused studio built around good taste, clear systems, and measurable outcomes. Design, development, and strategy — all under one roof."
+        lines={['Websites That Help', 'Businesses Grow']}
+        copy={
+          <div className="flex flex-col items-center gap-6 max-w-2xl mx-auto">
+            <span className="text-xl md:text-2xl text-purple-300 font-semibold tracking-wide block">
+              Professional websites designed to attract customers, generate leads, and build trust online.
+            </span>
+            <p className="text-white/70 text-[1.05rem] leading-[1.65] m-0">
+              Whether you're a coaching institute, consultant, startup, clinic, agency, or local business, we create fast, modern, and SEO-ready websites that deliver real results.
+            </p>
+          </div>
+        }
         actions={[
-          <ButtonLink key="work" to="/services" style={{ padding: '20px 40px', fontSize: '1.2rem' }}>
-            Our Services
+          <ButtonLink key="consultation" to="/contact" style={{ padding: '20px 40px', fontSize: '1.2rem' }}>
+            Get a Free Consultation
           </ButtonLink>,
-          <ButtonLink key="contact" to="/contact" variant="ghost" style={{ padding: '20px 40px', fontSize: '1.2rem' }}>
-            Get In Touch
+          <ButtonLink key="pricing" to="/pricing" variant="ghost" style={{ padding: '20px 40px', fontSize: '1.2rem' }}>
+            View Pricing
           </ButtonLink>,
         ]}
       >
         <Hyperspeed />
       </ImpactHero>
 
-      {/* 2. INTRO & MARQUEE */}
-      <SectionWise bg="bg-dark" style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.1)', backgroundColor: '#000000' }}>
-        <h2 className="text-[clamp(2.5rem,8vw,6.5rem)] font-extrabold tracking-tight leading-[0.9] uppercase text-center text-white mb-[60px]">
-          Crafting for <br /> the global web
-        </h2>
+      {/* 2. WHO WE ARE SECTION */}
+      <SectionWise bg="bg-black" style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '100px', paddingBottom: '100px', backgroundColor: '#000000' }}>
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start text-left max-w-5xl mx-auto">
+          <div className="md:col-span-5">
+            <span className="text-xs font-extrabold text-primary-2 uppercase tracking-[0.22em] flex items-center gap-2 mb-3">
+              <span className="w-2 h-2 rounded-full bg-primary-2 inline-block"></span>
+              who we are
+            </span>
+            <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-extrabold text-white leading-[1.1] uppercase tracking-tight font-['Space_Grotesk']">
+              A Small Studio Focused on Big Results
+            </h2>
+          </div>
+          <div className="md:col-span-7 flex flex-col gap-6 text-[1.1rem] text-white/70 leading-[1.7] font-normal">
+            <p className="m-0 font-medium text-white text-[1.2rem]">
+              Fidarix is a web design and development studio helping businesses establish a strong online presence without the complexity or agency-level costs.
+            </p>
+            <p className="m-0">
+              We combine strategy, design, development, and SEO to create websites that not only look professional but also help businesses generate inquiries, bookings, and sales.
+            </p>
+            <p className="m-0 text-primary-3 font-semibold">
+              Our goal is simple: build websites that work for your business.
+            </p>
+          </div>
+        </div>
+      </SectionWise>
+
+      {/* MARQUEE SEPARATOR */}
+      <div className="bg-black py-4 border-b border-white/8">
         <Marquee
           items={[
-            "BRANDING", "UI/UX DESIGN", "WEB DEVELOPMENT", "MOTION GRAPHICS", "STRATEGY",
-            "BRANDING", "UI/UX DESIGN", "WEB DEVELOPMENT", "MOTION GRAPHICS", "STRATEGY"
+            "WEBSITE DESIGN", "WEB DEVELOPMENT", "SEO OPTIMIZATION", "BRANDING",
+            "WEBSITE DESIGN", "WEB DEVELOPMENT", "SEO OPTIMIZATION", "BRANDING"
           ]}
           speed="20s"
         />
+      </div>
 
-        {/* 6 alternated cards services grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-[50px]">
-          {/* Row 1: Left Card (Static) | Right Card (Dynamic - Splash) */}
-          <div className="border border-white/8 rounded-[48px] bg-white/[0.03] p-[clamp(26px,4.8vw,46px)] shadow-[0_28px_80px_rgba(0,0,0,0.6)] flex flex-col justify-between relative overflow-hidden text-left min-h-[360px]">
-            <div>
-              <div className="text-xs font-extrabold text-primary uppercase tracking-[0.22em] flex items-center gap-2 mb-4">
-                <span className="w-2 h-2 rounded-full bg-primary-2 inline-block"></span>
-                01 / Branding
-              </div>
-              <h3 className="font-['Space_Grotesk'] text-white font-medium text-2xl tracking-tight mb-3">Identity Systems</h3>
-              <p className="text-white/60 text-[1.03rem] leading-[1.7] m-0">
-                Logo polish, comprehensive color systems, and strict brand guidelines that feel premium, consistent, and memorable.
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-2 mt-6">
-              <span className="bg-white/6 text-white/80 text-[0.78rem] px-2.5 py-1 rounded-full font-bold">Logo Polish</span>
-              <span className="bg-white/6 text-white/80 text-[0.78rem] px-2.5 py-1 rounded-full font-bold">Color Systems</span>
-              <span className="bg-white/6 text-white/80 text-[0.78rem] px-2.5 py-1 rounded-full font-bold">Guidelines</span>
-            </div>
-          </div>
+      {/* 3. SERVICES SECTION */}
+      <SectionWise bg="bg-black" style={{ paddingTop: '80px', paddingBottom: '80px', backgroundColor: '#000000', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
+        <div style={{ textAlign: 'left', marginBottom: '60px' }}>
+          <span className="text-xs font-extrabold text-primary uppercase tracking-[0.22em] flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-primary inline-block"></span>
+            services
+          </span>
+          <h2 className="text-[clamp(2.5rem,5vw,4rem)] font-extrabold text-white mt-3 uppercase tracking-tight font-['Space_Grotesk']">
+            Everything You Need to Grow Online
+          </h2>
+        </div>
 
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Card 1: Website Design */}
           <ScrollSplashCard>
-            {/* Dashboard Header */}
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="font-['Space_Grotesk'] text-white font-medium text-lg tracking-tight flex items-center gap-2">
-                <span>🎨</span> UI/UX Figma Design
-              </h2>
-              <div className="flex items-center gap-1.5">
-                <div className="flex items-center -space-x-2.5">
-                  <img className="w-6 h-6 rounded-full border border-black object-cover" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=80&q=80" alt="Designer 1" />
-                  <img className="w-6 h-6 rounded-full border border-black object-cover" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=80&q=80" alt="Designer 2" />
-                  <div className="w-6 h-6 rounded-full border border-black bg-white/10 text-white flex items-center justify-center font-bold text-[0.64rem]">+1</div>
-                </div>
-                <button className="w-7 h-7 rounded-full border border-white/10 bg-white/5 hover:bg-white/15 text-white flex items-center justify-center transition-colors" aria-label="Like Board">
-                  <Heart size={14} fill="currentColor" strokeWidth={0} />
-                </button>
-              </div>
+            <div className="text-xs font-extrabold text-primary uppercase tracking-[0.22em] mb-4">
+              01 / Design
             </div>
-            <div className="text-xs font-extrabold text-primary uppercase tracking-[0.22em] mb-1">02 / UX & Systems</div>
-            <h3 className="font-['Space_Grotesk'] text-white font-medium text-2xl tracking-tight mb-2">Interface Prototypes</h3>
-            <p className="text-white/60 text-[1.03rem] leading-[1.7] m-0 mb-4">
-              Bespoke UI layouts, robust wireframes, and design components built for Figma handoff.
+            <h3 className="font-['Space_Grotesk'] text-white font-medium text-2xl tracking-tight mb-3">Website Design</h3>
+            <p className="text-white/60 text-[1.03rem] leading-[1.7] m-0 mb-6">
+              Modern, professional designs built to create a strong first impression.
             </p>
-            <div className="w-full border border-white/8 rounded-2xl bg-white/[0.02] p-3 flex items-center justify-center">
+            <div className="w-full border border-white/8 rounded-2xl bg-white/[0.02] p-4 flex items-center justify-center">
               <svg viewBox="0 0 400 110" width="100%">
                 <rect x="5" y="5" width="390" height="100" rx="12" fill="none" stroke="rgba(124,58,237,0.3)" strokeWidth="1.5" />
                 <line x1="120" y1="5" x2="120" y2="105" stroke="rgba(124,58,237,0.2)" />
                 <circle cx="62" cy="55" r="28" fill="none" stroke="rgba(124,58,237,0.4)" strokeWidth="3" />
-                <circle cx="62" cy="55" r="14" fill="none" stroke="rgba(124,58,237,0.2)" strokeWidth="2" strokeDasharray="3 3" />
-                <rect x="140" y="24" width="220" height="12" rx="4" fill="rgba(124,58,237,0.25)" />
-                <rect x="140" y="48" width="170" height="8" rx="3" fill="rgba(124,58,237,0.15)" />
-                <rect x="140" y="68" width="120" height="8" rx="3" fill="rgba(124,58,237,0.15)" />
-                <rect x="140" y="86" width="60" height="8" rx="3" fill="rgba(90,116,255,0.25)" />
+                <rect x="140" y="34" width="220" height="12" rx="4" fill="rgba(124,58,237,0.25)" />
+                <rect x="140" y="58" width="170" height="8" rx="3" fill="rgba(124,58,237,0.15)" />
               </svg>
             </div>
           </ScrollSplashCard>
 
-          {/* Row 2: Left Card (Dynamic - Splash) | Right Card (Static) */}
+          {/* Card 2: Web Development */}
           <ScrollSplashCard>
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="font-['Space_Grotesk'] text-white font-medium text-lg tracking-tight flex items-center gap-2">
-                <span>⚡</span> Web Development
-              </h2>
-              <div className="flex items-center gap-1.5">
-                <div className="flex items-center -space-x-2.5">
-                  <img className="w-6 h-6 rounded-full border border-black object-cover" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&q=80" alt="Developer 1" />
-                  <img className="w-6 h-6 rounded-full border border-black object-cover" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=80&q=80" alt="Developer 2" />
-                  <div className="w-6 h-6 rounded-full border border-black bg-white/10 text-white flex items-center justify-center font-bold text-[0.64rem]">+1</div>
-                </div>
-                <button className="w-7 h-7 rounded-full border border-white/10 bg-white/5 hover:bg-white/15 text-white flex items-center justify-center transition-colors" aria-label="Like Board">
-                  <Heart size={14} fill="currentColor" strokeWidth={0} />
-                </button>
-              </div>
+            <div className="text-xs font-extrabold text-primary uppercase tracking-[0.22em] mb-4">
+              02 / Engineering
             </div>
-            <div className="text-xs font-extrabold text-primary uppercase tracking-[0.22em] mb-1">03 / Engineering</div>
-            <h3 className="font-['Space_Grotesk'] text-white font-medium text-2xl tracking-tight mb-2">Bespoke Frontend Builds</h3>
-            <p className="text-white/60 text-[1.03rem] leading-[1.7] m-0 mb-4">
-              Responsive web apps, optimized Vite structures, and robust component architecture.
+            <h3 className="font-['Space_Grotesk'] text-white font-medium text-2xl tracking-tight mb-3">Web Development</h3>
+            <p className="text-white/60 text-[1.03rem] leading-[1.7] m-0 mb-6">
+              Fast, responsive, and reliable websites built with modern technologies.
             </p>
-            <div className="p-[14px_16px] bg-[#0d1b3d] rounded-2xl w-full">
-              <div className="flex flex-col gap-1.5 font-mono text-[0.8rem] text-left">
-                <span className="text-purple-400">const buildApp = () =&gt; &#123;</span>
-                <span className="text-blue-400 pl-3">return &lt;FidarixCore /&gt;;</span>
-                <span className="text-purple-400">&#125;;</span>
-                <span className="text-green-400 text-[0.74rem]">// Production compiled in 9.78s</span>
-              </div>
+            <div className="p-4 bg-[#0d1b3d]/30 border border-white/8 rounded-2xl w-full flex flex-col gap-1.5 font-mono text-[0.8rem] text-left">
+              <span className="text-purple-400">const site = () =&gt; &#123;</span>
+              <span className="text-blue-400 pl-3">return &lt;FastResponsiveReliable /&gt;;</span>
+              <span className="text-purple-400">&#125;;</span>
+              <span className="text-green-400 text-[0.74rem]">// Optimized production build successful</span>
             </div>
           </ScrollSplashCard>
 
-          <div className="border border-white/8 rounded-[48px] bg-white/[0.03] p-[clamp(26px,4.8vw,46px)] shadow-[0_28px_80px_rgba(0,0,0,0.6)] flex flex-col justify-between relative overflow-hidden text-left min-h-[360px]">
+          {/* Card 3: SEO Optimization */}
+          <div className="border border-white/8 rounded-[48px] bg-white/[0.03] p-[clamp(26px,4.8vw,46px)] shadow-[0_28px_80px_rgba(0,0,0,0.6)] flex flex-col justify-between relative overflow-hidden text-left min-h-[340px]">
             <div>
-              <div className="text-xs font-extrabold text-primary uppercase tracking-[0.22em] flex items-center gap-2 mb-4">
-                <span className="w-2 h-2 rounded-full bg-blue-400 inline-block"></span>
-                04 / Marketing SEO
+              <div className="text-xs font-extrabold text-primary uppercase tracking-[0.22em] mb-4">
+                03 / Marketing
               </div>
-              <h3 className="font-['Space_Grotesk'] text-white font-medium text-2xl tracking-tight mb-3">Technical Ranking</h3>
+              <h3 className="font-['Space_Grotesk'] text-white font-medium text-2xl tracking-tight mb-3">SEO Optimization</h3>
               <p className="text-white/60 text-[1.03rem] leading-[1.7] m-0">
-                Keyword intent mapping, comprehensive on-page layouts, speed optimization, and strict index structures that turn visibility into search conversions.
+                Improve visibility on Google and attract customers actively searching for your services.
               </p>
             </div>
             <div className="flex flex-wrap gap-2 mt-6">
-              <span className="bg-white/6 text-white/80 text-[0.78rem] px-2.5 py-1 rounded-full font-bold">Keyword Maps</span>
-              <span className="bg-white/6 text-white/80 text-[0.78rem] px-2.5 py-1 rounded-full font-bold">Speed Tuning</span>
-              <span className="bg-white/6 text-white/80 text-[0.78rem] px-2.5 py-1 rounded-full font-bold">Indexing</span>
+              <span className="bg-white/6 text-[#00ff66] text-[0.78rem] px-3 py-1 rounded-full font-bold">✓ Google Visibility</span>
+              <span className="bg-white/6 text-white/80 text-[0.78rem] px-3 py-1 rounded-full font-bold">✓ Search Traffic</span>
+              <span className="bg-white/6 text-white/80 text-[0.78rem] px-3 py-1 rounded-full font-bold">✓ Higher Rankings</span>
             </div>
           </div>
 
-          {/* Row 3: Left Card (Static) | Right Card (Dynamic - Splash) */}
-          <div className="border border-white/8 rounded-[48px] bg-white/[0.03] p-[clamp(26px,4.8vw,46px)] shadow-[0_28px_80px_rgba(0,0,0,0.6)] flex flex-col justify-between relative overflow-hidden text-left min-h-[360px]">
+          {/* Card 4: Branding */}
+          <div className="border border-white/8 rounded-[48px] bg-white/[0.03] p-[clamp(26px,4.8vw,46px)] shadow-[0_28px_80px_rgba(0,0,0,0.6)] flex flex-col justify-between relative overflow-hidden text-left min-h-[340px]">
             <div>
-              <div className="text-xs font-extrabold text-primary uppercase tracking-[0.22em] flex items-center gap-2 mb-4">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block"></span>
-                05 / Studio Support
+              <div className="text-xs font-extrabold text-primary uppercase tracking-[0.22em] mb-4">
+                04 / Identity
               </div>
-              <h3 className="font-['Space_Grotesk'] text-white font-medium text-2xl tracking-tight mb-3">Uptime Care</h3>
+              <h3 className="font-['Space_Grotesk'] text-white font-medium text-2xl tracking-tight mb-3">Branding</h3>
               <p className="text-white/60 text-[1.03rem] leading-[1.7] m-0">
-                Dedicated maintenance agreements, rapid priority troubleshooting support, package upgrades, database backups, and core security maintenance.
+                Logos, color systems, and visual identity that make your business memorable.
               </p>
             </div>
             <div className="flex flex-wrap gap-2 mt-6">
-              <span className="bg-white/6 text-white/80 text-[0.78rem] px-2.5 py-1 rounded-full font-bold">Updates</span>
-              <span className="bg-white/6 text-white/80 text-[0.78rem] px-2.5 py-1 rounded-full font-bold">Fixes</span>
-              <span className="bg-white/6 text-white/80 text-[0.78rem] px-2.5 py-1 rounded-full font-bold">Backups</span>
+              <span className="bg-white/6 text-white/80 text-[0.78rem] px-3 py-1 rounded-full font-bold">Logos</span>
+              <span className="bg-white/6 text-white/80 text-[0.78rem] px-3 py-1 rounded-full font-bold">Color Systems</span>
+              <span className="bg-white/6 text-white/80 text-[0.78rem] px-3 py-1 rounded-full font-bold">Visual Identity</span>
             </div>
           </div>
+        </div>
 
-          <ScrollSplashCard>
-            {/* Dashboard Header */}
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="font-['Space_Grotesk'] text-white font-medium text-lg tracking-tight flex items-center gap-2">
-                <span>🌴</span> Case Study Board
-              </h2>
-              <div className="flex items-center gap-1.5">
-                <div className="flex items-center -space-x-2.5">
-                  <img className="w-6 h-6 rounded-full border border-black object-cover" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=80&q=80" alt="Collaborator 1" />
-                  <img className="w-6 h-6 rounded-full border border-black object-cover" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&q=80" alt="Collaborator 2" />
-                  <img className="w-6 h-6 rounded-full border border-black object-cover" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=80&q=80" alt="Collaborator 3" />
-                  <div className="w-6 h-6 rounded-full border border-black bg-white/10 text-white flex items-center justify-center font-bold text-[0.64rem]">+2</div>
-                </div>
-                <button className="w-7 h-7 rounded-full border border-white/10 bg-white/5 hover:bg-white/15 text-white flex items-center justify-center transition-colors" aria-label="Like Board">
-                  <Heart size={14} fill="currentColor" strokeWidth={0} />
-                </button>
-              </div>
-            </div>
-
-            <div className="text-xs font-extrabold text-primary uppercase tracking-[0.22em] mb-1">06 / Analytics & Apps</div>
-            <h3 className="font-['Space_Grotesk'] text-white font-medium text-2xl tracking-tight mb-2">Mapping travel behavior</h3>
-            <p className="text-white/60 text-[1.03rem] leading-[1.7] m-0 mb-4">
-              Tailored analytics widgets mapping event behavior and travel search conversions.
-            </p>
-
-            <div className="relative w-full border border-white/8 rounded-2xl bg-white/[0.02] p-4 flex items-center justify-center overflow-hidden">
-              <div className="absolute bg-black/80 border border-white/10 rounded-lg shadow-lg pointer-events-none transition-opacity duration-300 text-[0.66rem] p-[8px_10px] right-[8%] top-[12%] text-left z-20">
-                <div className="text-white/60">Trips Booked</div>
-                <div className="text-white font-bold my-0.5">Tue Nov 22</div>
-                <div className="text-primary font-extrabold flex items-center gap-1 text-[0.68rem]">
-                  744 events
-                  <span className="bg-primary/20 text-primary-3 px-1 rounded-sm text-[0.58rem] font-bold">+340</span>
-                </div>
-              </div>
-
-              <svg viewBox="0 0 500 170" width="100%" height="100%">
-                <defs>
-                  <linearGradient id="grid-chart-grad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#7c3aed" stopOpacity="0.22" />
-                    <stop offset="100%" stopColor="#7c3aed" stopOpacity="0.00" />
-                  </linearGradient>
-                </defs>
-
-                {/* Grid Lines */}
-                <line x1="0" y1="30" x2="500" y2="30" stroke="rgba(255,255,255,0.06)" strokeDasharray="3 3" />
-                <line x1="0" y1="75" x2="500" y2="75" stroke="rgba(255,255,255,0.06)" strokeDasharray="3 3" />
-                <line x1="0" y1="120" x2="500" y2="120" stroke="rgba(255,255,255,0.06)" strokeDasharray="3 3" />
-                <line x1="0" y1="150" x2="500" y2="150" stroke="rgba(255,255,255,0.15)" />
-
-                {/* Axis Labels */}
-                <text x="10" y="164" fill="#a78bfa" fontSize="9" fontWeight="bold">Nov 8</text>
-                <text x="235" y="164" fill="#a78bfa" fontSize="9" fontWeight="bold">Nov 16</text>
-                <text x="440" y="164" fill="#a78bfa" fontSize="9" fontWeight="bold">Dec 8</text>
-
-                {/* Filled Path */}
-                <path
-                  d="M 10 130 L 40 70 L 80 110 L 120 60 L 160 90 L 200 30 L 240 120 L 280 120 L 320 70 L 360 100 L 400 35 L 440 110 L 480 90 L 480 150 L 10 150 Z"
-                  fill="url(#grid-chart-grad)"
-                />
-
-                {/* Chart Line Path */}
-                <path
-                  d="M 10 130 L 40 70 L 80 110 L 120 60 L 160 90 L 200 30 L 240 120 L 280 120 L 320 70 L 360 100 L 400 35 L 440 110 L 480 90"
-                  fill="none"
-                  stroke="#7c3aed"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-
-                {/* Data points */}
-                <circle cx="200" cy="30" r="5" fill="#7c3aed" stroke="#ffffff" strokeWidth="2" />
-                <circle cx="400" cy="35" r="5" fill="#7c3aed" stroke="#ffffff" strokeWidth="2" />
-              </svg>
-            </div>
-          </ScrollSplashCard>
+        <div className="mt-12 flex justify-center">
+          <ButtonLink to="/services" style={{ padding: '16px 36px', fontSize: '1.1rem' }}>
+            Explore Services
+          </ButtonLink>
         </div>
       </SectionWise>
 
@@ -296,77 +461,183 @@ function HomePage() {
         <div style={{ textAlign: 'left', marginBottom: '30px' }}>
           <span className="text-xs font-extrabold text-primary-2 uppercase tracking-[0.22em] flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-primary-2 inline-block"></span>
-            case studies
+            featured work
           </span>
-          <h2 className="text-[clamp(2.5rem,5vw,4rem)] font-extrabold text-white mt-3 mb-5 uppercase tracking-tight">
-            Featured Projects
+          <h2 className="text-[clamp(2.5rem,5vw,4rem)] font-extrabold text-white mt-3 mb-5 uppercase tracking-tight font-['Space_Grotesk']">
+            Built for Performance. Designed for Growth.
           </h2>
           <p style={{ color: 'rgba(255,255,255,0.5)', maxWidth: '600px', fontSize: '1.05rem', lineHeight: '1.6' }}>
-            A curated list of client platforms where design, performance engineering, and conversion goals meet. Drag or use mouse wheel to scroll, hover to see details.
+            A selection of projects where modern design, fast performance, and business goals come together.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-[30px]">
-          <Link to="/contact" className="group relative border border-white/8 rounded-[48px] overflow-hidden bg-white/[0.03] aspect-[4/3] flex flex-col justify-end p-[clamp(26px,4.8vw,46px)] shadow-[0_28px_80px_rgba(0,0,0,0.6)]">
-            <div className="absolute inset-0 z-0 overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800" alt="Northstar Studio" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-            </div>
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-10 opacity-80 group-hover:opacity-90 transition-opacity"></div>
-            <div className="relative z-20 text-left">
-              <span className="text-[0.72rem] font-extrabold text-primary uppercase tracking-[0.22em]">Creative Agency</span>
-              <h3 className="font-['Space_Grotesk'] font-medium text-2xl tracking-tight text-white mt-2">NORTHSTAR STUDIO</h3>
-              <div className="max-h-0 opacity-0 overflow-hidden transition-all duration-500 group-hover:max-h-20 group-hover:opacity-100 mt-2">
-                <p className="text-xs text-white/50 m-0">Stack: React, Vite, Framer, Sanity</p>
-                <p className="text-xs text-white/70 m-0 mt-1">Result: Raised qualified leads by 38% after launch.</p>
-              </div>
-            </div>
-          </Link>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-[30px]">
+          {projects.map((project, i) => (
+            <InteractiveProjectCard key={project.name} project={project} index={i} />
+          ))}
+        </div>
 
-          <Link to="/contact" className="group relative border border-white/8 rounded-[48px] overflow-hidden bg-white/[0.03] aspect-[4/3] flex flex-col justify-end p-[clamp(26px,4.8vw,46px)] shadow-[0_28px_80px_rgba(0,0,0,0.6)]">
-            <div className="absolute inset-0 z-0 overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?w=800" alt="Harbor Clinic" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-            </div>
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-10 opacity-80 group-hover:opacity-90 transition-opacity"></div>
-            <div className="relative z-20 text-left">
-              <span className="text-[0.72rem] font-extrabold text-primary uppercase tracking-[0.22em]">Healthcare Platform</span>
-              <h3 className="font-['Space_Grotesk'] font-medium text-2xl tracking-tight text-white mt-2">HARBOR CLINIC</h3>
-              <div className="max-h-0 opacity-0 overflow-hidden transition-all duration-500 group-hover:max-h-20 group-hover:opacity-100 mt-2">
-                <p className="text-xs text-white/50 m-0">Stack: Next.js, Tailwind, HubSpot</p>
-                <p className="text-xs text-white/70 m-0 mt-1">Result: Reduced abandonment and doubled bookings.</p>
-              </div>
-            </div>
-          </Link>
+        <div className="mt-12 flex justify-center">
+          <ButtonLink to="/services" style={{ padding: '16px 36px', fontSize: '1.1rem' }}>
+            View More Projects
+          </ButtonLink>
         </div>
       </SectionWise>
 
-      {/* 5. CLIENT TESTIMONIALS SECTION */}
+      {/* 5. WHY CHOOSE FIDARIX */}
+      <SectionWise bg="bg-black" style={{ paddingTop: '80px', paddingBottom: '80px', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
+        <div style={{ textAlign: 'left', marginBottom: '50px' }}>
+          <span className="text-xs font-extrabold text-purple-400 uppercase tracking-[0.22em] flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-purple-400 inline-block"></span>
+            why choose fidarix
+          </span>
+          <h2 className="text-[clamp(2.5rem,5vw,4rem)] font-extrabold text-white mt-3 uppercase tracking-tight font-['Space_Grotesk']">
+            Why Businesses Work With Us
+          </h2>
+        </div>
+
+        <div style={{ height: '580px', position: 'relative', width: '100%' }}>
+          <FlowingMenu 
+            items={whyChooseItems} 
+            textColor="#ffffff"
+            bgColor="#000000"
+            marqueeBgColor="#7c3aed"
+            marqueeTextColor="#ffffff"
+            borderColor="rgba(255, 255, 255, 0.08)"
+          />
+        </div>
+      </SectionWise>
+
+      {/* 6. PRICING PREVIEW */}
+      <SectionWise bg="bg-black" style={{ paddingTop: '80px', paddingBottom: '80px', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
+        <div style={{ textAlign: 'left', marginBottom: '50px' }}>
+          <span className="text-xs font-extrabold text-blue-400 uppercase tracking-[0.22em] flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-blue-400 inline-block"></span>
+            pricing preview
+          </span>
+          <h2 className="text-[clamp(2.5rem,5vw,4rem)] font-extrabold text-white mt-3 uppercase tracking-tight font-['Space_Grotesk']">
+            Simple Packages. Clear Value.
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {pricingPlans.map((plan, idx) => (
+            <TiltedCard
+              key={idx}
+              altText={`${plan.name} pricing plan`}
+              captionText={`Fidarix - ${plan.name} Plan`}
+              containerHeight="480px"
+              containerWidth="100%"
+              imageHeight="100%"
+              imageWidth="100%"
+              rotateAmplitude={12}
+              scaleOnHover={1.05}
+              showMobileWarning={false}
+              showTooltip={true}
+              displayOverlayContent={true}
+              overlayContent={
+                <div className={`w-full h-full p-6 flex flex-col justify-between text-left rounded-[24px] border relative overflow-hidden select-none transition-all duration-300 ${
+                  plan.popular
+                    ? 'bg-gradient-to-b from-purple-950/20 to-black border-purple-500 shadow-[0_15px_40px_rgba(147,51,234,0.15)] scale-102 z-10'
+                    : 'bg-white/[0.02] border-white/8 hover:bg-white/[0.04] hover:border-white/12'
+                }`}>
+                  {plan.popular && (
+                    <span className="absolute top-4 right-4 bg-purple-600 text-white font-extrabold text-[0.68rem] tracking-widest uppercase px-3 py-1 rounded-full z-20">
+                      Popular
+                    </span>
+                  )}
+                  <div className="relative z-10">
+                    <h3 className="font-['Space_Grotesk'] text-white/90 text-xl font-bold uppercase tracking-wider mb-2">
+                      {plan.name}
+                    </h3>
+                    <div className="text-3xl font-extrabold text-white font-['Space_Grotesk'] tracking-tight mb-6">
+                      {plan.price}
+                    </div>
+                    <ul className="flex flex-col gap-3 list-none p-0 m-0 border-t border-white/10 pt-5">
+                      {plan.features.slice(0, 4).map((feature, fIdx) => (
+                        <li key={fIdx} className="text-white/80 text-[0.9rem] flex items-start gap-2.5">
+                          <span className="text-purple-400 font-bold mt-0.5">✓</span>
+                          <span>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="mt-6 pt-2 relative z-10">
+                    <ButtonLink
+                      to="/pricing"
+                      variant={plan.popular ? 'primary' : 'ghost'}
+                      style={{ width: '100%', textAlign: 'center', padding: '12px 0' }}
+                    >
+                      Choose {plan.name}
+                    </ButtonLink>
+                  </div>
+                </div>
+              }
+            />
+          ))}
+        </div>
+
+        <div className="mt-12 flex justify-center">
+          <ButtonLink to="/pricing" style={{ padding: '16px 36px', fontSize: '1.1rem' }}>
+            View Full Pricing
+          </ButtonLink>
+        </div>
+      </SectionWise>
+
+      {/* 7. CLIENT TESTIMONIALS SECTION */}
       <SectionWise bg="bg-transparent" style={{ paddingTop: '80px', paddingBottom: '100px', backgroundColor: '#000000', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
         <div style={{ textAlign: 'left', marginBottom: '60px' }}>
           <span className="text-xs font-extrabold text-green-400 uppercase tracking-[0.22em] flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-green-400 inline-block"></span>
-            kind words
+            testimonials
           </span>
-          <h2 className="text-[clamp(2.5rem,5vw,4rem)] font-extrabold text-white mt-3 uppercase tracking-tight">
-            What Clients Say
+          <h2 className="text-[clamp(2.5rem,5vw,4rem)] font-extrabold text-white mt-3 uppercase tracking-tight font-['Space_Grotesk']">
+            Trusted by Growing Businesses
           </h2>
+          <p style={{ color: 'rgba(255,255,255,0.5)', maxWidth: '600px', fontSize: '1.05rem', lineHeight: '1.6', marginTop: '10px' }}>
+            We take pride in helping businesses create a professional online presence and generate meaningful results.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {testimonials.map((t) => (
-            <blockquote key={t.name} className="border border-white/8 rounded-[48px] bg-white/[0.03] p-8 shadow-[0_28px_80px_rgba(0,0,0,0.6)] flex flex-col justify-between relative overflow-hidden text-left min-h-[280px]">
-              <span className="font-serif text-[5rem] text-primary/10 absolute top-2 left-6 leading-none pointer-events-none">“</span>
-              <p className="relative z-10 text-white/90 text-[1.05rem] leading-[1.6] m-0 italic">{t.quote}</p>
-              <cite className="flex flex-col gap-1 not-italic mt-6">
-                <span className="font-bold text-white text-base">{t.name}</span>
-                <span className="text-white/40 text-xs tracking-wider uppercase">{t.role}</span>
-              </cite>
-            </blockquote>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          {testimonials.map((t, i) => (
+            <TiltTestimonialCard key={t.name} testimonial={t} index={i} />
           ))}
         </div>
       </SectionWise>
 
       {/* INTERACTIVE ROADMAP PROCESS CYCLE */}
       <InteractiveRoadmap />
+
+      {/* 8. FINAL CTA SECTION */}
+      <SectionWise bg="bg-black" style={{ paddingTop: '100px', paddingBottom: '120px', backgroundColor: '#000000', position: 'relative', overflow: 'hidden' }}>
+        {/* Glowing accent bg */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-[radial-gradient(circle,rgba(124,58,237,0.18)_0%,transparent_70%)] pointer-events-none filter blur-[60px]" />
+        
+        <div className="relative z-10 max-w-3xl mx-auto text-center flex flex-col items-center gap-6">
+          <span className="text-xs font-extrabold text-primary-2 uppercase tracking-[0.22em] flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-primary-2 inline-block"></span>
+            get started today
+          </span>
+          <h2 className="text-[clamp(2.5rem,6vw,4.5rem)] font-extrabold text-white uppercase tracking-tight font-['Space_Grotesk'] leading-[1.05]">
+            Ready to Build Your Website?
+          </h2>
+          <p className="text-white/70 text-[1.15rem] leading-[1.7] max-w-[50ch] mb-4">
+            Let's create a website that helps your business stand out, attract customers, and grow online.
+          </p>
+          <div className="flex flex-wrap gap-4 justify-center">
+            <ButtonLink to="/contact" style={{ padding: '18px 38px', fontSize: '1.1rem' }}>
+              Book a Free Consultation
+            </ButtonLink>
+            <ButtonLink to="/contact" variant="ghost" style={{ padding: '18px 38px', fontSize: '1.1rem' }}>
+              Contact Us
+            </ButtonLink>
+          </div>
+          <div className="text-white/40 text-sm font-semibold tracking-wider mt-4">
+            Starting from ₹3,999
+          </div>
+        </div>
+      </SectionWise>
     </div>
   );
 }

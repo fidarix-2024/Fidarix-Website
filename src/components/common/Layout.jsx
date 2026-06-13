@@ -139,9 +139,9 @@ export function ImpactHero({
             </span>
           ))}
         </h1>
-        <p className="text-white/90 text-[1.15rem] leading-[1.7] max-w-[45ch] mb-12 animate-[fadeIn_1s_ease_0.6s_forwards] opacity-0">
+        <div className="text-white/90 text-[1.15rem] leading-[1.7] max-w-[70ch] mb-12 animate-[fadeIn_1s_ease_0.6s_forwards] opacity-0">
           {copy}
-        </p>
+        </div>
         {actions ? <div className="flex flex-wrap gap-3 justify-center animate-[fadeIn_1s_ease_0.8s_forwards] opacity-0">{actions}</div> : null}
       </div>
     </section>
