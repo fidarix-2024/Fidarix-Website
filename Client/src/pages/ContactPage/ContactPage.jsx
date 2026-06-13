@@ -13,7 +13,7 @@ function ContactPage() {
       <section className="contact-hero">
         {/* Beams WebGL fills the entire section */}
         <div className="contact-hero-canvas">
-          <Beams
+          <ContactBackground
             beamWidth={6}
             beamHeight={75}
             beamNumber={50}
@@ -26,9 +26,7 @@ function ContactPage() {
         </div>
 
         {/* Gradient vignette overlay so text pops */}
-        <div className="absolute inset-0 z-0 opacity-40 mix-blend-screen pointer-events-none overflow-hidden h-[60vh] max-h-[800px] bg-gradient-to-b from-transparent to-black">
-          <ContactBackground />
-        </div>
+        <div className="contact-hero-overlay" />
 
         {/* Centered content */}
         <div className="contact-hero-content">
