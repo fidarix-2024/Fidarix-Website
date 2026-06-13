@@ -126,7 +126,7 @@ function AboutPage() {
           <div className="flex flex-col md:flex-row justify-center gap-12 md:gap-16 items-center">
             {/* Dishi: Image */}
             <div className="w-full max-w-[340px] h-[500px] flex justify-center">
-              <ChromaGrid 
+              <AboutGridBackground 
                 items={[
                   {
                     image: founders[0].image,
@@ -151,7 +151,7 @@ function AboutPage() {
 
             {/* Yash: Image */}
             <div className="w-full max-w-[340px] h-[500px] flex justify-center">
-              <ChromaGrid 
+              <AboutGridBackground 
                 items={[
                   {
                     image: founders[1].image,
