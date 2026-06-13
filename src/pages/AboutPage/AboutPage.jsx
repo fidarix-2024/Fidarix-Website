@@ -3,8 +3,6 @@ import { motion } from 'framer-motion';
 import { team, techStack, aboutTimeline, founders, reasons } from '../../data/site';
 import Lightfall from '../../components/Lightfall';
 import ChromaGrid from '../../components/ChromaGrid';
-import ScrollRevealText from '../../components/ScrollRevealText';
-import CircularGallery from '../../components/CircularGallery';
 import DomainAccordion from '../../components/DomainAccordion';
 import { Link } from 'react-router-dom';
 import { ArrowRight, CheckCircle2, Zap, Code, Smartphone, Tag, TrendingUp, LifeBuoy, PenTool, Sparkles, Rocket } from 'lucide-react';
@@ -203,7 +201,6 @@ function AboutPage() {
                   }}
                   className={`relative flex flex-col md:flex-row items-start ${idx % 2 === 0 ? 'md:flex-row-reverse' : ''}`}
                 >
-                  {/* Center Dot */}
                   <motion.div 
                     variants={{
                       hidden: { scale: 0, opacity: 0 },
@@ -212,7 +209,6 @@ function AboutPage() {
                     className="absolute left-0 md:left-1/2 w-4 h-4 rounded-full bg-primary -translate-x-[7.5px] md:-translate-x-1/2 mt-2 ring-4 ring-white z-10 shadow-[0_0_15px_rgba(82,39,255,0.4)]"
                   ></motion.div>
                   
-                  {/* Content */}
                   <motion.div 
                     variants={{
                       hidden: { opacity: 0, y: 50 },
