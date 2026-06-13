@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { navItems } from '../../data/site';
 import './Navbar.css';
@@ -10,15 +10,27 @@ export function LogoMark() {
 }
 
 export default function SiteHeader() {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    // Trigger initially
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const routes = useMemo(
     () => navItems.filter((item) => item.path !== '/home'),
     [],
   );
 
   return (
-    <header className="site-header">
+    <header className={`site-header ${isScrolled ? 'is-scrolled' : ''}`}>
       <div className="site-frame">
-        <div className="header-shell is-dark">
+        <div className="header-shell">
           <Link className="brand-link" to="/">
             <LogoMark />
             <span className="brand-wordmark">
