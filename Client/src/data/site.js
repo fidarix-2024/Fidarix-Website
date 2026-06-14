@@ -66,7 +66,7 @@ export const projects = [
     stack: 'React, Vite, CSS Modules, REST APIs',
     problem: 'Needed a scalable coaching portal to manage Lateral Entry registrations, mock tests, and digital announcements for Delhi polytechnic students.',
     result: 'Redesigned their technical infrastructure, boosting page loads to 98% and driving a 45% increase in online student admissions.',
-    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop&q=80'
+    image: '/images/HomePage/mission-client-pic.png'
   },
   {
     name: 'Aarav Academy',
@@ -75,7 +75,7 @@ export const projects = [
     stack: 'Vite, React Router, Custom Keyframe Motion',
     problem: 'Lacked a high-end web identity to capture digital course inquiries, distribute test scores, and match their premium classroom tutoring standards.',
     result: 'Constructed a responsive, conversion-focused landing experience that doubled digital admissions inquiries in 30 days.',
-    image: '/images/aarav_academy.png'
+    image: '/images/HomePage/aarav-client-pic.jpeg'
   }
 ];
 
