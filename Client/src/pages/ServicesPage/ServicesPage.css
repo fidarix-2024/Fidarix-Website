@@ -400,6 +400,128 @@
     font-weight: 600;
     line-height: 1.5;
     color: #0d1b3d;
+
+  /* Roadmap improvements: larger, centered, smoother animations, better contrast */
+  .roadmap-3d-scene {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    overflow: visible;
+  }
+
+  .roadmap-3d-plane {
+    width: min(1400px, 92%);
+    height: min(880px, 80vh);
+    transform-origin: center center;
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+  }
+
+  .roadmap-3d-plane svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  /* make roadmap header text more visible */
+  .roadmap-3d-scene ~ .absolute .text-center h2,
+  .roadmap-3d-scene .text-center h2,
+  .roadmap-3d-scene + .text-center h2 {
+    color: #ffffff !important;
+    text-shadow: 0 6px 22px rgba(0,0,0,0.6);
+  }
+
+  /* Cards and billboards smoothing */
+  .roadmap-card {
+    transition: opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s ease;
+  }
+
+  .roadmap-circle-icon,
+  .roadmap-road-node {
+    transition: transform 0.45s cubic-bezier(0.22,1,0.36,1), box-shadow 0.45s ease, background-color 0.45s ease;
+  }
+
+  /* Ensure floating panels are readable on dark background */
+  .roadmap-card, .roadmap-card .roadmap-card-title, .roadmap-card .roadmap-card-desc {
+    color: #ffffff;
+  }
+
+  /* Active checkpoint popup styling */
+  .roadmap-card {
+    max-width: 320px;
+    padding: 14px 18px;
+    border-radius: 14px;
+    background: rgba(6,6,12,0.6);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.04);
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+    pointer-events: none;
+  }
+
+  .roadmap-card.is-active {
+    opacity: 1;
+    transform: translateY(-48%) scale(1.06);
+    pointer-events: auto;
+    max-width: 420px;
+    padding: 20px 22px;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 8px 28px rgba(0,0,0,0.45);
+    border-color: rgba(255,255,255,0.08);
+  }
+
+  .roadmap-card .roadmap-card-title { font-size: 1.05rem; font-weight: 800; }
+  .roadmap-card .roadmap-card-desc { font-size: 0.95rem; color: rgba(255,255,255,0.8); }
+
+  /* Hover glow effect using inline phase color when available */
+  .roadmap-circle-icon:hover, .roadmap-card:hover {
+    transform: translateY(-52%) scale(1.08) !important;
+    box-shadow: 0 30px 120px rgba(0,0,0,0.6), 0 0 60px rgba(124,58,237,0.12);
+  }
+
+  /* Create colored glow by reading inline color on parent via CSS variable fallback */
+  .roadmap-circle-icon:hover::after {
+    content: '';
+    position: absolute;
+    left: -18px; right: -18px; top: -18px; bottom: -18px;
+    border-radius: 999px;
+    filter: blur(22px);
+    opacity: 0.95;
+    pointer-events: none;
+    background: radial-gradient(circle at center, var(--phase-color, #9b4dff)33, transparent 40%);
+  }
+
+  /* Ensure the dot glows with its color when active or hovered */
+  .roadmap-road-node, .roadmap-circle-icon {
+    transition: box-shadow 0.45s ease, transform 0.45s cubic-bezier(0.22,1,0.36,1);
+  }
+
+  /* Use the phase color variable for active glow */
+  .roadmap-road-node {
+    box-shadow: 0 0 0 0 transparent;
+  }
+  .roadmap-road-node[style] {
+    /* keep inline styles as fallback, but prefer var when present */
+  }
+  .roadmap-road-node:where(.is-active), .roadmap-road-node:hover {
+    box-shadow: 0 0 28px 10px color-mix(in srgb, var(--phase-color, #9b4dff) 60%, transparent 40%);
+  }
+
+  /* Make the heading column on the left larger-looking when in wide screens */
+  @media (min-width: 1100px) {
+    .roadmap-3d-scene { padding-left: 6vw; }
+    .roadmap-3d-plane { width: min(1600px, 94%); height: min(920px, 86vh); }
+  }
+
+  /* Responsive: smaller screens scale down gracefully */
+  @media (max-width: 980px) {
+    .roadmap-3d-plane { transform: scale(0.85); }
+  }
+
+  @media (max-width: 640px) {
+    .roadmap-3d-plane { width: 100%; height: 60vh; transform: scale(0.72); }
+    .services-hero-title-monopo { font-size: clamp(2.2rem, 8vw, 4rem); }
+  }
     margin-bottom: 20px;
     font-style: italic;
   }
@@ -1681,3 +1803,151 @@
     margin-bottom: 40px;
   }
 }
+
+/* ==========================================================================
+   Winding 3D Isometric Highway Timeline ("How We Work")
+   ========================================================================== */
+
+.roadmap-3d-scene {
+  perspective: 2000px;
+  perspective-origin: 50% 42%;
+  transform-style: preserve-3d;
+  width: 100%;
+}
+
+/* The isometric tilted canvas */
+.roadmap-3d-plane {
+  transform: rotateX(58deg) rotateZ(-20deg) scale(0.92);
+  transform-style: preserve-3d;
+  position: relative;
+  margin: 0 auto;
+  pointer-events: auto;
+}
+
+/* ── On-road circular dot ────────────────────────────────────── */
+.roadmap-road-node {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 3px solid #000;
+  transform: translate(-50%, -50%) translateZ(2px);
+  z-index: 10;
+  transition: all 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── Upright billboard wrapper ───────────────────────────────── */
+/* Counter-rotates to face the camera straight on */
+.roadmap-upright-billboard {
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  /* Exact inverse of .roadmap-3d-plane transform so billboard is vertical */
+  transform: translateX(-50%) rotateZ(20deg) rotateX(-58deg);
+  transform-origin: bottom center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: auto;
+}
+
+/* ── Vertical glowing pole ────────────────────────────────────── */
+.roadmap-pole {
+  width: 2.5px;
+  height: 110px;
+  transform-origin: bottom center;
+  transform: scaleY(0);
+  opacity: 0;
+  border-radius: 2px;
+}
+
+/* ── Circle icon badge ────────────────────────────────────────── */
+.roadmap-circle-icon {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -2px;
+  z-index: 30;
+  background-color: #060410;
+  /* starts hidden — inline style drives the animation */
+  cursor: pointer;
+}
+
+/* ── Glassmorphic info card ───────────────────────────────────── */
+.roadmap-card {
+  position: absolute;
+  width: 340px;
+  padding: 26px 24px 22px;
+  background: rgba(6, 4, 18, 0.78);
+  backdrop-filter: blur(22px) saturate(200%);
+  -webkit-backdrop-filter: blur(22px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 22px;
+  z-index: 40;
+  /* opacity/transform driven by inline style in JSX */
+}
+
+.roadmap-card.align-right {
+  left: calc(100% + 20px);
+  top: 50%;
+}
+
+.roadmap-card.align-left {
+  right: calc(100% + 20px);
+  top: 50%;
+}
+
+/* ── Card typography ─────────────────────────────────────────── */
+.roadmap-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.roadmap-card-num {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  flex-shrink: 0;
+}
+
+.roadmap-card-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.18rem;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.roadmap-card-desc {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ── Mobile: hide 3D and show vertical list ──────────────────── */
+.roadmap-mobile-layout {
+  display: none;
+}
+
+@media (max-width: 980px) {
+  .roadmap-3d-scene {
+    display: none !important;
+  }
+  .roadmap-mobile-layout {
+    display: block !important;
+  }
+}
+
+
+
+

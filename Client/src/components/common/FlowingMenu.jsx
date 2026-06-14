@@ -5,10 +5,10 @@ function FlowingMenu({
   items = [],
   speed = 15,
   textColor = '#fff',
-  bgColor = '#120F17',
+  bgColor = '#000',
   marqueeBgColor = '#fff',
   marqueeTextColor = '#120F17',
-  borderColor = '#fff'
+  borderColor = 'rgba(255, 255, 255, 0.1)'
 }) {
   return (
     <div className="w-full h-full overflow-hidden" style={{ backgroundColor: bgColor }}>
@@ -51,7 +51,7 @@ function MenuItem({ link, text, image, speed, textColor, marqueeBgColor, marquee
       const marqueeContent = marqueeInnerRef.current.querySelector('.marquee-part');
       if (!marqueeContent) return;
       const contentWidth = marqueeContent.offsetWidth;
-      if (contentWidth <= 0) return;
+      if (contentWidth === 0) return;
       const viewportWidth = window.innerWidth;
       const needed = Math.ceil(viewportWidth / contentWidth) + 2;
       setRepetitions(Math.max(4, needed));
@@ -68,7 +68,7 @@ function MenuItem({ link, text, image, speed, textColor, marqueeBgColor, marquee
       const marqueeContent = marqueeInnerRef.current.querySelector('.marquee-part');
       if (!marqueeContent) return;
       const contentWidth = marqueeContent.offsetWidth;
-      if (contentWidth <= 0) return;
+      if (contentWidth === 0) return;
 
       if (animationRef.current) {
         animationRef.current.kill();
@@ -116,12 +116,12 @@ function MenuItem({ link, text, image, speed, textColor, marqueeBgColor, marquee
 
   return (
     <div
-      className="flex-1 relative overflow-hidden text-center flex flex-col justify-center min-h-[90px]"
+      className="flex-1 relative overflow-hidden text-center"
       ref={itemRef}
       style={{ borderTop: isFirst ? 'none' : `1px solid ${borderColor}` }}
     >
       <a
-        className="flex items-center justify-center h-full w-full relative cursor-pointer uppercase no-underline font-extrabold text-2xl md:text-3xl lg:text-4xl py-6 font-['Space_Grotesk'] tracking-tight"
+        className="flex items-center justify-center h-full min-h-[120px] relative cursor-pointer uppercase no-underline font-extrabold text-[clamp(2rem,4vw,3.5rem)] font-['Space_Grotesk'] tracking-tight"
         href={link}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
@@ -137,9 +137,9 @@ function MenuItem({ link, text, image, speed, textColor, marqueeBgColor, marquee
         <div className="h-full w-fit flex" ref={marqueeInnerRef}>
           {[...Array(repetitions)].map((_, idx) => (
             <div className="marquee-part flex items-center flex-shrink-0" key={idx} style={{ color: marqueeTextColor }}>
-              <span className="whitespace-nowrap uppercase font-extrabold text-2xl md:text-3xl lg:text-4xl leading-[1] px-[1vw] font-['Space_Grotesk'] tracking-tight">{text}</span>
+              <span className="whitespace-nowrap uppercase font-extrabold text-[clamp(2rem,4vw,3.5rem)] leading-[1] px-[2vw] font-['Space_Grotesk'] tracking-tight">{text}</span>
               <div
-                className="w-[120px] md:w-[150px] h-[36px] md:h-[44px] my-auto mx-[1.5vw] rounded-[30px] bg-cover bg-center"
+                className="w-[400px] md:w-[600px] h-[10vh] my-[2em] mx-[1vw] rounded-[50px] bg-cover bg-center border border-black/10"
                 style={{ backgroundImage: `url(${image})` }}
               />
             </div>
