@@ -663,7 +663,7 @@ function ServicesPage() {
         <div className="hero-vertical-guide right"><span className="hero-guide-arrow" /></div>
         <div className="hero-scroll-arrow">↓</div>
         <div className="services-hero-content-monopo">
-          <p className="services-hero-eyebrow-tag">FIDARIX DIGITAL AGENCY</p>
+          <p className="services-hero-eyebrow-tag">FIDARIX</p>
           <h1 className="services-hero-title-monopo">
             <span className="hero-line-left">
               <BlurText text="Our" delay={80} animateBy="words" direction="top" className="inline-block" />

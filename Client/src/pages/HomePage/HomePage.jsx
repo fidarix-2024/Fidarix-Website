@@ -8,6 +8,7 @@ import Roadmap from '../../components/HomeComponent/Roadmap';
 import FlowingMenu from '../../components/common/FlowingMenu';
 import TiltedCard from '../../components/common/TiltedCard';
 import PixelCard from '../../components/common/PixelCard';
+import CardSwap, { Card } from '../../components/common/CardSwap';
 import './HomePage.css';
 
 function ScrollSplashCard({ children }) {
@@ -41,15 +42,13 @@ function ScrollSplashCard({ children }) {
   return (
     <div
       ref={cardRef}
-      className={`border border-white/8 rounded-[48px] bg-white/[0.03] p-[clamp(26px,4.8vw,46px)] shadow-[0_28px_80px_rgba(0,0,0,0.6)] flex flex-col justify-between relative overflow-hidden transition-all duration-1000 ${
-        revealed ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-10 scale-98'
-      }`}
+      className={`border border-white/8 rounded-[48px] bg-white/[0.03] p-[clamp(26px,4.8vw,46px)] shadow-[0_28px_80px_rgba(0,0,0,0.6)] flex flex-col justify-between relative overflow-hidden transition-all duration-1000 ${revealed ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-10 scale-98'
+        }`}
       style={{ marginTop: 0 }}
     >
       {/* Purple Splash Mask */}
-      <div className={`absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(155,77,255,0.18)_0%,transparent_60%)] pointer-events-none transition-opacity duration-1000 ${
-        revealed ? 'opacity-100' : 'opacity-0'
-      }`} />
+      <div className={`absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(155,77,255,0.18)_0%,transparent_60%)] pointer-events-none transition-opacity duration-1000 ${revealed ? 'opacity-100' : 'opacity-0'
+        }`} />
       <div className="relative z-10 h-full flex flex-col justify-between">
         {children}
       </div>
@@ -298,59 +297,84 @@ const whyChooseItems = [
   { link: '#', text: 'Ongoing Support', image: 'https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=600&auto=format&fit=crop&q=80' }
 ];
 
+const templatesData = [
+  {
+    title: 'Portfolio',
+    badge: 'Creative Portfolio',
+    desc: 'Clean visual framework built to showcase creative work, photography, or case studies with immersive detail.',
+    color: '#ff91e0',
+    glow: 'rgba(255, 145, 224, 0.08)',
+    image: '/images/templates/portfolio_template.png'
+  },
+  {
+    title: 'Coaching',
+    badge: 'Professional Coaching',
+    desc: 'Designed to establish authority, build deep trust, and drive consistent appointment scheduling.',
+    color: '#5a74ff',
+    glow: 'rgba(90, 116, 255, 0.08)',
+    image: '/images/templates/coaching_template.png'
+  },
+  {
+    title: 'Restaurants',
+    badge: 'Luxury Dining',
+    desc: 'High-end digital menus, smooth reservations integrations, and immersive food presentations.',
+    color: '#f8ff1f',
+    glow: 'rgba(248, 255, 31, 0.08)',
+    image: '/images/templates/restaurant_template.png'
+  },
+  {
+    title: 'Startups',
+    badge: 'SaaS & Startups',
+    desc: 'Conversion-first landing structures with responsive product details and interactive elements.',
+    color: '#9fe870',
+    glow: 'rgba(159, 232, 112, 0.08)',
+    image: '/images/templates/startup_template.png'
+  }
+];
+
 function HomePage() {
+  const [activeTemplateIdx, setActiveTemplateIdx] = useState(0);
+
   return (
     <div className="min-h-screen bg-black text-white flex flex-col">
       {/* 1. HERO SECTION */}
       <ImpactHero
-        lines={['Websites That Help', 'Businesses Grow']}
+        lines={['Premium Websites', 'Built for Growth']}
         copy={
-          <div className="flex flex-col items-center gap-6 max-w-2xl mx-auto">
-            <span className="text-xl md:text-2xl text-purple-300 font-semibold tracking-wide block">
-              Professional websites designed to attract customers, generate leads, and build trust online.
-            </span>
-            <p className="text-white/70 text-[1.05rem] leading-[1.65] m-0">
-              Whether you're a coaching institute, consultant, startup, clinic, agency, or local business, we create fast, modern, and SEO-ready websites that deliver real results.
-            </p>
-          </div>
+          <p className="text-white/75 text-[1.15rem] leading-[1.7] m-0 max-w-[60ch] mx-auto">
+            We design custom visual systems and build high-performance web applications that convert visitors into customers.
+          </p>
         }
         actions={[
-          <ButtonLink key="consultation" to="/contact" style={{ padding: '20px 40px', fontSize: '1.2rem' }}>
-            Get a Free Consultation
-          </ButtonLink>,
-          <ButtonLink key="pricing" to="/pricing" variant="ghost" style={{ padding: '20px 40px', fontSize: '1.2rem' }}>
-            View Pricing
-          </ButtonLink>,
+          <Link key="consultation" to="/contact" className="cta-button">
+            <div className="cta-button__background" />
+            <div className="cta-button__blur" />
+            <div className="cta-button__inner">
+              <span className="cta-button__text">Build Custom Site</span>
+              <div className="cta-button__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
+              </div>
+            </div>
+          </Link>,
+          <Link key="pricing" to="/pricing" className="cta-button is--ghost">
+            <div className="cta-button__background" />
+            <div className="cta-button__inner">
+              <span className="cta-button__text">View Pricing</span>
+              <div className="cta-button__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
+              </div>
+            </div>
+          </Link>
         ]}
       >
         <HomeHero />
       </ImpactHero>
-
-      {/* 2. WHO WE ARE SECTION */}
-      <SectionWise bg="bg-black" style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '100px', paddingBottom: '100px', backgroundColor: '#000000' }}>
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start text-left max-w-5xl mx-auto">
-          <div className="md:col-span-5">
-            <span className="text-xs font-extrabold text-primary-2 uppercase tracking-[0.22em] flex items-center gap-2 mb-3">
-              <span className="w-2 h-2 rounded-full bg-primary-2 inline-block"></span>
-              who we are
-            </span>
-            <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-extrabold text-white leading-[1.1] uppercase tracking-tight font-['Space_Grotesk']">
-              A Small Studio Focused on Big Results
-            </h2>
-          </div>
-          <div className="md:col-span-7 flex flex-col gap-6 text-[1.1rem] text-white/70 leading-[1.7] font-normal">
-            <p className="m-0 font-medium text-white text-[1.2rem]">
-              Fidarix is a web design and development studio helping businesses establish a strong online presence without the complexity or agency-level costs.
-            </p>
-            <p className="m-0">
-              We combine strategy, design, development, and SEO to create websites that not only look professional but also help businesses generate inquiries, bookings, and sales.
-            </p>
-            <p className="m-0 text-primary-3 font-semibold">
-              Our goal is simple: build websites that work for your business.
-            </p>
-          </div>
-        </div>
-      </SectionWise>
 
       {/* MARQUEE SEPARATOR */}
       <div className="bg-black py-4 border-b border-white/8">
@@ -363,151 +387,67 @@ function HomePage() {
         />
       </div>
 
-      {/* 3. SERVICES SECTION */}
-      <SectionWise bg="bg-black" style={{ paddingTop: '80px', paddingBottom: '80px', backgroundColor: '#000000', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
-        <div style={{ textAlign: 'left', marginBottom: '60px' }}>
-          <span className="text-xs font-extrabold text-primary uppercase tracking-[0.22em] flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-primary inline-block"></span>
-            services
-          </span>
-          <h2 className="text-[clamp(2.5rem,5vw,4rem)] font-extrabold text-white mt-3 uppercase tracking-tight font-['Space_Grotesk']">
-            Everything You Need to Grow Online
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Card 1: Website Design */}
-          <ScrollSplashCard>
-            <div className="text-xs font-extrabold text-primary uppercase tracking-[0.22em] mb-4">
-              01 / Design
-            </div>
-            <h3 className="font-['Space_Grotesk'] text-white font-medium text-2xl tracking-tight mb-3">Website Design</h3>
-            <p className="text-white/60 text-[1.03rem] leading-[1.7] m-0 mb-6">
-              Modern, professional designs built to create a strong first impression.
+      {/* 3.5 TEMPLATES SECTION */}
+      <SectionWise bg="bg-black" style={{ paddingTop: '80px', paddingBottom: '100px', backgroundColor: '#000000', borderBottom: '1px solid rgba(255, 255, 255, 0.04)', overflow: 'visible' }}>
+        <div className="templates-split-container">
+          {/* Left Text and list items */}
+          <div className="templates-left-info">
+            <span className="text-xs font-extrabold text-primary-2 uppercase tracking-[0.22em] flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-primary-2 inline-block"></span>
+              ready-made designs
+            </span>
+            <h2 className="templates-heading">
+              Built for performance.<br />Tailored to grow.
+            </h2>
+            <p className="templates-description">
+              Select one of our high-converting base aesthetics. We customize every detail—colors, fonts, integrations—to match your business identity perfectly.
             </p>
-            <div className="w-full border border-white/8 rounded-2xl bg-white/[0.02] p-4 flex items-center justify-center">
-              <svg viewBox="0 0 400 110" width="100%">
-                <rect x="5" y="5" width="390" height="100" rx="12" fill="none" stroke="rgba(124,58,237,0.3)" strokeWidth="1.5" />
-                <line x1="120" y1="5" x2="120" y2="105" stroke="rgba(124,58,237,0.2)" />
-                <circle cx="62" cy="55" r="28" fill="none" stroke="rgba(124,58,237,0.4)" strokeWidth="3" />
-                <rect x="140" y="34" width="220" height="12" rx="4" fill="rgba(124,58,237,0.25)" />
-                <rect x="140" y="58" width="170" height="8" rx="3" fill="rgba(124,58,237,0.15)" />
-              </svg>
-            </div>
-          </ScrollSplashCard>
-
-          {/* Card 2: Web Development */}
-          <ScrollSplashCard>
-            <div className="text-xs font-extrabold text-primary uppercase tracking-[0.22em] mb-4">
-              02 / Engineering
-            </div>
-            <h3 className="font-['Space_Grotesk'] text-white font-medium text-2xl tracking-tight mb-3">Web Development</h3>
-            <p className="text-white/60 text-[1.03rem] leading-[1.7] m-0 mb-6">
-              Fast, responsive, and reliable websites built with modern technologies.
-            </p>
-            <div className="p-4 bg-[#0d1b3d]/30 border border-white/8 rounded-2xl w-full flex flex-col gap-1.5 font-mono text-[0.8rem] text-left">
-              <span className="text-purple-400">const site = () =&gt; &#123;</span>
-              <span className="text-blue-400 pl-3">return &lt;FastResponsiveReliable /&gt;;</span>
-              <span className="text-purple-400">&#125;;</span>
-              <span className="text-green-400 text-[0.74rem]">// Optimized production build successful</span>
-            </div>
-          </ScrollSplashCard>
-
-          {/* Card 3: SEO Optimization */}
-          <div className="border border-white/8 rounded-[48px] bg-white/[0.03] p-[clamp(26px,4.8vw,46px)] shadow-[0_28px_80px_rgba(0,0,0,0.6)] flex flex-col justify-between relative overflow-hidden text-left min-h-[340px]">
-            <div>
-              <div className="text-xs font-extrabold text-primary uppercase tracking-[0.22em] mb-4">
-                03 / Marketing
-              </div>
-              <h3 className="font-['Space_Grotesk'] text-white font-medium text-2xl tracking-tight mb-3">SEO Optimization</h3>
-              <p className="text-white/60 text-[1.03rem] leading-[1.7] m-0">
-                Improve visibility on Google and attract customers actively searching for your services.
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-2 mt-6">
-              <span className="bg-white/6 text-[#00ff66] text-[0.78rem] px-3 py-1 rounded-full font-bold">✓ Google Visibility</span>
-              <span className="bg-white/6 text-white/80 text-[0.78rem] px-3 py-1 rounded-full font-bold">✓ Search Traffic</span>
-              <span className="bg-white/6 text-white/80 text-[0.78rem] px-3 py-1 rounded-full font-bold">✓ Higher Rankings</span>
+            <div className="templates-list">
+              {templatesData.map((item, idx) => (
+                <div
+                  key={idx}
+                  className={`templates-list-item ${activeTemplateIdx === idx ? 'active' : ''}`}
+                  onClick={() => setActiveTemplateIdx(idx)}
+                  style={{ '--template-glow': item.glow, '--template-active-color': item.color }}
+                >
+                  <span className="templates-list-num">0{idx + 1}</span>
+                  <div className="templates-list-text">
+                    <h3>{item.title}</h3>
+                    <p>{item.desc}</p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
-          {/* Card 4: Branding */}
-          <div className="border border-white/8 rounded-[48px] bg-white/[0.03] p-[clamp(26px,4.8vw,46px)] shadow-[0_28px_80px_rgba(0,0,0,0.6)] flex flex-col justify-between relative overflow-hidden text-left min-h-[340px]">
-            <div>
-              <div className="text-xs font-extrabold text-primary uppercase tracking-[0.22em] mb-4">
-                04 / Identity
-              </div>
-              <h3 className="font-['Space_Grotesk'] text-white font-medium text-2xl tracking-tight mb-3">Branding</h3>
-              <p className="text-white/60 text-[1.03rem] leading-[1.7] m-0">
-                Logos, color systems, and visual identity that make your business memorable.
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-2 mt-6">
-              <span className="bg-white/6 text-white/80 text-[0.78rem] px-3 py-1 rounded-full font-bold">Logos</span>
-              <span className="bg-white/6 text-white/80 text-[0.78rem] px-3 py-1 rounded-full font-bold">Color Systems</span>
-              <span className="bg-white/6 text-white/80 text-[0.78rem] px-3 py-1 rounded-full font-bold">Visual Identity</span>
+          {/* Right CardSwap visual stack */}
+          <div className="templates-right-visual">
+            <div className="card-swap-wrapper">
+              <CardSwap
+                width={460}
+                height={350}
+                cardDistance={40}
+                verticalDistance={45}
+                delay={4500}
+                pauseOnHover={true}
+                onCardSwap={(newFrontIdx) => {
+                  setActiveTemplateIdx(newFrontIdx);
+                }}
+                onCardClick={(idx) => {
+                  setActiveTemplateIdx(idx);
+                }}
+              >
+                {templatesData.map((item, idx) => (
+                  <Card key={idx} className="template-preview-card">
+                    <div className="template-card-inner">
+                      <img src={item.image} alt={item.title} className="template-card-img" />
+                      <div className="template-card-badge">{item.badge}</div>
+                    </div>
+                  </Card>
+                ))}
+              </CardSwap>
             </div>
           </div>
-        </div>
-
-        <div className="mt-12 flex justify-center">
-          <ButtonLink to="/services" style={{ padding: '16px 36px', fontSize: '1.1rem' }}>
-            Explore Services
-          </ButtonLink>
-        </div>
-      </SectionWise>
-
-      {/* 3.5 TEMPLATES: Four sample ProfileCard templates */}
-      <SectionWise bg="bg-black" style={{ paddingTop: '60px', paddingBottom: '60px', backgroundColor: '#000000', borderBottom: '1px solid rgba(255, 255, 255, 0.04)' }}>
-        <div style={{ textAlign: 'left', marginBottom: '30px' }}>
-          <span className="text-xs font-extrabold text-primary-2 uppercase tracking-[0.22em] flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-primary-2 inline-block"></span>
-            templates
-          </span>
-          <h2 className="text-[clamp(1.6rem,3.5vw,2.5rem)] font-extrabold text-white mt-3 mb-5 uppercase tracking-tight font-['Space_Grotesk']">
-            Ready-made Templates
-          </h2>
-          <p style={{ color: 'rgba(255,255,255,0.6)', maxWidth: '720px', fontSize: '1rem' }}>
-            Four starter templates tailored for agencies, coaching, restaurants and startups — preview styles and imagery.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
-          <PixelCard variant="pink" className="bg-transparent">
-            <div className="relative z-10 w-full h-full flex items-center justify-center">
-              <div className="text-center px-4">
-                <h3 className="text-white font-bold text-2xl">Agencies</h3>
-                <p className="text-white/70 text-sm mt-2">Modern agency starter template</p>
-              </div>
-            </div>
-          </PixelCard>
-
-          <PixelCard variant="blue" className="bg-transparent">
-            <div className="relative z-10 w-full h-full flex items-center justify-center">
-              <div className="text-center px-4">
-                <h3 className="text-white font-bold text-2xl">Coaching</h3>
-                <p className="text-white/70 text-sm mt-2">Trust-focused coaching layout</p>
-              </div>
-            </div>
-          </PixelCard>
-
-          <PixelCard variant="yellow" className="bg-transparent">
-            <div className="relative z-10 w-full h-full flex items-center justify-center">
-              <div className="text-center px-4">
-                <h3 className="text-white font-bold text-2xl">Restaurants</h3>
-                <p className="text-white/70 text-sm mt-2">Menu-first, reservation-ready</p>
-              </div>
-            </div>
-          </PixelCard>
-
-          <PixelCard variant="default" className="bg-transparent">
-            <div className="relative z-10 w-full h-full flex items-center justify-center">
-              <div className="text-center px-4">
-                <h3 className="text-white font-bold text-2xl">Startups</h3>
-                <p className="text-white/70 text-sm mt-2">Lean landing structure</p>
-              </div>
-            </div>
-          </PixelCard>
         </div>
       </SectionWise>
 
@@ -552,8 +492,8 @@ function HomePage() {
         </div>
 
         <div style={{ height: '580px', position: 'relative', width: '100%' }}>
-          <FlowingMenu 
-            items={whyChooseItems} 
+          <FlowingMenu
+            items={whyChooseItems}
             textColor="#ffffff"
             bgColor="#000000"
             marqueeBgColor="#7c3aed"
@@ -591,11 +531,10 @@ function HomePage() {
               showTooltip={true}
               displayOverlayContent={true}
               overlayContent={
-                <div className={`w-full h-full p-6 flex flex-col justify-between text-left rounded-[24px] border relative overflow-hidden select-none transition-all duration-300 ${
-                  plan.popular
+                <div className={`w-full h-full p-6 flex flex-col justify-between text-left rounded-[24px] border relative overflow-hidden select-none transition-all duration-300 ${plan.popular
                     ? 'bg-gradient-to-b from-purple-950/20 to-black border-purple-500 shadow-[0_15px_40px_rgba(147,51,234,0.15)] scale-102 z-10'
                     : 'bg-white/[0.02] border-white/8 hover:bg-white/[0.04] hover:border-white/12'
-                }`}>
+                  }`}>
                   {plan.popular && (
                     <span className="absolute top-4 right-4 bg-purple-600 text-white font-extrabold text-[0.68rem] tracking-widest uppercase px-3 py-1 rounded-full z-20">
                       Popular
@@ -669,7 +608,7 @@ function HomePage() {
       <SectionWise bg="bg-black" style={{ paddingTop: '100px', paddingBottom: '120px', backgroundColor: '#000000', position: 'relative', overflow: 'hidden' }}>
         {/* Glowing accent bg */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-[radial-gradient(circle,rgba(124,58,237,0.18)_0%,transparent_70%)] pointer-events-none filter blur-[60px]" />
-        
+
         <div className="relative z-10 max-w-3xl mx-auto text-center flex flex-col items-center gap-6">
           <span className="text-xs font-extrabold text-primary-2 uppercase tracking-[0.22em] flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-primary-2 inline-block"></span>

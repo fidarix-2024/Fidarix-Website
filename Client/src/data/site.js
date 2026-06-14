@@ -174,7 +174,7 @@ export const pricingPlans = [
       'Analytics dashboard setup',
     ],
     popular: false,
-    bestFor: 'Established businesses, Agencies, Coaches, SaaS startups, Professional services'
+    bestFor: 'Established businesses, Coaches, SaaS startups, Professional services'
   },
   {
     name: 'Premium',
@@ -199,7 +199,7 @@ export const pricingPlans = [
       'Performance optimization & Security hardening',
     ],
     popular: false,
-    bestFor: 'Agencies, Multi-location businesses, Startups, E-commerce brands, Scaling businesses'
+    bestFor: 'Multi-location businesses, Startups, E-commerce brands, Scaling businesses'
   },
 ];
 
