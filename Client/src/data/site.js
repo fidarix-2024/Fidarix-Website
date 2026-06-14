@@ -252,9 +252,9 @@ export const founders = [
   },
   { 
     name: 'Yash Raj', 
-    role: 'Co-Founder',
+    role: 'Founder',
     bio: 'Architecting high-performance digital experiences and ensuring technical excellence across all builds.',
-    image: '/images/AboutPage/Yash_co_founder.jpeg'
+    image: '/images/AboutPage/Yash_founder.jpeg'
   }
 ];
 

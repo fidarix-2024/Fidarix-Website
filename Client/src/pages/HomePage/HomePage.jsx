@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Heart } from 'lucide-react';
+import { Heart, ArrowRight, MapPin, Sparkles } from 'lucide-react';
 import { SectionWise, ImpactHero, ButtonLink } from '../../components/common/Layout';
 import { projects, testimonials } from '../../data/site';
 import HomeHero from '../../components/HomeComponent/HomeHero';
 import CardSwap, { Card } from '../../components/common/CardSwap';
+import MarqueeStrip from '../../components/common/MarqueeStrip';
+import { motion, useMotionTemplate, useScroll, useTransform } from 'framer-motion';
 import './HomePage.css';
 
 function InteractiveProjectCard({ project, index = 0 }) {
@@ -274,32 +276,156 @@ const templatesData = [
   }
 ];
 
+const SECTION_HEIGHT = 1500;
+
+const CenterImage = () => {
+  const { scrollY } = useScroll();
+
+  const clip1 = useTransform(scrollY, [0, 1000], [25, 0]);
+  const clip2 = useTransform(scrollY, [0, 1000], [75, 100]);
+
+  const clipPath = useMotionTemplate`polygon(${clip1}% ${clip1}%, ${clip2}% ${clip1}%, ${clip2}% ${clip2}%, ${clip1}% ${clip2}%)`;
+
+  const backgroundSize = useTransform(
+    scrollY,
+    [0, 1000],
+    ["170%", "100%"]
+  );
+  const opacity = useTransform(
+    scrollY,
+    [1200, 1500],
+    [1, 0.2] // Faint background visibility at the very end of scroll range
+  );
+
+  const textOpacity = useTransform(scrollY, [0, 600], [1, 0]);
+  const textY = useTransform(scrollY, [0, 600], [0, -50]);
+
+  return (
+    <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
+      {/* Background Image Layer - Clipped & Scaled */}
+      <motion.div
+        className="absolute inset-0 z-0 bg-center bg-no-repeat"
+        style={{
+          clipPath,
+          backgroundSize,
+          opacity,
+          backgroundImage:
+            "url(https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2670&auto=format&fit=crop)",
+        }}
+      >
+        <div className="absolute inset-0 bg-black/60 z-0" />
+      </motion.div>
+
+      {/* Text Content Overlay - Safe from clipPath clipping */}
+      <motion.div
+        style={{ opacity: textOpacity, y: textY }}
+        className="relative z-10 flex flex-col items-center justify-center text-center px-6 max-w-4xl"
+      >
+        <div className="mb-6 inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/25 bg-primary/8 text-xs font-bold text-primary-3 tracking-widest uppercase backdrop-blur-md">
+          <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse shadow-[0_0_8px_rgba(74,222,128,0.8)]" />
+          Premium Web Experience
+        </div>
+        <h1 className="font-['Space_Grotesk'] font-extrabold text-white text-[clamp(2.5rem,6.2vw,5.5rem)] leading-[0.98] uppercase tracking-tight mb-6">
+          Become Impossible<br />to Ignore.
+        </h1>
+        <p className="text-white/60 text-lg md:text-xl font-medium leading-[1.6] max-w-[48ch] mb-8">
+          We combine strategy, high-end design, and custom development to turn websites into active sales channels.
+        </p>
+        <div className="flex flex-wrap gap-4 justify-center">
+          <Link to="/contact" className="inline-flex items-center justify-center min-h-[56px] px-8 rounded-full font-bold text-sm transition-all bg-gradient-to-r from-primary to-primary-2 text-white shadow-[0_0_30px_rgba(90,116,255,0.3)] hover:shadow-[0_0_45px_rgba(90,116,255,0.5)] hover:-translate-y-0.5">
+            Book a Free Consultation
+          </Link>
+          <Link to="/pricing" className="inline-flex items-center justify-center min-h-[56px] px-8 rounded-full font-bold text-sm transition-all border border-white/20 bg-white/5 hover:bg-white/10 hover:border-white/30 hover:-translate-y-0.5">
+            View Pricing
+          </Link>
+        </div>
+      </motion.div>
+    </div>
+  );
+};
+
+const ParallaxImages = () => {
+  return (
+    <div className="mx-auto max-w-5xl px-4 pt-[150px] relative z-10 flex flex-col gap-24 pointer-events-none pb-[300px]">
+      <ParallaxImg
+        src="/images/templates/portfolio_template.png"
+        alt="Creative Portfolio template mockup"
+        start={-150}
+        end={150}
+        className="w-1/3 border border-white/10 rounded-3xl shadow-[0_25px_60px_rgba(0,0,0,0.6)] overflow-hidden"
+      />
+      <ParallaxImg
+        src="/images/templates/startup_template.png"
+        alt="SaaS Startup template mockup"
+        start={150}
+        end={-200}
+        className="mx-auto w-2/3 border border-white/10 rounded-3xl shadow-[0_25px_60px_rgba(0,0,0,0.6)] overflow-hidden"
+      />
+      <ParallaxImg
+        src="/images/templates/coaching_template.png"
+        alt="Professional Coaching mockup"
+        start={-150}
+        end={150}
+        className="ml-auto w-1/3 border border-white/10 rounded-3xl shadow-[0_25px_60px_rgba(0,0,0,0.6)] overflow-hidden"
+      />
+      <ParallaxImg
+        src="/images/templates/restaurant_template.png"
+        alt="Luxury Dining mockup"
+        start={0}
+        end={-400}
+        className="ml-24 w-5/12 border border-white/10 rounded-3xl shadow-[0_25px_60px_rgba(0,0,0,0.6)] overflow-hidden"
+      />
+    </div>
+  );
+};
+
+const ParallaxImg = ({ className, alt, src, start, end }) => {
+  const ref = useRef(null);
+
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: [`${start}px end`, `end ${end * -1}px`],
+  });
+
+  const opacity = useTransform(scrollYProgress, [0.75, 1], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0.75, 1], [1, 0.85]);
+
+  const y = useTransform(scrollYProgress, [0, 1], [start, end]);
+  const transform = useMotionTemplate`translateY(${y}px) scale(${scale})`;
+
+  return (
+    <motion.img
+      src={src}
+      alt={alt}
+      className={className}
+      ref={ref}
+      style={{ transform, opacity }}
+    />
+  );
+};
+
+const SpaceXHero = () => {
+  return (
+    <div
+      style={{ height: `calc(${SECTION_HEIGHT}px + 100vh)` }}
+      className="relative w-full bg-black overflow-hidden"
+    >
+      <CenterImage />
+
+      <ParallaxImages />
+
+      <div className="absolute bottom-0 left-0 right-0 h-96 bg-gradient-to-b from-transparent to-black pointer-events-none" />
+    </div>
+  );
+};
+
 function HomePage() {
   const [activeTemplateIdx, setActiveTemplateIdx] = useState(0);
 
   return (
     <div className="min-h-screen bg-black text-white flex flex-col">
       {/* 1. HERO SECTION */}
-      <ImpactHero
-        lines={['Become impossible', 'to ignore.']}
-        copy={
-          <div className="flex flex-col items-center gap-6 max-w-2xl mx-auto">
-            <p className="text-xl md:text-2xl text-white/70 font-medium leading-[1.65] m-0 text-center">
-              Great businesses deserve better first impressions.
-            </p>
-          </div>
-        }
-        actions={[
-          <Link key="consultation" to="/contact" className="inline-flex items-center justify-center min-h-[60px] px-12 font-bold text-[1.15rem] transition-all hover:-translate-y-0.5 hover:bg-gray-200" style={{ backgroundColor: '#ffffff', color: '#000000' }}>
-            Contact Us?
-          </Link>,
-          <Link key="pricing" to="/pricing" className="inline-flex items-center justify-center min-h-[60px] px-12 font-bold text-[1.15rem] transition-all hover:-translate-y-0.5 hover:bg-gray-200" style={{ backgroundColor: '#ffffff', color: '#000000' }}>
-            View Pricing
-          </Link>,
-        ]}
-      >
-        <HomeHero />
-      </ImpactHero>
+      <SpaceXHero />
 
       {/* 2. THE PROBLEM SECTION */}
       <SectionWise bg="bg-black" style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '100px', paddingBottom: '100px', backgroundColor: '#000000' }}>
@@ -390,18 +516,18 @@ function HomePage() {
               <span className="w-2 h-2 rounded-full bg-red-500"></span> Before
             </div>
             <ul className="flex flex-col gap-6 text-white/60 text-[1.1rem]">
-               <li className="flex gap-4 items-start"><span className="text-red-400 font-bold">✗</span> Outdated design that hurts trust</li>
-               <li className="flex gap-4 items-start"><span className="text-red-400 font-bold">✗</span> Confusing navigation for visitors</li>
-               <li className="flex gap-4 items-start"><span className="text-red-400 font-bold">✗</span> Invisible on Google (Poor SEO)</li>
-               <li className="flex gap-4 items-start"><span className="text-red-400 font-bold">✗</span> Doesn't convert visitors into leads</li>
+              <li className="flex gap-4 items-start"><span className="text-red-400 font-bold">✗</span> Outdated design that hurts trust</li>
+              <li className="flex gap-4 items-start"><span className="text-red-400 font-bold">✗</span> Confusing navigation for visitors</li>
+              <li className="flex gap-4 items-start"><span className="text-red-400 font-bold">✗</span> Invisible on Google (Poor SEO)</li>
+              <li className="flex gap-4 items-start"><span className="text-red-400 font-bold">✗</span> Doesn't convert visitors into leads</li>
             </ul>
           </div>
-          
+
           {/* Arrow */}
           <div className="flex items-center justify-center -my-6 md:my-0 md:-mx-8 z-10">
-             <div className="w-16 h-16 rounded-full bg-black border border-white/10 flex items-center justify-center shadow-xl text-white/50 rotate-90 md:rotate-0">
-               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path></svg>
-             </div>
+            <div className="w-16 h-16 rounded-full bg-black border border-white/10 flex items-center justify-center shadow-xl text-white/50 rotate-90 md:rotate-0">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path></svg>
+            </div>
           </div>
 
           {/* After */}
@@ -412,22 +538,22 @@ function HomePage() {
               <span className="w-2 h-2 rounded-full bg-primary-3 animate-pulse shadow-[0_0_10px_rgba(155,77,255,0.8)]"></span> After
             </div>
             <ul className="flex flex-col gap-6 text-white/95 font-medium text-[1.1rem]">
-               <li className="flex gap-4 items-center">
-                 <span className="w-6 h-6 rounded-full bg-green-500/20 text-green-400 flex items-center justify-center text-sm font-bold shrink-0">✓</span> 
-                 Premium, trust-building aesthetic
-               </li>
-               <li className="flex gap-4 items-center">
-                 <span className="w-6 h-6 rounded-full bg-green-500/20 text-green-400 flex items-center justify-center text-sm font-bold shrink-0">✓</span> 
-                 Clear user journey & seamless UX
-               </li>
-               <li className="flex gap-4 items-center">
-                 <span className="w-6 h-6 rounded-full bg-green-500/20 text-green-400 flex items-center justify-center text-sm font-bold shrink-0">✓</span> 
-                 Optimized for local & global SEO
-               </li>
-               <li className="flex gap-4 items-center">
-                 <span className="w-6 h-6 rounded-full bg-green-500/20 text-green-400 flex items-center justify-center text-sm font-bold shrink-0">✓</span> 
-                 High-converting landing pages
-               </li>
+              <li className="flex gap-4 items-center">
+                <span className="w-6 h-6 rounded-full bg-green-500/20 text-green-400 flex items-center justify-center text-sm font-bold shrink-0">✓</span>
+                Premium, trust-building aesthetic
+              </li>
+              <li className="flex gap-4 items-center">
+                <span className="w-6 h-6 rounded-full bg-green-500/20 text-green-400 flex items-center justify-center text-sm font-bold shrink-0">✓</span>
+                Clear user journey & seamless UX
+              </li>
+              <li className="flex gap-4 items-center">
+                <span className="w-6 h-6 rounded-full bg-green-500/20 text-green-400 flex items-center justify-center text-sm font-bold shrink-0">✓</span>
+                Optimized for local & global SEO
+              </li>
+              <li className="flex gap-4 items-center">
+                <span className="w-6 h-6 rounded-full bg-green-500/20 text-green-400 flex items-center justify-center text-sm font-bold shrink-0">✓</span>
+                High-converting landing pages
+              </li>
             </ul>
           </div>
         </div>
@@ -512,6 +638,9 @@ function HomePage() {
           </div>
         </div>
       </SectionWise>
+
+      {/* 8. MARQUEE STRIP (BIPSYNC STYLE HOVER EFFECT) */}
+      <MarqueeStrip />
     </div>
   );
 }
