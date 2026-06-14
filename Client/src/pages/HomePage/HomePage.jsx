@@ -1,61 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Heart } from 'lucide-react';
-import { SectionWise, Marquee, ImpactHero, ButtonLink } from '../../components/common/Layout';
-import { services, projects, testimonials, pricingPlans } from '../../data/site';
+import { SectionWise, ImpactHero, ButtonLink } from '../../components/common/Layout';
+import { projects, testimonials } from '../../data/site';
 import HomeHero from '../../components/HomeComponent/HomeHero';
-import Roadmap from '../../components/HomeComponent/Roadmap';
-import FlowingMenu from '../../components/common/FlowingMenu';
-import TiltedCard from '../../components/common/TiltedCard';
-import PixelCard from '../../components/common/PixelCard';
 import './HomePage.css';
-
-function ScrollSplashCard({ children }) {
-  const [revealed, setRevealed] = useState(false);
-  const cardRef = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setRevealed(true);
-          observer.unobserve(entry.target);
-        }
-      },
-      {
-        threshold: 0.15,
-      }
-    );
-
-    if (cardRef.current) {
-      observer.observe(cardRef.current);
-    }
-
-    return () => {
-      if (cardRef.current) {
-        observer.unobserve(cardRef.current);
-      }
-    };
-  }, []);
-
-  return (
-    <div
-      ref={cardRef}
-      className={`border border-white/8 rounded-[48px] bg-white/[0.03] p-[clamp(26px,4.8vw,46px)] shadow-[0_28px_80px_rgba(0,0,0,0.6)] flex flex-col justify-between relative overflow-hidden transition-all duration-1000 ${
-        revealed ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-10 scale-98'
-      }`}
-      style={{ marginTop: 0 }}
-    >
-      {/* Purple Splash Mask */}
-      <div className={`absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(155,77,255,0.18)_0%,transparent_60%)] pointer-events-none transition-opacity duration-1000 ${
-        revealed ? 'opacity-100' : 'opacity-0'
-      }`} />
-      <div className="relative z-10 h-full flex flex-col justify-between">
-        {children}
-      </div>
-    </div>
-  );
-}
 
 function InteractiveProjectCard({ project, index = 0 }) {
   const cardRef = useRef(null);
@@ -289,229 +238,164 @@ function TiltTestimonialCard({ testimonial, index = 0 }) {
   );
 }
 
-const whyChooseItems = [
-  { link: '#', text: 'Fast Turnaround', image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&auto=format&fit=crop&q=80' },
-  { link: '#', text: 'Transparent Pricing', image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=600&auto=format&fit=crop&q=80' },
-  { link: '#', text: 'Mobile-First Approach', image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&auto=format&fit=crop&q=80' },
-  { link: '#', text: 'SEO Ready', image: 'https://images.unsplash.com/photo-1432821596592-e2c18b78144f?w=600&auto=format&fit=crop&q=80' },
-  { link: '#', text: 'Conversion Focused', image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=600&auto=format&fit=crop&q=80' },
-  { link: '#', text: 'Ongoing Support', image: 'https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=600&auto=format&fit=crop&q=80' }
-];
-
 function HomePage() {
   return (
     <div className="min-h-screen bg-black text-white flex flex-col">
       {/* 1. HERO SECTION */}
       <ImpactHero
-        lines={['Websites That Help', 'Businesses Grow']}
+        lines={['Become impossible', 'to ignore.']}
         copy={
           <div className="flex flex-col items-center gap-6 max-w-2xl mx-auto">
-            <span className="text-xl md:text-2xl text-purple-300 font-semibold tracking-wide block">
-              Professional websites designed to attract customers, generate leads, and build trust online.
-            </span>
-            <p className="text-white/70 text-[1.05rem] leading-[1.65] m-0">
-              Whether you're a coaching institute, consultant, startup, clinic, agency, or local business, we create fast, modern, and SEO-ready websites that deliver real results.
+            <p className="text-xl md:text-2xl text-white/70 font-medium leading-[1.65] m-0 text-center">
+              Great businesses deserve better first impressions.
             </p>
           </div>
         }
         actions={[
-          <ButtonLink key="consultation" to="/contact" style={{ padding: '20px 40px', fontSize: '1.2rem' }}>
-            Get a Free Consultation
-          </ButtonLink>,
-          <ButtonLink key="pricing" to="/pricing" variant="ghost" style={{ padding: '20px 40px', fontSize: '1.2rem' }}>
+          <Link key="consultation" to="/contact" className="inline-flex items-center justify-center min-h-[60px] px-12 font-bold text-[1.15rem] transition-all hover:-translate-y-0.5 hover:bg-gray-200" style={{ backgroundColor: '#ffffff', color: '#000000' }}>
+            Contact Us?
+          </Link>,
+          <Link key="pricing" to="/pricing" className="inline-flex items-center justify-center min-h-[60px] px-12 font-bold text-[1.15rem] transition-all hover:-translate-y-0.5 hover:bg-gray-200" style={{ backgroundColor: '#ffffff', color: '#000000' }}>
             View Pricing
-          </ButtonLink>,
+          </Link>,
         ]}
       >
         <HomeHero />
       </ImpactHero>
 
-      {/* 2. WHO WE ARE SECTION */}
+      {/* 2. THE PROBLEM SECTION */}
       <SectionWise bg="bg-black" style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '100px', paddingBottom: '100px', backgroundColor: '#000000' }}>
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start text-left max-w-5xl mx-auto">
-          <div className="md:col-span-5">
-            <span className="text-xs font-extrabold text-primary-2 uppercase tracking-[0.22em] flex items-center gap-2 mb-3">
-              <span className="w-2 h-2 rounded-full bg-primary-2 inline-block"></span>
-              who we are
-            </span>
-            <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-extrabold text-white leading-[1.1] uppercase tracking-tight font-['Space_Grotesk']">
-              A Small Studio Focused on Big Results
-            </h2>
-          </div>
-          <div className="md:col-span-7 flex flex-col gap-6 text-[1.1rem] text-white/70 leading-[1.7] font-normal">
-            <p className="m-0 font-medium text-white text-[1.2rem]">
-              Fidarix is a web design and development studio helping businesses establish a strong online presence without the complexity or agency-level costs.
-            </p>
-            <p className="m-0">
-              We combine strategy, design, development, and SEO to create websites that not only look professional but also help businesses generate inquiries, bookings, and sales.
-            </p>
-            <p className="m-0 text-primary-3 font-semibold">
-              Our goal is simple: build websites that work for your business.
-            </p>
-          </div>
-        </div>
-      </SectionWise>
-
-      {/* MARQUEE SEPARATOR */}
-      <div className="bg-black py-4 border-b border-white/8">
-        <Marquee
-          items={[
-            "WEBSITE DESIGN", "WEB DEVELOPMENT", "SEO OPTIMIZATION", "BRANDING",
-            "WEBSITE DESIGN", "WEB DEVELOPMENT", "SEO OPTIMIZATION", "BRANDING"
-          ]}
-          speed="20s"
-        />
-      </div>
-
-      {/* 3. SERVICES SECTION */}
-      <SectionWise bg="bg-black" style={{ paddingTop: '80px', paddingBottom: '80px', backgroundColor: '#000000', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
-        <div style={{ textAlign: 'left', marginBottom: '60px' }}>
-          <span className="text-xs font-extrabold text-primary uppercase tracking-[0.22em] flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-primary inline-block"></span>
-            services
+        <div className="max-w-4xl mx-auto text-center mb-16">
+          <span className="text-xs font-extrabold text-red-500 uppercase tracking-[0.22em] flex items-center justify-center gap-2 mb-3">
+            <span className="w-2 h-2 rounded-full bg-red-500 inline-block"></span>
+            the problem
           </span>
-          <h2 className="text-[clamp(2.5rem,5vw,4rem)] font-extrabold text-white mt-3 uppercase tracking-tight font-['Space_Grotesk']">
-            Everything You Need to Grow Online
+          <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-extrabold text-white leading-[1.1] uppercase tracking-tight font-['Space_Grotesk']">
+            Is your website costing you customers?
           </h2>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Card 1: Website Design */}
-          <ScrollSplashCard>
-            <div className="text-xs font-extrabold text-primary uppercase tracking-[0.22em] mb-4">
-              01 / Design
-            </div>
-            <h3 className="font-['Space_Grotesk'] text-white font-medium text-2xl tracking-tight mb-3">Website Design</h3>
-            <p className="text-white/60 text-[1.03rem] leading-[1.7] m-0 mb-6">
-              Modern, professional designs built to create a strong first impression.
-            </p>
-            <div className="w-full border border-white/8 rounded-2xl bg-white/[0.02] p-4 flex items-center justify-center">
-              <svg viewBox="0 0 400 110" width="100%">
-                <rect x="5" y="5" width="390" height="100" rx="12" fill="none" stroke="rgba(124,58,237,0.3)" strokeWidth="1.5" />
-                <line x1="120" y1="5" x2="120" y2="105" stroke="rgba(124,58,237,0.2)" />
-                <circle cx="62" cy="55" r="28" fill="none" stroke="rgba(124,58,237,0.4)" strokeWidth="3" />
-                <rect x="140" y="34" width="220" height="12" rx="4" fill="rgba(124,58,237,0.25)" />
-                <rect x="140" y="58" width="170" height="8" rx="3" fill="rgba(124,58,237,0.15)" />
-              </svg>
-            </div>
-          </ScrollSplashCard>
-
-          {/* Card 2: Web Development */}
-          <ScrollSplashCard>
-            <div className="text-xs font-extrabold text-primary uppercase tracking-[0.22em] mb-4">
-              02 / Engineering
-            </div>
-            <h3 className="font-['Space_Grotesk'] text-white font-medium text-2xl tracking-tight mb-3">Web Development</h3>
-            <p className="text-white/60 text-[1.03rem] leading-[1.7] m-0 mb-6">
-              Fast, responsive, and reliable websites built with modern technologies.
-            </p>
-            <div className="p-4 bg-[#0d1b3d]/30 border border-white/8 rounded-2xl w-full flex flex-col gap-1.5 font-mono text-[0.8rem] text-left">
-              <span className="text-purple-400">const site = () =&gt; &#123;</span>
-              <span className="text-blue-400 pl-3">return &lt;FastResponsiveReliable /&gt;;</span>
-              <span className="text-purple-400">&#125;;</span>
-              <span className="text-green-400 text-[0.74rem]">// Optimized production build successful</span>
-            </div>
-          </ScrollSplashCard>
-
-          {/* Card 3: SEO Optimization */}
-          <div className="border border-white/8 rounded-[48px] bg-white/[0.03] p-[clamp(26px,4.8vw,46px)] shadow-[0_28px_80px_rgba(0,0,0,0.6)] flex flex-col justify-between relative overflow-hidden text-left min-h-[340px]">
-            <div>
-              <div className="text-xs font-extrabold text-primary uppercase tracking-[0.22em] mb-4">
-                03 / Marketing
-              </div>
-              <h3 className="font-['Space_Grotesk'] text-white font-medium text-2xl tracking-tight mb-3">SEO Optimization</h3>
-              <p className="text-white/60 text-[1.03rem] leading-[1.7] m-0">
-                Improve visibility on Google and attract customers actively searching for your services.
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-2 mt-6">
-              <span className="bg-white/6 text-[#00ff66] text-[0.78rem] px-3 py-1 rounded-full font-bold">✓ Google Visibility</span>
-              <span className="bg-white/6 text-white/80 text-[0.78rem] px-3 py-1 rounded-full font-bold">✓ Search Traffic</span>
-              <span className="bg-white/6 text-white/80 text-[0.78rem] px-3 py-1 rounded-full font-bold">✓ Higher Rankings</span>
-            </div>
-          </div>
-
-          {/* Card 4: Branding */}
-          <div className="border border-white/8 rounded-[48px] bg-white/[0.03] p-[clamp(26px,4.8vw,46px)] shadow-[0_28px_80px_rgba(0,0,0,0.6)] flex flex-col justify-between relative overflow-hidden text-left min-h-[340px]">
-            <div>
-              <div className="text-xs font-extrabold text-primary uppercase tracking-[0.22em] mb-4">
-                04 / Identity
-              </div>
-              <h3 className="font-['Space_Grotesk'] text-white font-medium text-2xl tracking-tight mb-3">Branding</h3>
-              <p className="text-white/60 text-[1.03rem] leading-[1.7] m-0">
-                Logos, color systems, and visual identity that make your business memorable.
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-2 mt-6">
-              <span className="bg-white/6 text-white/80 text-[0.78rem] px-3 py-1 rounded-full font-bold">Logos</span>
-              <span className="bg-white/6 text-white/80 text-[0.78rem] px-3 py-1 rounded-full font-bold">Color Systems</span>
-              <span className="bg-white/6 text-white/80 text-[0.78rem] px-3 py-1 rounded-full font-bold">Visual Identity</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-12 flex justify-center">
-          <ButtonLink to="/services" style={{ padding: '16px 36px', fontSize: '1.1rem' }}>
-            Explore Services
-          </ButtonLink>
-        </div>
-      </SectionWise>
-
-      {/* 3.5 TEMPLATES: Four sample ProfileCard templates */}
-      <SectionWise bg="bg-black" style={{ paddingTop: '60px', paddingBottom: '60px', backgroundColor: '#000000', borderBottom: '1px solid rgba(255, 255, 255, 0.04)' }}>
-        <div style={{ textAlign: 'left', marginBottom: '30px' }}>
-          <span className="text-xs font-extrabold text-primary-2 uppercase tracking-[0.22em] flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-primary-2 inline-block"></span>
-            templates
-          </span>
-          <h2 className="text-[clamp(1.6rem,3.5vw,2.5rem)] font-extrabold text-white mt-3 mb-5 uppercase tracking-tight font-['Space_Grotesk']">
-            Ready-made Templates
-          </h2>
-          <p style={{ color: 'rgba(255,255,255,0.6)', maxWidth: '720px', fontSize: '1rem' }}>
-            Four starter templates tailored for agencies, coaching, restaurants and startups — preview styles and imagery.
+          <p className="mt-6 text-[1.1rem] text-white/70 leading-[1.7] max-w-2xl mx-auto">
+            Most business websites are treated like digital brochures instead of active sales channels.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
-          <PixelCard variant="pink" className="bg-transparent">
-            <div className="relative z-10 w-full h-full flex items-center justify-center">
-              <div className="text-center px-4">
-                <h3 className="text-white font-bold text-2xl">Agencies</h3>
-                <p className="text-white/70 text-sm mt-2">Modern agency starter template</p>
-              </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          {/* Problem 1 */}
+          <div className="border border-white/8 rounded-[32px] bg-red-500/[0.03] p-10 relative overflow-hidden group hover:-translate-y-2 transition-transform duration-300">
+            <div className="w-14 h-14 bg-red-500/10 rounded-2xl flex items-center justify-center mb-6 border border-red-500/20 text-red-400">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
             </div>
-          </PixelCard>
-
-          <PixelCard variant="blue" className="bg-transparent">
-            <div className="relative z-10 w-full h-full flex items-center justify-center">
-              <div className="text-center px-4">
-                <h3 className="text-white font-bold text-2xl">Coaching</h3>
-                <p className="text-white/70 text-sm mt-2">Trust-focused coaching layout</p>
-              </div>
+            <h3 className="text-2xl font-bold text-white mb-4 font-['Space_Grotesk']">Slow & Clunky</h3>
+            <p className="text-white/60 leading-relaxed text-[1.05rem]">Visitors leave before your site even finishes loading, resulting in lost leads and a high bounce rate.</p>
+          </div>
+          {/* Problem 2 */}
+          <div className="border border-white/8 rounded-[32px] bg-red-500/[0.03] p-10 relative overflow-hidden group hover:-translate-y-2 transition-transform duration-300">
+            <div className="w-14 h-14 bg-red-500/10 rounded-2xl flex items-center justify-center mb-6 border border-red-500/20 text-red-400">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
             </div>
-          </PixelCard>
-
-          <PixelCard variant="yellow" className="bg-transparent">
-            <div className="relative z-10 w-full h-full flex items-center justify-center">
-              <div className="text-center px-4">
-                <h3 className="text-white font-bold text-2xl">Restaurants</h3>
-                <p className="text-white/70 text-sm mt-2">Menu-first, reservation-ready</p>
-              </div>
+            <h3 className="text-2xl font-bold text-white mb-4 font-['Space_Grotesk']">Poor Mobile Experience</h3>
+            <p className="text-white/60 leading-relaxed text-[1.05rem]">Over 60% of traffic is mobile, yet your site is hard to read and navigate on phones.</p>
+          </div>
+          {/* Problem 3 */}
+          <div className="border border-white/8 rounded-[32px] bg-red-500/[0.03] p-10 relative overflow-hidden group hover:-translate-y-2 transition-transform duration-300">
+            <div className="w-14 h-14 bg-red-500/10 rounded-2xl flex items-center justify-center mb-6 border border-red-500/20 text-red-400">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
             </div>
-          </PixelCard>
-
-          <PixelCard variant="default" className="bg-transparent">
-            <div className="relative z-10 w-full h-full flex items-center justify-center">
-              <div className="text-center px-4">
-                <h3 className="text-white font-bold text-2xl">Startups</h3>
-                <p className="text-white/70 text-sm mt-2">Lean landing structure</p>
-              </div>
-            </div>
-          </PixelCard>
+            <h3 className="text-2xl font-bold text-white mb-4 font-['Space_Grotesk']">Zero Conversions</h3>
+            <p className="text-white/60 leading-relaxed text-[1.05rem]">Traffic comes in, but there's no clear path for them to contact you, book a call, or buy.</p>
+          </div>
         </div>
       </SectionWise>
 
-      {/* 4. FEATURED PROJECTS SECTION */}
+      {/* 3. WHY FIDARIX EXISTS SECTION */}
+      <SectionWise bg="bg-black" style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '100px', paddingBottom: '100px', backgroundColor: '#000000' }}>
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start text-left max-w-6xl mx-auto">
+          <div className="md:col-span-5">
+            <span className="text-xs font-extrabold text-primary-2 uppercase tracking-[0.22em] flex items-center gap-2 mb-3">
+              <span className="w-2 h-2 rounded-full bg-primary-2 inline-block"></span>
+              why fidarix exists
+            </span>
+            <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-extrabold text-white leading-[1.1] uppercase tracking-tight font-['Space_Grotesk']">
+              A Studio Focused on Big Results
+            </h2>
+          </div>
+          <div className="md:col-span-7 flex flex-col gap-6 text-[1.15rem] text-white/70 leading-[1.7] font-normal">
+            <p className="m-0 font-medium text-white text-[1.25rem]">
+              Fidarix was built to bridge the gap between high-end agency quality and accessible pricing for growing businesses.
+            </p>
+            <p className="m-0">
+              We combine strategy, design, development, and SEO to create websites that not only look stunning but actively solve the problems holding your business back.
+            </p>
+            <p className="m-0 text-primary-3 font-semibold text-[1.2rem]">
+              Our goal is simple: turn your website from a digital brochure into a powerful growth engine.
+            </p>
+          </div>
+        </div>
+      </SectionWise>
+
+      {/* 4. TRANSFORMATION SECTION */}
+      <SectionWise bg="bg-black" style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '100px', paddingBottom: '100px', backgroundColor: '#000000' }}>
+        <div className="text-center mb-16">
+          <span className="text-xs font-extrabold text-blue-400 uppercase tracking-[0.22em] flex items-center justify-center gap-2 mb-3">
+            <span className="w-2 h-2 rounded-full bg-blue-400 inline-block"></span>
+            the transformation
+          </span>
+          <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-extrabold text-white leading-[1.1] uppercase tracking-tight font-['Space_Grotesk']">
+            From Invisible to Irresistible
+          </h2>
+        </div>
+
+        <div className="flex flex-col md:flex-row gap-6 max-w-6xl mx-auto">
+          {/* Before */}
+          <div className="flex-1 border border-white/5 rounded-[40px] bg-white/[0.02] p-12 flex flex-col relative overflow-hidden grayscale opacity-80">
+            <div className="absolute top-0 left-0 w-full h-1 bg-red-500/50"></div>
+            <div className="text-red-400 font-bold uppercase tracking-widest text-sm mb-8 flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-red-500"></span> Before
+            </div>
+            <ul className="flex flex-col gap-6 text-white/60 text-[1.1rem]">
+               <li className="flex gap-4 items-start"><span className="text-red-400 font-bold">✗</span> Outdated design that hurts trust</li>
+               <li className="flex gap-4 items-start"><span className="text-red-400 font-bold">✗</span> Confusing navigation for visitors</li>
+               <li className="flex gap-4 items-start"><span className="text-red-400 font-bold">✗</span> Invisible on Google (Poor SEO)</li>
+               <li className="flex gap-4 items-start"><span className="text-red-400 font-bold">✗</span> Doesn't convert visitors into leads</li>
+            </ul>
+          </div>
+          
+          {/* Arrow */}
+          <div className="flex items-center justify-center -my-6 md:my-0 md:-mx-8 z-10">
+             <div className="w-16 h-16 rounded-full bg-black border border-white/10 flex items-center justify-center shadow-xl text-white/50 rotate-90 md:rotate-0">
+               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path></svg>
+             </div>
+          </div>
+
+          {/* After */}
+          <div className="flex-1 border border-primary/30 rounded-[40px] bg-primary/[0.05] p-12 flex flex-col relative overflow-hidden shadow-[0_0_50px_rgba(124,58,237,0.1)]">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-primary-3"></div>
+            <div className="absolute -top-32 -right-32 w-64 h-64 bg-primary/20 rounded-full blur-[60px] pointer-events-none"></div>
+            <div className="text-primary-3 font-bold uppercase tracking-widest text-sm mb-8 flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-primary-3 animate-pulse shadow-[0_0_10px_rgba(155,77,255,0.8)]"></span> After
+            </div>
+            <ul className="flex flex-col gap-6 text-white/95 font-medium text-[1.1rem]">
+               <li className="flex gap-4 items-center">
+                 <span className="w-6 h-6 rounded-full bg-green-500/20 text-green-400 flex items-center justify-center text-sm font-bold shrink-0">✓</span> 
+                 Premium, trust-building aesthetic
+               </li>
+               <li className="flex gap-4 items-center">
+                 <span className="w-6 h-6 rounded-full bg-green-500/20 text-green-400 flex items-center justify-center text-sm font-bold shrink-0">✓</span> 
+                 Clear user journey & seamless UX
+               </li>
+               <li className="flex gap-4 items-center">
+                 <span className="w-6 h-6 rounded-full bg-green-500/20 text-green-400 flex items-center justify-center text-sm font-bold shrink-0">✓</span> 
+                 Optimized for local & global SEO
+               </li>
+               <li className="flex gap-4 items-center">
+                 <span className="w-6 h-6 rounded-full bg-green-500/20 text-green-400 flex items-center justify-center text-sm font-bold shrink-0">✓</span> 
+                 High-converting landing pages
+               </li>
+            </ul>
+          </div>
+        </div>
+      </SectionWise>
+
+      {/* 5. FEATURED PROJECTS SECTION */}
       <SectionWise bg="bg-transparent" style={{ paddingTop: '80px', paddingBottom: '80px', backgroundColor: '#000000', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
         <div style={{ textAlign: 'left', marginBottom: '30px' }}>
           <span className="text-xs font-extrabold text-primary-2 uppercase tracking-[0.22em] flex items-center gap-2">
@@ -539,108 +423,7 @@ function HomePage() {
         </div>
       </SectionWise>
 
-      {/* 5. WHY CHOOSE FIDARIX */}
-      <SectionWise bg="bg-black" style={{ paddingTop: '80px', paddingBottom: '80px', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
-        <div style={{ textAlign: 'left', marginBottom: '50px' }}>
-          <span className="text-xs font-extrabold text-purple-400 uppercase tracking-[0.22em] flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-purple-400 inline-block"></span>
-            why choose fidarix
-          </span>
-          <h2 className="text-[clamp(2.5rem,5vw,4rem)] font-extrabold text-white mt-3 uppercase tracking-tight font-['Space_Grotesk']">
-            Why Businesses Work With Us
-          </h2>
-        </div>
-
-        <div style={{ height: '580px', position: 'relative', width: '100%' }}>
-          <FlowingMenu 
-            items={whyChooseItems} 
-            textColor="#ffffff"
-            bgColor="#000000"
-            marqueeBgColor="#7c3aed"
-            marqueeTextColor="#ffffff"
-            borderColor="rgba(255, 255, 255, 0.08)"
-          />
-        </div>
-      </SectionWise>
-
-      {/* 6. PRICING PREVIEW */}
-      <SectionWise bg="bg-black" style={{ paddingTop: '80px', paddingBottom: '80px', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
-        <div style={{ textAlign: 'left', marginBottom: '50px' }}>
-          <span className="text-xs font-extrabold text-blue-400 uppercase tracking-[0.22em] flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-blue-400 inline-block"></span>
-            pricing preview
-          </span>
-          <h2 className="text-[clamp(2.5rem,5vw,4rem)] font-extrabold text-white mt-3 uppercase tracking-tight font-['Space_Grotesk']">
-            Simple Packages. Clear Value.
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {pricingPlans.map((plan, idx) => (
-            <TiltedCard
-              key={idx}
-              altText={`${plan.name} pricing plan`}
-              captionText={`Fidarix - ${plan.name} Plan`}
-              containerHeight="480px"
-              containerWidth="100%"
-              imageHeight="100%"
-              imageWidth="100%"
-              rotateAmplitude={12}
-              scaleOnHover={1.05}
-              showMobileWarning={false}
-              showTooltip={true}
-              displayOverlayContent={true}
-              overlayContent={
-                <div className={`w-full h-full p-6 flex flex-col justify-between text-left rounded-[24px] border relative overflow-hidden select-none transition-all duration-300 ${
-                  plan.popular
-                    ? 'bg-gradient-to-b from-purple-950/20 to-black border-purple-500 shadow-[0_15px_40px_rgba(147,51,234,0.15)] scale-102 z-10'
-                    : 'bg-white/[0.02] border-white/8 hover:bg-white/[0.04] hover:border-white/12'
-                }`}>
-                  {plan.popular && (
-                    <span className="absolute top-4 right-4 bg-purple-600 text-white font-extrabold text-[0.68rem] tracking-widest uppercase px-3 py-1 rounded-full z-20">
-                      Popular
-                    </span>
-                  )}
-                  <div className="relative z-10">
-                    <h3 className="font-['Space_Grotesk'] text-white/90 text-xl font-bold uppercase tracking-wider mb-2">
-                      {plan.name}
-                    </h3>
-                    <div className="text-3xl font-extrabold text-white font-['Space_Grotesk'] tracking-tight mb-6">
-                      {plan.price}
-                    </div>
-                    <ul className="flex flex-col gap-3 list-none p-0 m-0 border-t border-white/10 pt-5">
-                      {plan.features.slice(0, 4).map((feature, fIdx) => (
-                        <li key={fIdx} className="text-white/80 text-[0.9rem] flex items-start gap-2.5">
-                          <span className="text-purple-400 font-bold mt-0.5">✓</span>
-                          <span>{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="mt-6 pt-2 relative z-10">
-                    <ButtonLink
-                      to="/pricing"
-                      variant={plan.popular ? 'primary' : 'ghost'}
-                      style={{ width: '100%', textAlign: 'center', padding: '12px 0' }}
-                    >
-                      Choose {plan.name}
-                    </ButtonLink>
-                  </div>
-                </div>
-              }
-            />
-          ))}
-        </div>
-
-        <div className="mt-12 flex justify-center">
-          <ButtonLink to="/pricing" style={{ padding: '16px 36px', fontSize: '1.1rem' }}>
-            View Full Pricing
-          </ButtonLink>
-        </div>
-      </SectionWise>
-
-      {/* 7. CLIENT TESTIMONIALS SECTION */}
-
+      {/* 6. CLIENT TESTIMONIALS SECTION */}
       <SectionWise bg="bg-transparent" style={{ paddingTop: '80px', paddingBottom: '100px', backgroundColor: '#000000', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
         <div style={{ textAlign: 'left', marginBottom: '60px' }}>
           <span className="text-xs font-extrabold text-green-400 uppercase tracking-[0.22em] flex items-center gap-2">
@@ -662,10 +445,7 @@ function HomePage() {
         </div>
       </SectionWise>
 
-      {/* INTERACTIVE ROADMAP PROCESS CYCLE */}
-      <Roadmap />
-
-      {/* 8. FINAL CTA SECTION */}
+      {/* 7. FINAL CTA SECTION */}
       <SectionWise bg="bg-black" style={{ paddingTop: '100px', paddingBottom: '120px', backgroundColor: '#000000', position: 'relative', overflow: 'hidden' }}>
         {/* Glowing accent bg */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-[radial-gradient(circle,rgba(124,58,237,0.18)_0%,transparent_70%)] pointer-events-none filter blur-[60px]" />

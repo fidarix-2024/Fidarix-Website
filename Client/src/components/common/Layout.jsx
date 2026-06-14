@@ -131,11 +131,11 @@ export function ImpactHero({
   children,
   minHeight = 'min-h-[80vh]',
   titleSize = 'text-[clamp(2.8rem,7vw,5.5rem)]',
-  py = 'py-20 md:py-28',
+  py = 'pt-24 pb-10 md:pt-32 md:pb-12',
   leadingClass = 'leading-[0.95]'
 }) {
   return (
-    <section className={`${minHeight} flex flex-col justify-center items-center text-center px-6 ${py} rounded-none bg-black text-white relative overflow-hidden z-10`}>
+    <section className={`${minHeight} flex flex-col items-center px-6 ${py} rounded-none bg-black text-white relative overflow-hidden z-10`}>
       {children && (
         <div className="absolute inset-0 z-0 opacity-60 pointer-events-none">
           {children}
@@ -146,7 +146,7 @@ export function ImpactHero({
       <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-[radial-gradient(circle,rgba(76,195,255,0.4)_0%,transparent_70%)] pointer-events-none filter blur-[80px]" />
       <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-[radial-gradient(circle,rgba(155,77,255,0.4)_0%,transparent_70%)] pointer-events-none filter blur-[80px]" />
 
-      <div className="relative z-10 flex flex-col items-center">
+      <div className="relative z-10 flex flex-col items-center justify-center flex-1 w-full">
         <h1 className={`text-white ${titleSize} ${leadingClass} font-extrabold font-['Space_Grotesk'] uppercase tracking-tight flex flex-col items-center mb-8`}>
           {lines.map((line, i) => (
             <span key={i} className="block overflow-hidden py-1.5 -my-1.5">
@@ -156,11 +156,12 @@ export function ImpactHero({
             </span>
           ))}
         </h1>
-        <div className="text-white/90 text-[1.15rem] leading-[1.7] max-w-[70ch] mb-12 animate-[fadeIn_1s_ease_0.6s_forwards] opacity-0">
+        <div className="text-white/90 text-[1.15rem] leading-[1.7] max-w-[70ch] animate-[fadeIn_1s_ease_0.6s_forwards] opacity-0 text-center">
           {copy}
         </div>
-        {actions ? <div className="flex flex-wrap gap-3 justify-center animate-[fadeIn_1s_ease_0.8s_forwards] opacity-0">{actions}</div> : null}
       </div>
+      
+      {actions ? <div className="relative z-10 mt-auto flex flex-wrap gap-4 justify-center animate-[fadeIn_1s_ease_0.8s_forwards] opacity-0 w-full pt-12">{actions}</div> : null}
     </section>
   );
 }
