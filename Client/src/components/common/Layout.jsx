@@ -5,45 +5,45 @@ import './Layout.css';
 
 export function SiteFooter({ isDark }) {
   return (
-    <footer className={`bg-black text-white w-full pt-20 pb-10 border-t ${
+    <footer className={`bg-black text-white w-full pt-20 pb-10 max-md:pt-8 max-md:pb-4 border-t ${
       isDark ? 'border-white/8' : 'border-white/8'
     }`}>
       <div className="w-[min(1180px,calc(100%-32px))] mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-[1.2fr_repeat(3,1fr)] gap-[60px]">
+        <div className="grid grid-cols-2 md:grid-cols-[1.2fr_repeat(3,1fr)] gap-4 md:gap-[60px]">
           {/* Column 1: Logo and Pitch */}
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-5 max-md:gap-2 col-span-2 md:col-span-1">
             <Link className="inline-flex items-center gap-3" to="/" style={{ color: '#ffffff' }}>
               <LogoMark />
               <span className="flex flex-col line-height-1">
                 <span className="font-['Space_Grotesk'] font-medium text-xl tracking-[0.26em] uppercase">Fidarix</span>
               </span>
             </Link>
-            <p className="text-white/60 text-[1.1rem] leading-[1.6] m-0 max-w-[320px]">
+            <p className="text-white/60 text-[1.1rem] leading-[1.6] m-0 max-w-[320px] hidden md:block">
               We craft premium digital experiences that refuse to blend in. Combining striking design, flawless engineering, and strategic growth for ambitious brands.
             </p>
           </div>
 
           {/* Column 2: Navigation */}
-          <div className="flex flex-col gap-4">
-            <h4 className="font-['Space_Grotesk'] text-[1rem] font-extrabold text-white uppercase tracking-[0.12em] m-0 mb-3 border-b border-white/8 pb-3">Navigation</h4>
-            <Link to="/" className="text-white/60 text-[1.1rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">Home</Link>
-            <Link to="/about" className="text-white/60 text-[1.1rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">About</Link>
-            <Link to="/services" className="text-white/60 text-[1.1rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">Services</Link>
-            <Link to="/contact" className="text-white/60 text-[1.1rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">Contact</Link>
+          <div className="flex flex-col gap-2 md:gap-4">
+            <h4 className="font-['Space_Grotesk'] text-[0.75rem] md:text-[1rem] font-extrabold text-white uppercase tracking-[0.12em] m-0 mb-1 md:mb-3 border-b border-white/8 pb-1 md:pb-3">Navigation</h4>
+            <Link to="/" className="text-white/60 text-[0.85rem] md:text-[1.1rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">Home</Link>
+            <Link to="/about" className="text-white/60 text-[0.85rem] md:text-[1.1rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">About</Link>
+            <Link to="/services" className="text-white/60 text-[0.85rem] md:text-[1.1rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">Services</Link>
+            <Link to="/contact" className="text-white/60 text-[0.85rem] md:text-[1.1rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">Contact</Link>
           </div>
 
           {/* Column 3: Services */}
-          <div className="flex flex-col gap-4">
-            <h4 className="font-['Space_Grotesk'] text-[1rem] font-extrabold text-white uppercase tracking-[0.12em] m-0 mb-3 border-b border-white/8 pb-3">Services</h4>
-            <Link to="/services" className="text-white/60 text-[1.1rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">Web Development</Link>
-            <Link to="/services" className="text-white/60 text-[1.1rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">Web Design</Link>
-            <Link to="/services" className="text-white/60 text-[1.1rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">SEO Optimization</Link>
-            <Link to="/services" className="text-white/60 text-[1.1rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">Branding</Link>
+          <div className="flex flex-col gap-2 md:gap-4">
+            <h4 className="font-['Space_Grotesk'] text-[0.75rem] md:text-[1rem] font-extrabold text-white uppercase tracking-[0.12em] m-0 mb-1 md:mb-3 border-b border-white/8 pb-1 md:pb-3">Services</h4>
+            <Link to="/services" className="text-white/60 text-[0.85rem] md:text-[1.1rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">Web Development</Link>
+            <Link to="/services" className="text-white/60 text-[0.85rem] md:text-[1.1rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">Web Design</Link>
+            <Link to="/services" className="text-white/60 text-[0.85rem] md:text-[1.1rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">SEO Optimization</Link>
+            <Link to="/services" className="text-white/60 text-[0.85rem] md:text-[1.1rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">Branding</Link>
           </div>
 
           {/* Column 4: Connect */}
-          <div className="flex flex-col gap-4">
-            <h4 className="font-['Space_Grotesk'] text-[1rem] font-extrabold text-white uppercase tracking-[0.12em] m-0 mb-3 border-b border-white/8 pb-3">Connect</h4>
+          <div className="flex flex-col gap-2 md:gap-4 col-span-2 md:col-span-1 footer-connect">
+            <h4 className="font-['Space_Grotesk'] text-[0.75rem] md:text-[1rem] font-extrabold text-white uppercase tracking-[0.12em] m-0 mb-1 md:mb-3 border-b border-white/8 pb-1 md:pb-3">Connect</h4>
             <div className="flex flex-row gap-6 items-center mt-3">
               <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-primary transition-transform hover:-translate-y-1" aria-label="LinkedIn">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
@@ -68,7 +68,7 @@ export function SiteFooter({ isDark }) {
         </div>
 
         {/* Giant Interactive Wordmark */}
-        <div style={{ position: 'relative', height: 'clamp(80px, 12vw, 180px)', width: '100%', margin: '40px 0' }}>
+        <div className="hidden md:block" style={{ position: 'relative', height: 'clamp(80px, 12vw, 180px)', width: '100%', margin: '40px 0' }}>
           <TextPressure
             text="FIDARIX"
             flex
@@ -84,7 +84,7 @@ export function SiteFooter({ isDark }) {
         </div>
 
         {/* Legal Bottom Bar */}
-        <div className="flex flex-col md:flex-row justify-center items-center gap-4 border-t border-white/8 pt-6 text-[1rem] text-white">
+        <div className="flex flex-col md:flex-row justify-center items-center gap-2 md:gap-4 border-t border-white/8 pt-3 md:pt-6 text-[0.8rem] md:text-[1rem] text-white">
           <span>&copy; 2024 Fidarix. All rights reserved.</span>
         </div>
       </div>

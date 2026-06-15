@@ -1,4 +1,4 @@
-
+make
   .site-header {
     position: fixed;
     top: 0;
@@ -58,17 +58,21 @@
   .nav-links {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 16px;
     flex-wrap: wrap;
     justify-content: center;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   .nav-link {
-    padding: 10px 14px;
+    padding: 10px 16px;
     border-radius: 8px;
     color: var(--muted);
     font-weight: 600;
-    font-size: 0.95rem;
+    font-size: 1.15rem;
+    letter-spacing: 0.02em;
     transition: background-color 180ms ease, color 180ms ease, transform 180ms ease;
   }
 
@@ -236,5 +240,78 @@
 
 .site-header.is-scrolled .header-actions button svg {
   stroke: #0d1b3d !important;
+}
+
+@media (max-width: 900px) {
+  .header-shell {
+    flex-direction: column !important;
+    height: auto !important;
+    padding: 16px 20px !important;
+    gap: 12px;
+  }
+  
+  .nav-links {
+    position: static !important;
+    transform: none !important;
+    gap: 8px !important;
+    padding-bottom: 8px;
+  }
+  
+  .nav-link {
+    font-size: 0.95rem !important;
+    padding: 8px 12px !important;
+  }
+}
+
+/* Mobile hamburger button styles */
+.mobile-menu-button {
+  display: inline-grid;
+  grid-template-rows: repeat(3, 6px);
+  gap: 6px;
+  width: 44px;
+  height: 40px;
+  padding: 6px;
+  align-items: center;
+  justify-items: center;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 999px;
+  color: #fff;
+  cursor: pointer;
+  transition: background 200ms ease, transform 200ms ease;
+}
+
+.mobile-menu-button:hover {
+  background: rgba(255,255,255,0.06);
+  transform: translateY(-1px);
+}
+
+.hamburger-line {
+  display: block;
+  width: 22px;
+  height: 2.5px;
+  background: currentColor;
+  border-radius: 2px;
+  transition: transform 300ms cubic-bezier(.2,.9,.3,1), opacity 200ms ease;
+}
+
+.mobile-menu-button.is-open .line-top {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.mobile-menu-button.is-open .line-mid {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.mobile-menu-button.is-open .line-bot {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Hide native nav on small screens and show hamburger */
+@media (max-width: 900px) {
+  .mobile-menu-button { display: inline-grid; }
+  .nav-links { display: none; }
+  .nav-links.open { display: flex; flex-direction: column; gap: 10px; }
 }
 

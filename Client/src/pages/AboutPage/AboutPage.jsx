@@ -6,6 +6,7 @@ import AboutGridBackground from '../../components/AboutComponent/AboutGridBackgr
 import DomainAccordion from '../../components/AboutComponent/DomainAccordion';
 import { Link } from 'react-router-dom';
 import { ArrowRight, CheckCircle2, Zap, Code, Smartphone, Tag, TrendingUp, LifeBuoy, PenTool, Sparkles, Rocket } from 'lucide-react';
+import SplitText from '../../components/common/SplitText';
 import './AboutPage.css';
 
 function AboutPage() {
@@ -43,9 +44,30 @@ function AboutPage() {
 
         <div className="relative z-20 text-center px-6 max-w-[900px] mx-auto mt-20">
 
-          <h1 className="text-[clamp(3.5rem,8vw,7rem)] font-extrabold tracking-tighter leading-[0.9] text-white mb-6 font-['Space_Grotesk']">
-            We Build <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#A6C8FF] via-[#FF9FFC] to-[#5227FF]">Digital Trust.</span>
+          <h1 className="text-[clamp(3.5rem,8vw,7rem)] font-extrabold tracking-tighter leading-[0.9] text-white mb-6 font-['Space_Grotesk'] flex flex-col items-center">
+            <SplitText
+              text="We Build"
+              delay={40}
+              duration={0.7}
+              ease="power4.out"
+              splitType="chars"
+              from={{ opacity: 0, y: 40 }}
+              to={{ opacity: 1, y: 0 }}
+              tag="span"
+              textAlign="center"
+            />
+            <SplitText
+              text="Digital Trust."
+              className="text-[#A6C8FF]"
+              delay={40}
+              duration={0.7}
+              ease="power4.out"
+              splitType="chars"
+              from={{ opacity: 0, y: 40 }}
+              to={{ opacity: 1, y: 0 }}
+              tag="span"
+              textAlign="center"
+            />
           </h1>
           <p className="text-white/70 text-[clamp(1.1rem,2vw,1.3rem)] leading-[1.6] max-w-[750px] mx-auto mb-10 animate-[fadeIn_1s_ease_0.3s_forwards] opacity-0 font-medium">
             Fidarix crafts high-performance websites, unforgettable brands, and scalable products. We fuse world-class design and robust engineering to make you the obvious choice.
@@ -62,7 +84,18 @@ function AboutPage() {
         <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
         <div className="w-full">
           <div className="text-center mb-16 px-6">
-            <h2 className="text-[clamp(2.5rem,5vw,4.5rem)] font-extrabold tracking-tight leading-[1] mb-4 font-['Space_Grotesk']">Why Choose Us</h2>
+            <SplitText
+              text="Why Choose Us"
+              className="text-[clamp(2.5rem,5vw,4.5rem)] font-extrabold tracking-tight leading-[1] mb-4 font-['Space_Grotesk']"
+              delay={40}
+              duration={0.7}
+              ease="power4.out"
+              splitType="chars"
+              from={{ opacity: 0, y: 40 }}
+              to={{ opacity: 1, y: 0 }}
+              tag="h2"
+              textAlign="center"
+            />
             <p className="text-white/60 text-lg max-w-[500px] mx-auto">The principles that guide every project we take on.</p>
           </div>
 
@@ -118,15 +151,26 @@ function AboutPage() {
 
         <div className="max-w-[1200px] mx-auto relative z-10">
           <div className="text-center mb-20">
-            <h2 className="text-[clamp(3rem,6vw,5.5rem)] font-extrabold tracking-tight leading-[1] mb-4 font-['Space_Grotesk']">The Founders</h2>
+            <SplitText
+              text="The Founders"
+              className="text-[clamp(3rem,6vw,5.5rem)] font-extrabold tracking-tight leading-[1] mb-4 font-['Space_Grotesk']"
+              delay={40}
+              duration={0.7}
+              ease="power4.out"
+              splitType="chars"
+              from={{ opacity: 0, y: 40 }}
+              to={{ opacity: 1, y: 0 }}
+              tag="h2"
+              textAlign="center"
+            />
             <p className="text-white text-xl md:text-2xl font-medium max-w-[1000px] mx-auto">
               Meet the duo behind Fidarix. We combine design intuition with technical precision.
             </p>
           </div>
 
-          <div className="flex flex-col md:flex-row justify-center gap-12 md:gap-16 items-center">
+          <div className="flex flex-row justify-center gap-4 md:gap-16 items-center">
             {/* Dishi: Image */}
-            <div className="w-full max-w-[340px] h-[500px] flex justify-center">
+            <div className="w-full max-w-[160px] md:max-w-[340px] h-[260px] md:h-[500px] flex justify-center">
               <AboutGridBackground
                 items={[
                   {
@@ -151,7 +195,7 @@ function AboutPage() {
             </div>
 
             {/* Yash: Image */}
-            <div className="w-full max-w-[340px] h-[500px] flex justify-center">
+            <div className="w-full max-w-[160px] md:max-w-[340px] h-[260px] md:h-[500px] flex justify-center">
               <AboutGridBackground
                 items={[
                   {
@@ -181,7 +225,18 @@ function AboutPage() {
       {/* 5. TIMELINE SECTION */}
       <section className="py-32 px-6 relative z-20 bg-white border-t border-black/5">
         <div className="max-w-[900px] mx-auto">
-          <h2 className="text-[clamp(2.5rem,5vw,4.5rem)] font-extrabold tracking-tight leading-[1] mb-20 text-center font-['Space_Grotesk'] text-gray-900">Our Journey</h2>
+          <SplitText
+            text="Our Journey"
+            className="text-[clamp(2.5rem,5vw,4.5rem)] font-extrabold tracking-tight leading-[1] mb-20 text-center font-['Space_Grotesk'] text-gray-900"
+            delay={40}
+            duration={0.7}
+            ease="power4.out"
+            splitType="chars"
+            from={{ opacity: 0, y: 40 }}
+            to={{ opacity: 1, y: 0 }}
+            tag="h2"
+            textAlign="center"
+          />
 
           <div className="relative">
             {/* Vertical Line */}
@@ -258,8 +313,30 @@ function AboutPage() {
             {/* Text & Button Overlay Container */}
             <div className="relative z-10 w-full max-w-[1400px] mx-auto p-8 md:p-16 lg:p-24 flex flex-col items-start justify-center text-left transform group-hover:translate-x-2 transition-transform duration-500">
 
-              <h2 className="text-[clamp(3.5rem,8vw,7rem)] font-extrabold tracking-tighter leading-[0.95] text-white mb-6 font-['Space_Grotesk'] max-w-[800px]">
-                Ready to <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF9FFC] via-[#A6C8FF] to-white">upgrade?</span>
+              <h2 className="text-[clamp(3.5rem,8vw,7rem)] font-extrabold tracking-tighter leading-[0.95] text-white mb-6 font-['Space_Grotesk'] max-w-[800px] flex flex-wrap gap-x-4">
+                <SplitText
+                  text="Ready to"
+                  delay={40}
+                  duration={0.7}
+                  ease="power4.out"
+                  splitType="chars"
+                  from={{ opacity: 0, y: 40 }}
+                  to={{ opacity: 1, y: 0 }}
+                  tag="span"
+                  textAlign="left"
+                />
+                <SplitText
+                  text="upgrade?"
+                  className="text-[#FF9FFC]"
+                  delay={40}
+                  duration={0.7}
+                  ease="power4.out"
+                  splitType="chars"
+                  from={{ opacity: 0, y: 40 }}
+                  to={{ opacity: 1, y: 0 }}
+                  tag="span"
+                  textAlign="left"
+                />
               </h2>
 
               <p className="text-white/80 text-xl md:text-2xl max-w-[600px] font-medium leading-[1.6] mb-10">

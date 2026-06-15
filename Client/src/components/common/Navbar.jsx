@@ -11,6 +11,7 @@ export function LogoMark() {
 
 export default function SiteHeader() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -36,13 +37,24 @@ export default function SiteHeader() {
           </span>
         </Link>
 
-        <nav className="nav-links" style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: '16px' }}>
+        {/* Mobile hamburger button */}
+        <button
+          className={`mobile-menu-button ${menuOpen ? 'is-open' : ''}`}
+          aria-label="Toggle navigation"
+          aria-expanded={menuOpen}
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          <span className="hamburger-line line-top" />
+          <span className="hamburger-line line-mid" />
+          <span className="hamburger-line line-bot" />
+        </button>
+
+        <nav className={`nav-links ${menuOpen ? 'open' : ''}`}>
           {routes.map((item) => (
             <NavLink
               key={item.path}
               to={item.path}
               className={({ isActive }) => `nav-link ${isActive ? 'is-active' : ''}`}
-              style={{ fontSize: '1.15rem', letterSpacing: '0.02em', padding: '10px 16px' }}
             >
               {item.label}
             </NavLink>

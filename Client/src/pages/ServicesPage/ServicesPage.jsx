@@ -1,11 +1,14 @@
 import { useRef, useEffect, useState } from 'react';
+import { motion, useMotionValue, useSpring, useTransform, AnimatePresence, animate } from 'framer-motion';
 import { ButtonLink, SectionWise } from '../../components/common/Layout';
 import { ServicesScanner } from '../../components/ServicesComponent/ServicesScanner';
 import CircularGallery from '../../components/CircularGallery/CircularGallery';
 import RippleGrid from '../../components/common/RippleGrid';
 import BlurText from '../../components/common/BlurText';
 import FlowingMenu from '../../components/common/FlowingMenu';
-import { Zap, Target, Code, Layout as LayoutIcon, CheckCircle, Rocket, Lightbulb } from 'lucide-react';
+import SplitText from '../../components/common/SplitText';
+import GradientBlinds from '../../components/common/GradientBlinds';
+import { Zap, Target, Code, Layout as LayoutIcon, CheckCircle, Rocket, Lightbulb, Hand, Grab } from 'lucide-react';
 import '../../components/ServicesComponent/ServicesScanner/ServicesPageAnimations.css';
 import './ServicesPage.css';  
 
@@ -69,14 +72,15 @@ const galleryItems = [
 
 function CircularGalleryShowcase() {
   return (
-    <div style={{ height: '300vh', width: '100%', position: 'relative', background: '#000000' }}>
+    <div className="hidden md:block" style={{ height: '300vh', width: '100%', position: 'relative', background: '#000000' }}>
       <div style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden' }}>
         <CircularGallery
           items={galleryItems}
           bend={3}
           textColor="#ffffff"
           borderRadius={0.05}
-          scrollEase={0.05}
+          scrollEase={0.035}
+          scrollSpeed={0.5}
           font="bold 30px Space Grotesk"
           fontUrl="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&display=swap"
         />
@@ -91,9 +95,18 @@ const OurSolutionsHeader = () => {
     <SectionWise bg="bg-transparent" style={{ borderBottom: 'none', paddingTop: '80px', paddingBottom: 0, marginBottom: 0 }}>
       <div style={{ textAlign: 'left', marginBottom: 0 }}>
       
-        <h2 className="display-huge" style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', marginTop: 12, marginBottom: 0 }}>
-          <BlurText text="Core Capabilities." delay={100} animateBy="words" direction="top" className="inline-block" />
-        </h2>
+        <SplitText
+          text="Core Capabilities."
+          className="font-extrabold text-white text-[clamp(2.5rem,5vw,4rem)] font-['Space_Grotesk']"
+          delay={40}
+          duration={0.7}
+          ease="power4.out"
+          splitType="chars"
+          from={{ opacity: 0, y: 40 }}
+          to={{ opacity: 1, y: 0 }}
+          tag="h2"
+          textAlign="left"
+        />
         <p className="text-white/50 text-[1.1rem] mt-4 max-w-2xl">
           We engineer digital assets that demand attention. Fast, scalable, and built to convert.
         </p>
@@ -148,26 +161,58 @@ const CardRow = ({ items, direction, isWireframe }) => {
 
 const ServicesMovingCards = () => {
   const containerRef = useRef(null);
-  const [sliderPosition, setSliderPosition] = useState(50); // percentage 0 - 100
+  const [isHovering, setIsHovering] = useState(false);
+  const [activeDrag, setActiveDrag] = useState(false);
+
+  const xPercent = useMotionValue(50);
+  const smoothXPercent = useSpring(xPercent, { stiffness: 120, damping: 22 });
+
+  const clipPathLeft = useTransform(smoothXPercent, (val) => `inset(0 ${100 - val}% 0 0)`);
+  const clipPathRight = useTransform(smoothXPercent, (val) => `inset(0 0 0 ${val}%)`);
+  const handleLeft = useTransform(smoothXPercent, (val) => `${val}%`);
+
+  const cursorX = useMotionValue(0);
+  const cursorY = useMotionValue(0);
+  const smoothCursorX = useSpring(cursorX, { stiffness: 220, damping: 28 });
+  const smoothCursorY = useSpring(cursorY, { stiffness: 220, damping: 28 });
+
   const isDragging = useRef(false);
 
   const handlePointerDown = (e) => {
     isDragging.current = true;
+    setActiveDrag(true);
     e.currentTarget.setPointerCapture(e.pointerId);
+
+    if (containerRef.current) {
+      const rect = containerRef.current.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      let percentage = (x / rect.width) * 100;
+      if (percentage < 0) percentage = 0;
+      if (percentage > 100) percentage = 100;
+      xPercent.set(percentage);
+    }
   };
 
   const handlePointerMove = (e) => {
-    if (!isDragging.current || !containerRef.current) return;
+    if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
-    let percentage = (x / rect.width) * 100;
-    if (percentage < 0) percentage = 0;
-    if (percentage > 100) percentage = 100;
-    setSliderPosition(percentage);
+    const y = e.clientY - rect.top;
+
+    cursorX.set(x);
+    cursorY.set(y);
+
+    if (isDragging.current) {
+      let percentage = (x / rect.width) * 100;
+      if (percentage < 0) percentage = 0;
+      if (percentage > 100) percentage = 100;
+      xPercent.set(percentage);
+    }
   };
 
   const handlePointerUp = (e) => {
     isDragging.current = false;
+    setActiveDrag(false);
     try {
       e.currentTarget.releasePointerCapture(e.pointerId);
     } catch (err) {}
@@ -183,7 +228,19 @@ const ServicesMovingCards = () => {
   ];
 
   return (
-    <div ref={containerRef} className="relative w-[100vw] max-w-[100vw] h-[500px] left-1/2 -translate-x-1/2 overflow-hidden mt-16 mb-4 touch-none select-none">
+    <div 
+      ref={containerRef} 
+      className="relative w-[100vw] max-w-[100vw] h-[500px] left-1/2 -translate-x-1/2 overflow-hidden mt-16 mb-4 touch-none select-none cursor-none"
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerUp}
+      onPointerCancel={handlePointerUp}
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => {
+        setIsHovering(false);
+        setActiveDrag(false);
+      }}
+    >
       <style>{`
         @keyframes scroll-left {
           0% { transform: translateX(0); }
@@ -193,57 +250,65 @@ const ServicesMovingCards = () => {
           0% { transform: translateX(-50%); }
           100% { transform: translateX(0); }
         }
-        @keyframes swipe-indicator {
-          0% { transform: translateX(20px) translateY(10px) rotate(-15deg); opacity: 0; }
-          20% { opacity: 1; }
-          80% { transform: translateX(-20px) translateY(10px) rotate(-15deg); opacity: 1; }
-          100% { transform: translateX(-30px) translateY(10px) rotate(-15deg); opacity: 0; }
-        }
       `}</style>
       {/* Wireframe Layer (Left) */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none" style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)`, perspective: '1200px' }}>
-        <div className="flex flex-col gap-6 min-w-[300vw] items-center" style={{ transform: 'rotateY(15deg) rotateZ(-6deg) scale(1.8)' }}>
+      <motion.div 
+        className="absolute inset-0 flex items-center justify-center pointer-events-none" 
+        style={{ clipPath: clipPathLeft, perspective: '1200px' }}
+      >
+        <div className="flex flex-col gap-6 min-w-[300vw] items-center" style={{ transform: 'rotateY(12deg) rotateZ(-4deg) scale(1.35)' }}>
           <CardRow items={items} direction="left" isWireframe={true} />
           <CardRow items={items} direction="right" isWireframe={true} />
-          <CardRow items={items} direction="left" isWireframe={true} />
         </div>
-      </div>
+      </motion.div>
 
       {/* Real Layer (Right) */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none" style={{ clipPath: `inset(0 0 0 ${sliderPosition}%)`, perspective: '1200px' }}>
-        <div className="flex flex-col gap-6 min-w-[300vw] items-center" style={{ transform: 'rotateY(-15deg) rotateZ(-6deg) scale(1.8)' }}>
+      <motion.div 
+        className="absolute inset-0 flex items-center justify-center pointer-events-none" 
+        style={{ clipPath: clipPathRight, perspective: '1200px' }}
+      >
+        <div className="flex flex-col gap-6 min-w-[300vw] items-center" style={{ transform: 'rotateY(-12deg) rotateZ(-4deg) scale(1.35)' }}>
           <CardRow items={items} direction="left" isWireframe={false} />
           <CardRow items={items} direction="right" isWireframe={false} />
-          <CardRow items={items} direction="left" isWireframe={false} />
         </div>
-      </div>
+      </motion.div>
 
       {/* Center Beam and Drag Handle */}
-      <div 
-        className="absolute inset-y-0 z-30 pointer-events-auto cursor-ew-resize flex items-center justify-center touch-none select-none"
-        style={{ left: `${sliderPosition}%`, transform: 'translateX(-50%)' }}
-        onPointerDown={handlePointerDown}
-        onPointerMove={handlePointerMove}
-        onPointerUp={handlePointerUp}
-        onPointerCancel={handlePointerUp}
+      <motion.div 
+        className="absolute inset-y-0 z-30 pointer-events-none flex items-center justify-center"
+        style={{ left: handleLeft, transform: 'translateX(-50%)' }}
       >
         <div className="absolute top-[-20%] bottom-[-20%] w-[3px] bg-gradient-to-b from-transparent via-purple-500 to-transparent shadow-[0_0_30px_rgba(168,85,247,1)]" />
-        <div className="w-16 h-16 rounded-2xl bg-purple-600 border border-white/20 flex items-center justify-center shadow-[0_0_50px_rgba(168,85,247,0.8)] z-10 text-white select-none active:scale-95 hover:scale-105 transition-transform duration-150 relative">
+        <div className="w-16 h-16 rounded-2xl bg-purple-600 border border-white/20 flex items-center justify-center shadow-[0_0_50px_rgba(168,85,247,0.8)] z-10 text-white select-none relative">
            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
              <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
              <line x1="12" y1="22.08" x2="12" y2="12"></line>
            </svg>
-           
-           {/* Animated Hand */}
-           <div className="absolute top-[80%] left-full pointer-events-none" style={{ animation: 'swipe-indicator 2s infinite ease-in-out' }}>
-             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-               <path d="M18 11V6a2 2 0 0 0-4 0v4a2 2 0 0 0-4 0V4a2 2 0 0 0-4 0v10"></path>
-               <path d="M6 14v-1a2 2 0 0 0-4 0v3a6 6 0 0 0 6 6h4.5a6 6 0 0 0 5.8-4.5L20 12"></path>
-             </svg>
-           </div>
         </div>
-      </div>
+      </motion.div>
+
+      {/* Custom Cursor Overlay */}
+      {isHovering && (
+        <motion.div
+          className="absolute z-40 pointer-events-none -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center"
+          style={{
+            left: smoothCursorX,
+            top: smoothCursorY,
+          }}
+        >
+          <div className={`w-12 h-12 rounded-full border border-purple-500/60 bg-purple-950/40 backdrop-blur-md flex items-center justify-center transition-all duration-300 shadow-[0_0_20px_rgba(168,85,247,0.3)] ${activeDrag ? 'scale-90 bg-purple-600/40 border-purple-400' : 'scale-100'}`}>
+            {activeDrag ? (
+              <Grab className="w-6 h-6 text-white animate-pulse" />
+            ) : (
+              <Hand className="w-6 h-6 text-white" />
+            )}
+          </div>
+          <span className="text-[9px] uppercase font-black tracking-[0.2em] text-white mt-2 bg-black/60 px-2.5 py-1 rounded-full border border-white/10 backdrop-blur-md">
+            {activeDrag ? 'Grabbing' : 'Drag anywhere'}
+          </span>
+        </motion.div>
+      )}
     </div>
   );
 };
@@ -253,9 +318,18 @@ const TransformationSection = () => {
     <SectionWise bg="bg-black" style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '100px', paddingBottom: '100px', backgroundColor: '#000000' }}>
       <div className="max-w-4xl mx-auto text-center mb-12">
     
-        <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-extrabold text-white leading-[1.1] uppercase tracking-tight font-['Space_Grotesk']">
-          The Process.
-        </h2>
+        <SplitText
+          text="The Process."
+          className="text-[clamp(2rem,4vw,3.5rem)] font-extrabold text-white leading-[1.1] uppercase tracking-tight font-['Space_Grotesk']"
+          delay={40}
+          duration={0.7}
+          ease="power4.out"
+          splitType="chars"
+          from={{ opacity: 0, y: 40 }}
+          to={{ opacity: 1, y: 0 }}
+          tag="h2"
+          textAlign="center"
+        />
         <p className="mt-6 text-[1.1rem] text-white/70 leading-[1.7] max-w-2xl mx-auto">
           Watch abstract wireframes become tactile, interactive products. Slide to reveal the engineering behind the interface.
         </p>
@@ -276,9 +350,18 @@ const WhatYouReceiveSection = () => {
         <span className="text-xs font-extrabold text-primary-2 uppercase tracking-[0.22em] flex items-center justify-center gap-2 mb-3">
       
         </span>
-        <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-extrabold text-white leading-[1.1] uppercase tracking-tight font-['Space_Grotesk']">
-          Deliverables.
-        </h2>
+        <SplitText
+          text="Deliverables."
+          className="text-[clamp(2rem,4vw,3.5rem)] font-extrabold text-white leading-[1.1] uppercase tracking-tight font-['Space_Grotesk']"
+          delay={40}
+          duration={0.7}
+          ease="power4.out"
+          splitType="chars"
+          from={{ opacity: 0, y: 40 }}
+          to={{ opacity: 1, y: 0 }}
+          tag="h2"
+          textAlign="center"
+        />
         <p className="mt-6 text-[1.1rem] text-white/70 leading-[1.7] max-w-2xl mx-auto">
           Aesthetics backed by robust engineering. We ship clean architecture designed for effortless scaling.
         </p>
@@ -307,10 +390,19 @@ const HowWeWorkSection = () => {
       <div className="flex flex-col lg:flex-row w-full min-h-[80vh]">
         
         {/* Left Column (Sticky) */}
-        <div className="lg:w-[40%] p-10 lg:p-20 border-b lg:border-b-0 lg:border-r border-white/10 flex flex-col justify-center lg:sticky lg:top-0 lg:h-screen">
-          <h2 className="text-[clamp(2.5rem,4vw,4rem)] break-words font-extrabold text-white leading-[1.05] tracking-tighter font-['Space_Grotesk'] mb-8">
-            Methodology.
-          </h2>
+        <div className="lg:w-[40%] p-10 lg:px-12 lg:py-20 border-b lg:border-b-0 lg:border-r border-white/10 flex flex-col justify-center lg:sticky lg:top-0 lg:h-screen">
+          <SplitText
+            text="Methodology."
+            className="text-[clamp(2rem,3.2vw,3.2rem)] break-words font-extrabold text-white leading-[1.05] tracking-tighter font-['Space_Grotesk'] mb-8"
+            delay={40}
+            duration={0.7}
+            ease="power4.out"
+            splitType="chars"
+            from={{ opacity: 0, y: 40 }}
+            to={{ opacity: 1, y: 0 }}
+            tag="h2"
+            textAlign="left"
+          />
           
           <p className="text-white/50 text-[1.1rem] leading-relaxed max-w-sm mt-auto">
             Precision at every step. We operate with total transparency and zero friction.
@@ -318,18 +410,18 @@ const HowWeWorkSection = () => {
         </div>
 
         {/* Right Column (Scrollable Grid) */}
-        <div className="lg:w-[60%] grid grid-cols-1 md:grid-cols-2">
+        <div className="lg:w-[60%] grid grid-cols-2 md:grid-cols-2">
           
           {/* Card 1 */}
-          <div className="group relative p-12 border-b border-white/10 md:border-r transition-all duration-500 overflow-hidden hover:bg-white/[0.02]">
+          <div className="group relative p-5 md:p-12 border-b border-white/10 md:border-r transition-all duration-500 overflow-hidden hover:bg-white/[0.02]">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(168,85,247,0.15),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
             
-            <div className="text-[5rem] font-bold text-white/20 leading-none mb-6 font-['Space_Grotesk'] transition-colors duration-500 group-hover:text-purple-400">01</div>
-            <h3 className="text-2xl font-bold text-white mb-6 font-['Space_Grotesk'] relative z-10">Strategy & Scope</h3>
-            <p className="text-white/60 leading-relaxed mb-8 relative z-10">
+            <div className="text-[2.5rem] md:text-[5rem] font-bold text-white/20 leading-none mb-3 md:mb-6 font-['Space_Grotesk'] transition-colors duration-500 group-hover:text-purple-400">01</div>
+            <h3 className="text-lg md:text-2xl font-bold text-white mb-3 md:mb-6 font-['Space_Grotesk'] relative z-10">Strategy & Scope</h3>
+            <p className="text-white/60 leading-relaxed mb-4 md:mb-8 relative z-10 text-sm md:text-base">
               We define the architecture and user journey to align directly with your growth metrics.
             </p>
-            <ul className="space-y-3 text-white/50 text-sm relative z-10">
+            <ul className="space-y-2 md:space-y-3 text-white/50 text-xs md:text-sm relative z-10">
               <li className="flex gap-3"><span className="text-white/20">—</span> Market research</li>
               <li className="flex gap-3"><span className="text-white/20">—</span> Architecture planning</li>
               <li className="flex gap-3"><span className="text-white/20">—</span> Technical scoping</li>
@@ -337,15 +429,15 @@ const HowWeWorkSection = () => {
           </div>
 
           {/* Card 2 */}
-          <div className="group relative p-12 border-b border-white/10 transition-all duration-500 overflow-hidden hover:bg-white/[0.02]">
+          <div className="group relative p-5 md:p-12 border-b border-white/10 transition-all duration-500 overflow-hidden hover:bg-white/[0.02]">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(168,85,247,0.15),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
             
-            <div className="text-[5rem] font-bold text-white/20 leading-none mb-6 font-['Space_Grotesk'] transition-colors duration-500 group-hover:text-purple-400">02</div>
-            <h3 className="text-2xl font-bold text-white mb-6 font-['Space_Grotesk'] relative z-10">Premium Design</h3>
-            <p className="text-white/60 leading-relaxed mb-8 relative z-10">
+            <div className="text-[2.5rem] md:text-[5rem] font-bold text-white/20 leading-none mb-3 md:mb-6 font-['Space_Grotesk'] transition-colors duration-500 group-hover:text-purple-400">02</div>
+            <h3 className="text-lg md:text-2xl font-bold text-white mb-3 md:mb-6 font-['Space_Grotesk'] relative z-10">Premium Design</h3>
+            <p className="text-white/60 leading-relaxed mb-4 md:mb-8 relative z-10 text-sm md:text-base">
               Iterative design sprints to craft a visual language that commands attention and feels uniquely yours.
             </p>
-            <ul className="space-y-3 text-white/50 text-sm relative z-10">
+            <ul className="space-y-2 md:space-y-3 text-white/50 text-xs md:text-sm relative z-10">
               <li className="flex gap-3"><span className="text-white/20">—</span> UI/UX Design</li>
               <li className="flex gap-3"><span className="text-white/20">—</span> Visual identity</li>
               <li className="flex gap-3"><span className="text-white/20">—</span> Interactive prototypes</li>
@@ -353,15 +445,15 @@ const HowWeWorkSection = () => {
           </div>
 
           {/* Card 3 */}
-          <div className="group relative p-12 border-b border-white/10 md:border-r transition-all duration-500 overflow-hidden hover:bg-white/[0.02]">
+          <div className="group relative p-5 md:p-12 border-b border-white/10 md:border-r transition-all duration-500 overflow-hidden hover:bg-white/[0.02]">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(168,85,247,0.15),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
             
-            <div className="text-[5rem] font-bold text-white/20 leading-none mb-6 font-['Space_Grotesk'] transition-colors duration-500 group-hover:text-purple-400">03</div>
-            <h3 className="text-2xl font-bold text-white mb-6 font-['Space_Grotesk'] relative z-10">Performance Build</h3>
-            <p className="text-white/60 leading-relaxed mb-8 relative z-10">
+            <div className="text-[2.5rem] md:text-[5rem] font-bold text-white/20 leading-none mb-3 md:mb-6 font-['Space_Grotesk'] transition-colors duration-500 group-hover:text-purple-400">03</div>
+            <h3 className="text-lg md:text-2xl font-bold text-white mb-3 md:mb-6 font-['Space_Grotesk'] relative z-10">Performance Build</h3>
+            <p className="text-white/60 leading-relaxed mb-4 md:mb-8 relative z-10 text-sm md:text-base">
               Flawless React code. Sub-second loads, hardware-accelerated animations, and zero layout shift.
             </p>
-            <ul className="space-y-3 text-white/50 text-sm relative z-10">
+            <ul className="space-y-2 md:space-y-3 text-white/50 text-xs md:text-sm relative z-10">
               <li className="flex gap-3"><span className="text-white/20">—</span> Front-end engineering</li>
               <li className="flex gap-3"><span className="text-white/20">—</span> Custom animations</li>
               <li className="flex gap-3"><span className="text-white/20">—</span> API integrations</li>
@@ -369,15 +461,15 @@ const HowWeWorkSection = () => {
           </div>
 
           {/* Card 4 */}
-          <div className="group relative p-12 border-b md:border-b-0 border-white/10 transition-all duration-500 overflow-hidden hover:bg-white/[0.02]">
+          <div className="group relative p-5 md:p-12 border-b md:border-b-0 border-white/10 transition-all duration-500 overflow-hidden hover:bg-white/[0.02]">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(168,85,247,0.15),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
             
-            <div className="text-[5rem] font-bold text-white/20 leading-none mb-6 font-['Space_Grotesk'] transition-colors duration-500 group-hover:text-purple-400">04</div>
-            <h3 className="text-2xl font-bold text-white mb-6 font-['Space_Grotesk'] relative z-10">SEO & Launch</h3>
-            <p className="text-white/60 leading-relaxed mb-8 relative z-10">
+            <div className="text-[2.5rem] md:text-[5rem] font-bold text-white/20 leading-none mb-3 md:mb-6 font-['Space_Grotesk'] transition-colors duration-500 group-hover:text-purple-400">04</div>
+            <h3 className="text-lg md:text-2xl font-bold text-white mb-3 md:mb-6 font-['Space_Grotesk'] relative z-10">SEO & Launch</h3>
+            <p className="text-white/60 leading-relaxed mb-4 md:mb-8 relative z-10 text-sm md:text-base">
               Rigorous QA and technical SEO configuration to ensure your launch is secure and visible.
             </p>
-            <ul className="space-y-3 text-white/50 text-sm relative z-10">
+            <ul className="space-y-2 md:space-y-3 text-white/50 text-xs md:text-sm relative z-10">
               <li className="flex gap-3"><span className="text-white/20">—</span> Technical SEO setup</li>
               <li className="flex gap-3"><span className="text-white/20">—</span> Quality assurance</li>
               <li className="flex gap-3"><span className="text-white/20">—</span> Secure deployment</li>
@@ -396,16 +488,43 @@ const HowWeWorkSection = () => {
 const CTASection = () => {
   return (
     <SectionWise bg="bg-black" style={{ paddingTop: '100px', paddingBottom: '120px', backgroundColor: '#000000', position: 'relative', overflow: 'hidden' }}>
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-[radial-gradient(circle,rgba(124,58,237,0.18)_0%,transparent_70%)] pointer-events-none filter blur-[60px]" />
+      {/* Dynamic Animated Gradient Blinds Background */}
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-45">
+        <GradientBlinds
+          gradientColors={['#FF9FFC', '#5227FF']}
+          angle={20}
+          noise={0.5}
+          blindCount={16}
+          blindMinWidth={60}
+          spotlightRadius={0.5}
+          spotlightSoftness={1}
+          spotlightOpacity={1}
+          mouseDampening={0.15}
+          distortAmount={0}
+          shineDirection="left"
+          mixBlendMode="lighten"
+          color1="#FF9FFC"
+          color2="#5227FF"
+        />
+      </div>
 
       <div className="relative z-10 max-w-3xl mx-auto text-center flex flex-col items-center gap-6">
         <span className="text-xs font-extrabold text-primary-2 uppercase tracking-[0.22em] flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-primary-2 inline-block animate-pulse"></span>
           
         </span>
-        <h2 className="text-[clamp(2.5rem,6vw,4.5rem)] font-extrabold text-white uppercase tracking-tight font-['Space_Grotesk'] leading-[1.05]">
-          Next Steps.
-        </h2>
+        <SplitText
+          text="Next Steps."
+          className="text-[clamp(2.5rem,6vw,4.5rem)] font-extrabold text-white uppercase tracking-tight font-['Space_Grotesk'] leading-[1.05]"
+          delay={40}
+          duration={0.7}
+          ease="power4.out"
+          splitType="chars"
+          from={{ opacity: 0, y: 40 }}
+          to={{ opacity: 1, y: 0 }}
+          tag="h2"
+          textAlign="center"
+        />
         <p className="text-white/70 text-[1.15rem] leading-[1.7] max-w-[50ch] mb-4">
           Let’s map your next phase of growth. Book a 30-minute discovery call to align on strategy and scope.
         </p>
@@ -466,10 +585,32 @@ function ServicesPage() {
          
           <h1 className="services-hero-title-monopo">
             <span className="hero-line-left">
-              <BlurText text="Our" delay={80} animateBy="words" direction="top" className="inline-block" />
+              <SplitText
+                text="Our"
+                className="text-white inline-block"
+                delay={60}
+                duration={0.8}
+                ease="power4.out"
+                splitType="chars"
+                from={{ opacity: 0, y: 40 }}
+                to={{ opacity: 1, y: 0 }}
+                tag="span"
+                textAlign="left"
+              />
             </span>
             <span className="hero-line-right">
-              <BlurText text="Services." delay={80} animateBy="words" direction="top" className="inline-block" />
+              <SplitText
+                text="Services."
+                className="text-white inline-block"
+                delay={60}
+                duration={0.8}
+                ease="power4.out"
+                splitType="chars"
+                from={{ opacity: 0, y: 40 }}
+                to={{ opacity: 1, y: 0 }}
+                tag="span"
+                textAlign="left"
+              />
             </span>
           </h1>
           <p className="services-hero-mono-sub">[ Digital experiences engineered for performance and conversion. ]</p>

@@ -501,6 +501,21 @@ class App {
     }
   }
   update() {
+    // Bind target to parent container scroll progress if inside a scroll track
+    const grandparent = this.container?.parentElement?.parentElement;
+    if (grandparent) {
+      const rect = grandparent.getBoundingClientRect();
+      const scrollableHeight = rect.height - window.innerHeight;
+      if (scrollableHeight > 0) {
+        const progress = -rect.top / scrollableHeight;
+        const clampedProgress = Math.max(0, Math.min(1, progress));
+        if (this.medias && this.medias[0]) {
+          const totalWidth = this.medias[0].widthTotal;
+          this.scroll.target = clampedProgress * totalWidth * this.scrollSpeed; // Scales directly with scrollSpeed prop
+        }
+      }
+    }
+
     this.scroll.current = lerp(this.scroll.current, this.scroll.target, this.scroll.ease);
     const direction = this.scroll.current > this.scroll.last ? 'right' : 'left';
     if (this.medias) {

@@ -9,6 +9,7 @@ import MarqueeStrip from '../../components/common/MarqueeStrip';
 import { motion, useMotionTemplate, useScroll, useTransform } from 'framer-motion';
 import Silk from '../../components/Silk';
 import Galaxy from '../../components/Galaxy';
+import SplitText from '../../components/common/SplitText';
 import './HomePage.css';
 
 const STATIC_TILES = Array.from({ length: 800 }).map((_, i) => {
@@ -137,19 +138,21 @@ function InteractiveProjectCard({ project, index = 0 }) {
             </div>
           </div>
           
-          {/* Bottom Section (Title and Stack Pills) */}
-          <div className="flex flex-col gap-6 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+          {/* Bottom Section (Title, Description, and Outcome) */}
+          <div className="flex flex-col gap-4 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
             <h3 className="font-['Space_Grotesk'] font-bold text-3xl md:text-4xl lg:text-5xl text-white tracking-tight leading-[1.1]">
               {project.name}
             </h3>
-            
-            <div className="flex flex-wrap gap-2 md:gap-3">
-              {project.stack ? project.stack.split(',').map((item, i) => (
-                <span key={i} className="px-3 md:px-4 py-1.5 md:py-2 rounded-full border border-white/15 bg-black/40 backdrop-blur-md text-white/90 text-[9px] md:text-[10px] lg:text-xs font-semibold tracking-widest uppercase hover:bg-white/10 transition-colors">
-                  {item.trim()}
-                </span>
-              )) : null}
-            </div>
+            {project.description && (
+              <p className="text-white/80 text-sm md:text-base leading-relaxed m-0 font-medium max-w-[90%]">
+                {project.description}
+              </p>
+            )}
+            {project.outcome && (
+              <div className="text-[#ffbd2e] text-[10px] md:text-xs font-semibold tracking-wider border-l-2 border-[#ffbd2e] pl-3 py-0.5 mt-1 uppercase">
+                {project.outcome}
+              </div>
+            )}
           </div>
           
         </div>
@@ -270,12 +273,21 @@ const SpaceXHero = () => {
 
       {/* Text Content Overlay */}
       <div className="relative z-10 flex flex-col items-center justify-center max-w-4xl mt-16">
-        <h1 className="font-['Space_Grotesk'] font-extrabold text-white text-[clamp(2.5rem,6.2vw,5.5rem)] leading-[0.98] uppercase tracking-tight mb-6">
-          Become Impossible<br />to Ignore.
-        </h1>
+        <SplitText
+          text="  Turn Your Website Into Your Best Salesperson"
+          className="font-['Space_Grotesk'] font-extrabold text-white text-[clamp(2.5rem,6.2vw,5.5rem)] leading-[0.98] uppercase tracking-tight mb-6"
+          delay={40}
+          duration={1}
+          ease="power4.out"
+          splitType="words"
+          from={{ opacity: 0, y: 40 }}
+          to={{ opacity: 1, y: 0 }}
+          tag="h1"
+          textAlign="center"
+        />
         <p className="text-white/70 text-lg md:text-xl font-medium leading-[1.6] max-w-[52ch] mb-10 mx-auto">
-          We combine strategy, high-end design, and custom development to turn websites into active sales channels.
-        </p>
+         We design and build premium websites that attract customers,
+generate leads, and help local businesses grow faster.</p>
         <div className="flex flex-wrap gap-4 justify-center">
           <Link to="/contact" className="inline-flex items-center justify-center min-h-[56px] px-8 rounded-full font-bold text-sm transition-all bg-gradient-to-r from-primary to-primary-2 text-white shadow-[0_0_30px_rgba(90,116,255,0.3)] hover:shadow-[0_0_45px_rgba(90,116,255,0.5)] hover:-translate-y-0.5">
             Book a Free Consultation
@@ -295,9 +307,9 @@ function HomePage() {
 
   useEffect(() => {
     const handleResize = () => {
-      // Calculate scale to fit 1600px content inside screen height (minus padding) and width
-      const sH = (window.innerHeight - 120) / 1600;
-      const sW = window.innerWidth / 1600;
+      // Calculate scale to fit 2500px content inside screen height (minus padding) and width
+      const sH = (window.innerHeight - 120) / 2500;
+      const sW = window.innerWidth / 2500;
       // Allow it to scale up slightly (up to 1.25x) on very large monitors so it doesn't look tiny
       setOrbitScale(Math.min(1.25, sH, sW));
     };
@@ -345,63 +357,71 @@ function HomePage() {
             
             {/* Central "Sun" text */}
             <div className="absolute z-20 text-center pointer-events-none flex flex-col items-center">
-              <div className="w-56 h-56 bg-[#ffbd2e]/10 rounded-full blur-[70px] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
-              <span className="text-sm font-extrabold text-primary-2 uppercase tracking-[0.22em] flex items-center gap-2 mb-4 relative z-10">
-                <span className="w-2.5 h-2.5 rounded-full bg-primary-2 inline-block shadow-[0_0_10px_#ffbd2e]"></span>
-                our story
+              <div className="w-72 h-72 bg-[#ffbd2e]/10 rounded-full blur-[90px] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+              <span className="text-lg font-extrabold text-primary-2 uppercase tracking-[0.22em] flex items-center gap-2 mb-4 relative z-10">
+              
               </span>
-              <h2 className="text-[clamp(5rem,9vw,7.5rem)] font-extrabold text-white leading-[1.05] tracking-tight font-['Space_Grotesk'] relative z-10">
-                Why we<br />exist?
-              </h2>
-              <p className="mt-8 text-white/70 text-xl md:text-[1.4rem] leading-[1.6] max-w-[500px] relative z-10 mx-auto font-medium tracking-wide">
+              <SplitText
+                text="Why we exist?"
+                className="text-[clamp(7.5rem,13vw,11.5rem)] font-extrabold text-white leading-[1.05] tracking-tight font-['Space_Grotesk'] relative z-10"
+                delay={40}
+                duration={0.7}
+                ease="power4.out"
+                splitType="words"
+                from={{ opacity: 0, y: 40 }}
+                to={{ opacity: 1, y: 0 }}
+                tag="h2"
+                textAlign="center"
+              />
+              <p className="mt-8 text-white/70 text-3xl md:text-[2.2rem] leading-[1.6] max-w-[800px] relative z-10 mx-auto font-medium tracking-wide">
                 We craft digital experiences designed to scale your business and outshine the competition.
               </p>
             </div>
 
             {/* Orbit Rings (Visible Path) */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
-              <div className="w-[1200px] h-[1200px] rounded-full border-[2px] border-white/20 border-solid shadow-[0_0_30px_rgba(255,255,255,0.05)]" />
+              <div className="w-[2000px] h-[2000px] shrink-0 rounded-full border-[2px] border-white/20 border-solid shadow-[0_0_30px_rgba(255,255,255,0.05)]" />
             </div>
 
             {/* The Orbiting Track */}
             <div className="absolute top-1/2 left-1/2 w-0 h-0 z-30">
               
               {/* Card 1 */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[420px] bg-transparent border border-white/10 rounded-[32px] p-10 overflow-hidden transition-colors duration-300 hover:border-[#ffbd2e]/50 pointer-events-auto cursor-pointer animate-orbit-1 group-hover:[animation-play-state:paused]">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-[#ffbd2e]/10 rounded-full blur-[40px] pointer-events-none" />
-                <span className="text-[#ffbd2e] font-bold tracking-widest uppercase text-base mb-5 block">01 / The Gap</span>
-                <h3 className="text-4xl font-bold text-white mb-5 font-['Space_Grotesk']">Accessible Quality</h3>
-                <p className="text-white/80 text-[1.2rem] leading-relaxed m-0 relative z-10 font-medium">
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[580px] bg-transparent border border-white/10 rounded-[32px] p-12 overflow-hidden transition-colors duration-300 hover:border-[#ffbd2e]/50 pointer-events-auto cursor-pointer animate-orbit-1 group-hover:[animation-play-state:paused]">
+                <div className="absolute top-0 right-0 w-48 h-48 bg-[#ffbd2e]/10 rounded-full blur-[70px] pointer-events-none" />
+                <span className="text-[#ffbd2e] font-bold tracking-widest uppercase text-xl mb-5 block">01 / The Gap</span>
+                <h3 className="text-6xl font-bold text-white mb-5 font-['Space_Grotesk']">Accessible Quality</h3>
+                <p className="text-white/80 text-[1.5rem] leading-relaxed m-0 relative z-10 font-medium">
                   Fidarix bridges the gap between high-end agency quality and accessible pricing for growing businesses.
                 </p>
               </div>
 
               {/* Card 2 */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[420px] bg-transparent border border-white/10 rounded-[32px] p-10 overflow-hidden transition-colors duration-300 hover:border-[#7c3aed]/50 pointer-events-auto cursor-pointer animate-orbit-2 group-hover:[animation-play-state:paused]">
-                <div className="absolute bottom-0 left-0 w-32 h-32 bg-[#7c3aed]/10 rounded-full blur-[40px] pointer-events-none" />
-                <span className="text-[#9b4dff] font-bold tracking-widest uppercase text-base mb-5 block">02 / The Approach</span>
-                <h3 className="text-4xl font-bold text-white mb-5 font-['Space_Grotesk']">Beyond Aesthetics</h3>
-                <p className="text-white/80 text-[1.2rem] leading-relaxed m-0 relative z-10 font-medium">
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[580px] bg-transparent border border-white/10 rounded-[32px] p-12 overflow-hidden transition-colors duration-300 hover:border-[#7c3aed]/50 pointer-events-auto cursor-pointer animate-orbit-2 group-hover:[animation-play-state:paused]">
+                <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#7c3aed]/10 rounded-full blur-[70px] pointer-events-none" />
+                <span className="text-[#9b4dff] font-bold tracking-widest uppercase text-xl mb-5 block">02 / The Approach</span>
+                <h3 className="text-6xl font-bold text-white mb-5 font-['Space_Grotesk']">Beyond Aesthetics</h3>
+                <p className="text-white/80 text-[1.5rem] leading-relaxed m-0 relative z-10 font-medium">
                   We combine strategy, design, and technical SEO to create platforms that actively solve your business problems.
                 </p>
               </div>
 
               {/* Card 3 */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[420px] bg-transparent border border-white/10 rounded-[32px] p-10 overflow-hidden transition-colors duration-300 hover:border-emerald-500/50 pointer-events-auto cursor-pointer animate-orbit-3 group-hover:[animation-play-state:paused]">
-                <div className="absolute top-1/2 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-[40px] pointer-events-none" />
-                <span className="text-emerald-400 font-bold tracking-widest uppercase text-base mb-5 block">03 / The Goal</span>
-                <h3 className="text-4xl font-bold text-white mb-5 font-['Space_Grotesk']">The Growth Engine</h3>
-                <p className="text-white/80 text-[1.2rem] leading-relaxed m-0 relative z-10 font-medium">
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[580px] bg-transparent border border-white/10 rounded-[32px] p-12 overflow-hidden transition-colors duration-300 hover:border-emerald-500/50 pointer-events-auto cursor-pointer animate-orbit-3 group-hover:[animation-play-state:paused]">
+                <div className="absolute top-1/2 right-0 w-48 h-48 bg-emerald-500/10 rounded-full blur-[70px] pointer-events-none" />
+                <span className="text-emerald-400 font-bold tracking-widest uppercase text-xl mb-5 block">03 / The Goal</span>
+                <h3 className="text-6xl font-bold text-white mb-5 font-['Space_Grotesk']">The Growth Engine</h3>
+                <p className="text-white/80 text-[1.5rem] leading-relaxed m-0 relative z-10 font-medium">
                   Our ultimate goal is simple: turn your website into a powerful, automated, revenue-generating growth engine.
                 </p>
               </div>
 
               {/* Card 4 */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[420px] bg-transparent border border-white/10 rounded-[32px] p-10 overflow-hidden transition-colors duration-300 hover:border-blue-500/50 pointer-events-auto cursor-pointer animate-orbit-4 group-hover:[animation-play-state:paused]">
-                <div className="absolute top-0 left-0 w-32 h-32 bg-blue-500/10 rounded-full blur-[40px] pointer-events-none" />
-                <span className="text-blue-400 font-bold tracking-widest uppercase text-base mb-5 block">04 / The Result</span>
-                <h3 className="text-4xl font-bold text-white mb-5 font-['Space_Grotesk']">Unfair Advantage</h3>
-                <p className="text-white/80 text-[1.2rem] leading-relaxed m-0 relative z-10 font-medium">
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[580px] bg-transparent border border-white/10 rounded-[32px] p-12 overflow-hidden transition-colors duration-300 hover:border-blue-500/50 pointer-events-auto cursor-pointer animate-orbit-4 group-hover:[animation-play-state:paused]">
+                <div className="absolute top-0 left-0 w-48 h-48 bg-blue-500/10 rounded-full blur-[70px] pointer-events-none" />
+                <span className="text-blue-400 font-bold tracking-widest uppercase text-xl mb-5 block">04 / The Result</span>
+                <h3 className="text-6xl font-bold text-white mb-5 font-['Space_Grotesk']">Unfair Advantage</h3>
+                <p className="text-white/80 text-[1.5rem] leading-relaxed m-0 relative z-10 font-medium">
                   We give your business the digital leverage it needs to dominate your local market and scale predictably.
                 </p>
               </div>
@@ -411,54 +431,63 @@ function HomePage() {
         </div>
 
         {/* Mobile Stacked Layout */}
-        <div className="md:hidden flex flex-col gap-12 max-w-lg mx-auto px-4">
-          <div className="text-center flex flex-col items-center mb-8">
+        <div className="md:hidden flex flex-col gap-6 max-w-lg mx-auto px-4">
+          <div className="text-center flex flex-col items-center mb-4">
             <span className="text-xs font-extrabold text-primary-2 uppercase tracking-[0.22em] flex items-center gap-2 mb-3">
               <span className="w-2 h-2 rounded-full bg-primary-2 inline-block shadow-[0_0_10px_#ffbd2e]"></span>
               our story
             </span>
-            <h2 className="text-[3rem] font-extrabold text-white leading-[1.05] tracking-tight font-['Space_Grotesk']">
-              Why we<br />exist?
-            </h2>
-            <p className="mt-4 text-white/60 text-lg leading-relaxed">
+            <SplitText
+              text="Why we exist?"
+              className="text-[2.2rem] font-extrabold text-white leading-[1.05] tracking-tight font-['Space_Grotesk']"
+              delay={40}
+              duration={0.7}
+              ease="power4.out"
+              splitType="words"
+              from={{ opacity: 0, y: 40 }}
+              to={{ opacity: 1, y: 0 }}
+              tag="h2"
+              textAlign="center"
+            />
+            <p className="mt-3 text-white/60 text-sm leading-relaxed">
               We don't just build websites. We craft digital experiences designed to scale your business.
             </p>
           </div>
 
-          <div className="flex flex-col gap-6">
-            <div className="bg-white/[0.02] border border-white/10 rounded-[24px] p-6 relative overflow-hidden backdrop-blur-xl">
-               <div className="absolute top-0 right-0 w-24 h-24 bg-[#ffbd2e]/10 rounded-full blur-[30px]" />
-               <span className="text-[#ffbd2e] font-bold tracking-widest uppercase text-xs mb-3 block">01 / The Gap</span>
-               <h3 className="text-xl font-bold text-white mb-3 font-['Space_Grotesk']">Accessible Quality</h3>
-               <p className="text-white/70 text-sm leading-relaxed m-0 relative z-10">
-                 Fidarix bridges the huge gap between high-end agency quality and accessible pricing for growing businesses.
+          <div className="grid grid-cols-2 gap-3">
+            <div className="bg-white/[0.02] border border-white/10 rounded-[18px] p-4 relative overflow-hidden backdrop-blur-xl">
+               <div className="absolute top-0 right-0 w-16 h-16 bg-[#ffbd2e]/10 rounded-full blur-[20px]" />
+               <span className="text-[#ffbd2e] font-bold tracking-widest uppercase text-[10px] mb-2 block">01 / The Gap</span>
+               <h3 className="text-sm font-bold text-white mb-2 font-['Space_Grotesk']">Accessible Quality</h3>
+               <p className="text-white/70 text-xs leading-relaxed m-0 relative z-10">
+                 Bridging high-end agency quality and accessible pricing for growing businesses.
                </p>
             </div>
             
-            <div className="bg-white/[0.02] border border-white/10 rounded-[24px] p-6 relative overflow-hidden backdrop-blur-xl">
-               <div className="absolute bottom-0 left-0 w-24 h-24 bg-[#7c3aed]/10 rounded-full blur-[30px]" />
-               <span className="text-[#9b4dff] font-bold tracking-widest uppercase text-xs mb-3 block">02 / The Approach</span>
-               <h3 className="text-xl font-bold text-white mb-3 font-['Space_Grotesk']">Beyond Aesthetics</h3>
-               <p className="text-white/70 text-sm leading-relaxed m-0 relative z-10">
-                 We combine strategy, design, and technical SEO to create platforms that actively solve your business problems.
+            <div className="bg-white/[0.02] border border-white/10 rounded-[18px] p-4 relative overflow-hidden backdrop-blur-xl">
+               <div className="absolute bottom-0 left-0 w-16 h-16 bg-[#7c3aed]/10 rounded-full blur-[20px]" />
+               <span className="text-[#9b4dff] font-bold tracking-widest uppercase text-[10px] mb-2 block">02 / The Approach</span>
+               <h3 className="text-sm font-bold text-white mb-2 font-['Space_Grotesk']">Beyond Aesthetics</h3>
+               <p className="text-white/70 text-xs leading-relaxed m-0 relative z-10">
+                 Strategy, design, and technical SEO to solve your business problems.
                </p>
             </div>
 
-            <div className="bg-white/[0.02] border border-white/10 rounded-[24px] p-6 relative overflow-hidden backdrop-blur-xl">
-               <div className="absolute top-1/2 right-0 w-24 h-24 bg-emerald-500/10 rounded-full blur-[30px]" />
-               <span className="text-emerald-400 font-bold tracking-widest uppercase text-xs mb-3 block">03 / The Goal</span>
-               <h3 className="text-xl font-bold text-white mb-3 font-['Space_Grotesk']">The Growth Engine</h3>
-               <p className="text-white/70 text-sm leading-relaxed m-0 relative z-10">
-                 Our ultimate goal is simple: turn your website into a powerful, automated, revenue-generating growth engine.
+            <div className="bg-white/[0.02] border border-white/10 rounded-[18px] p-4 relative overflow-hidden backdrop-blur-xl">
+               <div className="absolute top-1/2 right-0 w-16 h-16 bg-emerald-500/10 rounded-full blur-[20px]" />
+               <span className="text-emerald-400 font-bold tracking-widest uppercase text-[10px] mb-2 block">03 / The Goal</span>
+               <h3 className="text-sm font-bold text-white mb-2 font-['Space_Grotesk']">The Growth Engine</h3>
+               <p className="text-white/70 text-xs leading-relaxed m-0 relative z-10">
+                 Turn your website into a powerful, automated revenue-generating engine.
                </p>
             </div>
 
-            <div className="bg-white/[0.02] border border-white/10 rounded-[24px] p-6 relative overflow-hidden backdrop-blur-xl">
-               <div className="absolute top-0 left-0 w-24 h-24 bg-blue-500/10 rounded-full blur-[30px]" />
-               <span className="text-blue-400 font-bold tracking-widest uppercase text-xs mb-3 block">04 / The Result</span>
-               <h3 className="text-xl font-bold text-white mb-3 font-['Space_Grotesk']">Unfair Advantage</h3>
-               <p className="text-white/70 text-sm leading-relaxed m-0 relative z-10">
-                 We give your business the digital leverage it needs to dominate your local market and scale predictably.
+            <div className="bg-white/[0.02] border border-white/10 rounded-[18px] p-4 relative overflow-hidden backdrop-blur-xl">
+               <div className="absolute top-0 left-0 w-16 h-16 bg-blue-500/10 rounded-full blur-[20px]" />
+               <span className="text-blue-400 font-bold tracking-widest uppercase text-[10px] mb-2 block">04 / The Result</span>
+               <h3 className="text-sm font-bold text-white mb-2 font-['Space_Grotesk']">Unfair Advantage</h3>
+               <p className="text-white/70 text-xs leading-relaxed m-0 relative z-10">
+                 Digital leverage to dominate your market and scale predictably.
                </p>
             </div>
           </div>
@@ -473,14 +502,22 @@ function HomePage() {
       <SectionWise bg="bg-transparent" style={{ paddingTop: '100px', paddingBottom: '120px', backgroundColor: '#000000', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
         <div className="text-center mb-20 flex flex-col items-center">
           <span className="text-xs font-extrabold text-primary-2 uppercase tracking-[0.22em] flex items-center gap-2 mb-3">
-            <span className="w-2 h-2 rounded-full bg-primary-2 inline-block shadow-[0_0_10px_#ffbd2e]"></span>
-            featured work
+            
           </span>
-          <h2 className="text-[clamp(3rem,5vw,4.5rem)] font-extrabold text-white leading-[1.05] uppercase tracking-tight font-['Space_Grotesk']">
-             Client Work
-          </h2>
+          <SplitText
+            text="Results We’re Proud Of"
+            className="text-[clamp(3rem,5vw,4.5rem)] font-extrabold text-white leading-[1.05] uppercase tracking-tight font-['Space_Grotesk']"
+            delay={40}
+            duration={0.7}
+            ease="power4.out"
+            splitType="chars"
+            from={{ opacity: 0, y: 40 }}
+            to={{ opacity: 1, y: 0 }}
+            tag="h2"
+            textAlign="center"
+          />
           <p className="mt-6 text-[1.15rem] text-white/60 leading-[1.7] max-w-2xl mx-auto font-medium">
-            A showcase of our client projects and their unique web experiences, engineered for maximum impact.
+            Every project below solved a real business problem.
           </p>
         </div>
 
@@ -494,6 +531,165 @@ function HomePage() {
           <ButtonLink to="/services" style={{ padding: '16px 36px', fontSize: '1.1rem' }}>
             View More Projects
           </ButtonLink>
+        </div>
+      </SectionWise>
+
+      {/* 5B. WHY BUSINESSES MOVE BEYOND TEMPLATES SECTION */}
+      <SectionWise bg="bg-transparent" style={{ paddingTop: '100px', paddingBottom: '100px', backgroundColor: '#000000', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', position: 'relative' }}>
+        <div className="beyond-templates-container max-w-7xl mx-auto px-4">
+          
+          <div className="text-center mb-16 flex flex-col items-center">
+            <span className="text-xs font-extrabold text-[#9b4dff] uppercase tracking-[0.22em] flex items-center gap-2 mb-3">
+              <span className="w-2 h-2 rounded-full bg-[#9b4dff] inline-block shadow-[0_0_10px_rgba(155,77,255,0.6)]"></span>
+              custom design vs templates
+            </span>
+            <SplitText
+              text="Why Businesses Move Beyond Templates"
+              className="text-[clamp(2.2rem,5vw,3.8rem)] font-extrabold text-white leading-[1.1] uppercase tracking-tight font-['Space_Grotesk']"
+              delay={35}
+              duration={0.6}
+              ease="power4.out"
+              splitType="words,chars"
+              from={{ opacity: 0, y: 40 }}
+              to={{ opacity: 1, y: 0 }}
+              tag="h2"
+              textAlign="center"
+            />
+            <p className="mt-4 text-[1.1rem] text-white/50 leading-[1.6] max-w-2xl mx-auto font-medium">
+              The difference between having a website and having a professional online presence.
+            </p>
+          </div>
+
+          <div className="split-comparison-layout grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-stretch mb-16">
+            
+            {/* Left Card: Template Website */}
+            <motion.div 
+              className="comparison-card template-card"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={{
+                hidden: { opacity: 0, y: 40 },
+                visible: { 
+                  opacity: 1, 
+                  y: 0, 
+                  transition: { 
+                    duration: 0.8, 
+                    ease: [0.16, 1, 0.3, 1],
+                    staggerChildren: 0.08,
+                    delayChildren: 0.2
+                  } 
+                }
+              }}
+            >
+              <div className="card-badge-placeholder" />
+              <h3 className="comparison-title text-white/60 font-['Space_Grotesk'] text-2xl font-bold mb-6 flex items-center gap-3">
+                <span className="text-xs border border-white/20 px-2 py-0.5 rounded text-white/40 font-bold uppercase tracking-wider">Standard</span>
+                Template Website
+              </h3>
+              <ul className="comparison-points flex flex-col gap-5">
+                {[
+                  "Quick to launch",
+                  "Uses pre-made layouts",
+                  "Limited brand differentiation",
+                  "Built for convenience",
+                  "Works for getting started"
+                ].map((point, index) => (
+                  <motion.li 
+                    key={index}
+                    className="point-item text-white/50 flex items-start gap-3"
+                    variants={{
+                      hidden: { opacity: 0, y: 12 },
+                      visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } }
+                    }}
+                  >
+                    <span className="point-bullet text-white/30">•</span>
+                    <span>{point}</span>
+                  </motion.li>
+                ))}
+              </ul>
+            </motion.div>
+
+            {/* Right Card: Fidarix Website */}
+            <motion.div 
+              className="comparison-card fidarix-card"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={{
+                hidden: { opacity: 0, y: 40 },
+                visible: { 
+                  opacity: 1, 
+                  y: 0, 
+                  transition: { 
+                    duration: 0.8, 
+                    delay: 0.15,
+                    ease: [0.16, 1, 0.3, 1],
+                    staggerChildren: 0.08,
+                    delayChildren: 0.35
+                  } 
+                }
+              }}
+            >
+              <div className="premium-badge">
+                <Sparkles className="w-3.5 h-3.5" /> Premium Standard
+              </div>
+              <h3 className="comparison-title text-white font-['Space_Grotesk'] text-2xl font-bold mb-6 flex items-center gap-3">
+                <span className="text-xs border border-[#9b4dff] px-2 py-0.5 rounded bg-[#9b4dff]/10 text-[#9b4dff] font-bold uppercase tracking-wider">Custom</span>
+                Fidarix Website
+              </h3>
+              <ul className="comparison-points flex flex-col gap-5">
+                {[
+                  "Designed specifically for your business",
+                  "Reflects your brand identity",
+                  "Tailored to your customers",
+                  "Built to establish trust",
+                  "Created to help your business stand out"
+                ].map((point, index) => (
+                  <motion.li 
+                    key={index}
+                    className="point-item text-white/90 flex items-start gap-3"
+                    variants={{
+                      hidden: { opacity: 0, y: 12 },
+                      visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } }
+                    }}
+                  >
+                    <span className="point-bullet text-[#9b4dff]">✓</span>
+                    <span>{point}</span>
+                  </motion.li>
+                ))}
+              </ul>
+            </motion.div>
+
+          </div>
+
+          <div className="text-center max-w-3xl mx-auto mt-20 flex flex-col items-center gap-6">
+            <p className="statement-quote font-['Space_Grotesk'] text-2xl md:text-3xl font-medium leading-relaxed text-white max-w-[28ch] italic">
+              "Most businesses don't need another website.<br />
+              They need a digital presence that reflects the quality of their work."
+            </p>
+            <p className="statement-tagline text-white/40 uppercase tracking-[0.25em] text-[10px] font-extrabold mt-4">
+              Premium Online Presence for Growing Businesses
+            </p>
+          </div>
+
+          {/* Subtle animated divider / visual transition leading into Testimonials */}
+          <div className="section-transition-divider mt-24 relative flex justify-center items-center">
+            <div className="divider-line w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
+            <motion.div 
+              className="divider-glow-dot absolute w-3 h-3 bg-[#9b4dff] rounded-full blur-[2px]"
+              animate={{ 
+                x: [-150, 150],
+                opacity: [0, 1, 0]
+              }}
+              transition={{ 
+                duration: 4, 
+                repeat: Infinity, 
+                ease: "easeInOut" 
+              }}
+            />
+          </div>
+
         </div>
       </SectionWise>
 
@@ -516,9 +712,18 @@ function HomePage() {
               Testimonials
             </div>
             
-            <h3 className="text-[2rem] font-bold text-white mb-6 leading-[1.1] font-['Space_Grotesk'] tracking-tight">
-              What Our<br/>Clients are Saying
-            </h3>
+            <SplitText
+              text="What Our Clients are Saying"
+              className="text-[2rem] font-bold text-white mb-6 leading-[1.1] font-['Space_Grotesk'] tracking-tight"
+              delay={40}
+              duration={0.7}
+              ease="power4.out"
+              splitType="chars"
+              from={{ opacity: 0, y: 40 }}
+              to={{ opacity: 1, y: 0 }}
+              tag="h3"
+              textAlign="center"
+            />
             <p className="text-white/60 text-[0.95rem] leading-relaxed">
               Hear from satisfied founders who transformed their web presence with Fidarix.
             </p>
@@ -532,19 +737,19 @@ function HomePage() {
                 name: "Rajan Shrivastav",
                 role: "Director, Mission Engineering",
                 quote: "Fidarix completely transformed how we handle admissions. Our portal is now incredibly fast and responsive.",
-                image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&auto=format&fit=crop&q=80"
+                image: '/images/HomePage/ranjan.png'
               },
               {
                 name: "Arvind Kumar",
                 role: "Founder, Aarav Academy",
                 quote: "Partnering with Fidarix was a game-changer for Aarav Academy. We've doubled our digital course registrations.",
-                image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=800&auto=format&fit=crop&q=80"
+                image: '/images/HomePage/arvind.png'
               },
               {
                 name: "Abhishek Shrivastav",
                 role: "Director, MissionIq",
                 quote: "Fidarix revolutionized our workflow. It's like having a dedicated tech team who works around the clock!",
-                image: "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?w=800&auto=format&fit=crop&q=80"
+                image:'/images/HomePage/abhishek.png'
               },
               {
                 name: "Ravi",
@@ -576,7 +781,7 @@ function HomePage() {
                   <h4 className="text-white font-bold text-lg">Rajan Shrivastav</h4>
                   <p className="text-white/50 text-sm mt-0.5">Director, Mission Engineering</p>
                 </div>
-                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&auto=format&fit=crop&q=80" alt="Rajan Shrivastav" className="w-12 h-12 rounded-full border border-white/20 object-cover" />
+                <img src="/images/HomePage/ranjan.png" alt="Rajan Shrivastav" className="w-12 h-12 rounded-full border border-white/20 object-cover" />
               </div>
               <p className="text-white/80 leading-relaxed text-[0.95rem]">
                 "Fidarix completely transformed how we handle admissions. Our portal is now incredibly fast and responsive."
@@ -590,7 +795,7 @@ function HomePage() {
                   <h4 className="text-white font-bold text-lg">Arvind Kumar</h4>
                   <p className="text-white/50 text-sm mt-0.5">Founder, Aarav Academy</p>
                 </div>
-                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=800&auto=format&fit=crop&q=80" alt="Arvind Kumar" className="w-12 h-12 rounded-full border border-white/20 object-cover" />
+                <img src="/images/HomePage/arvind.png" alt="Arvind Kumar" className="w-12 h-12 rounded-full border border-white/20 object-cover" />
               </div>
               <p className="text-white/80 leading-relaxed text-[0.95rem]">
                 "Partnering with Fidarix was a game-changer for Aarav Academy. We've doubled our digital course registrations."
@@ -605,7 +810,7 @@ function HomePage() {
                   <h4 className="text-white font-bold text-lg">Abhishek Shrivastav</h4>
                   <p className="text-white/80 text-sm mt-0.5">Director, MissionIq</p>
                 </div>
-                <img src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?w=800&auto=format&fit=crop&q=80" alt="Abhishek Shrivastav" className="w-12 h-12 rounded-full border border-white/20 object-cover" />
+                <img src="/images/HomePage/abhishek.png" alt="Abhishek Shrivastav" className="w-12 h-12 rounded-full border border-white/20 object-cover" />
               </div>
               <p className="text-white/90 leading-relaxed text-[0.95rem] relative z-10">
                 "Fidarix revolutionized our workflow. It's like having a dedicated tech team who works around the clock!"
@@ -652,9 +857,18 @@ function HomePage() {
             <span className="w-2 h-2 rounded-full bg-primary-2 inline-block"></span>
             get started today
           </span>
-          <h2 className="text-[clamp(2.5rem,6vw,4.5rem)] font-extrabold text-white uppercase tracking-tight font-['Space_Grotesk'] leading-[1.05]">
-            Ready to Build Your Website?
-          </h2>
+          <SplitText
+            text="Ready to Build Your Website?"
+            className="text-[clamp(2.5rem,6vw,4.5rem)] font-extrabold text-white uppercase tracking-tight font-['Space_Grotesk'] leading-[1.05]"
+            delay={40}
+            duration={0.7}
+            ease="power4.out"
+            splitType="chars"
+            from={{ opacity: 0, y: 40 }}
+            to={{ opacity: 1, y: 0 }}
+            tag="h2"
+            textAlign="center"
+          />
           <p className="text-white/70 text-[1.15rem] leading-[1.7] max-w-[50ch] mb-4">
             Let's create a website that helps your business stand out, attract customers, and grow online.
           </p>

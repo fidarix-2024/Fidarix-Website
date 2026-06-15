@@ -35,7 +35,61 @@ export default function DomainAccordion() {
         </motion.div>
 
         {/* Accordion Container */}
-        <div className="flex flex-col md:flex-row h-[900px] md:h-[600px] w-full gap-4">
+        <div className="flex flex-col md:flex-row h-auto md:h-[600px] w-full gap-3 md:gap-4">
+          {/* Mobile: 2x2 grid + last item full width. Desktop: flex-row accordion */}
+          <div className="grid grid-cols-2 md:hidden gap-3 w-full">
+            {domains.slice(0, 4).map((domain, index) => {
+              const Icon = domain.icon;
+              return (
+                <div
+                  key={domain.id}
+                  className="relative overflow-hidden rounded-2xl border border-white/10 h-[180px]"
+                >
+                  <div
+                    className="absolute inset-0 bg-cover bg-center opacity-50"
+                    style={{ backgroundImage: `url(${domain.img})` }}
+                  ></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"></div>
+                  <div className="absolute inset-0 p-4 flex flex-col justify-end">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-8 h-8 rounded-full bg-black/40 backdrop-blur-md border border-white/20 flex items-center justify-center flex-shrink-0">
+                        <Icon className="w-4 h-4 text-white" />
+                      </div>
+                      <h3 className="text-sm font-extrabold text-white font-['Space_Grotesk'] tracking-tight">{domain.title}</h3>
+                    </div>
+                    <p className="text-white/70 text-xs leading-[1.4] line-clamp-2">{domain.desc}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          {/* Last item full width on mobile */}
+          {(() => {
+            const domain = domains[4];
+            const Icon = domain.icon;
+            return (
+              <div
+                key={domain.id}
+                className="md:hidden relative overflow-hidden rounded-2xl border border-white/10 h-[140px] w-full"
+              >
+                <div
+                  className="absolute inset-0 bg-cover bg-center opacity-50"
+                  style={{ backgroundImage: `url(${domain.img})` }}
+                ></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"></div>
+                <div className="absolute inset-0 p-4 flex flex-col justify-end">
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-8 h-8 rounded-full bg-black/40 backdrop-blur-md border border-white/20 flex items-center justify-center flex-shrink-0">
+                      <Icon className="w-4 h-4 text-white" />
+                    </div>
+                    <h3 className="text-sm font-extrabold text-white font-['Space_Grotesk'] tracking-tight">{domain.title}</h3>
+                  </div>
+                  <p className="text-white/70 text-xs leading-[1.4]">{domain.desc}</p>
+                </div>
+              </div>
+            );
+          })()}
+          {/* Desktop accordion (unchanged) */}
           {domains.map((domain, index) => {
             const Icon = domain.icon;
             return (
@@ -45,7 +99,7 @@ export default function DomainAccordion() {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1, duration: 0.6 }}
                 key={domain.id}
-                className="relative group flex-1 md:hover:grow-[4] hover:grow-[2] transition-all duration-[800ms] ease-[cubic-bezier(0.25,1,0.5,1)] overflow-hidden rounded-[2rem] cursor-pointer border border-white/10 shadow-[0_0_20px_rgba(0,0,0,0.5)] hover:shadow-[0_0_40px_rgba(82,39,255,0.2)]"
+                className="relative group flex-1 md:hover:grow-[4] hover:grow-[2] transition-all duration-[800ms] ease-[cubic-bezier(0.25,1,0.5,1)] overflow-hidden rounded-[2rem] cursor-pointer border border-white/10 shadow-[0_0_20px_rgba(0,0,0,0.5)] hover:shadow-[0_0_40px_rgba(82,39,255,0.2)] hidden md:flex"
               >
                 {/* Background Image */}
                 <div 

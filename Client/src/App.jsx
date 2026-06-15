@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import Lenis from 'lenis';
 import { useEffect } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { SiteChrome } from './components/common/Layout';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
@@ -42,18 +43,76 @@ function LenisProvider() {
 }
 
 function App() {
+  const location = useLocation();
+
   return (
     <SiteChrome>
       <LenisProvider />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/services" element={<ServicesPage />} />
-        <Route path="/pricing" element={<PricingPage />} />
-        <Route path="/contact" element={<ContactPage />} />
-        <Route path="/home" element={<Navigate to="/" replace />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -16 }}
+              transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <HomePage />
+            </motion.div>
+          } />
+          <Route path="/about" element={
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -16 }}
+              transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <AboutPage />
+            </motion.div>
+          } />
+          <Route path="/services" element={
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -16 }}
+              transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <ServicesPage />
+            </motion.div>
+          } />
+          <Route path="/pricing" element={
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -16 }}
+              transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <PricingPage />
+            </motion.div>
+          } />
+          <Route path="/contact" element={
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -16 }}
+              transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <ContactPage />
+            </motion.div>
+          } />
+          <Route path="/home" element={<Navigate to="/" replace />} />
+          <Route path="*" element={
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -16 }}
+              transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <NotFoundPage />
+            </motion.div>
+          } />
+        </Routes>
+      </AnimatePresence>
     </SiteChrome>
   );
 }

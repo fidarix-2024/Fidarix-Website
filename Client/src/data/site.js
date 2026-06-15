@@ -62,22 +62,21 @@ export const projects = [
   {
     name: 'Mission Engineering',
     url: 'https://missionengineering.in/',
-    industry: 'Education & Coaching',
-    stack: 'React, Vite, CSS Modules, REST APIs',
-    problem: 'Needed a scalable coaching portal to manage Lateral Entry registrations, mock tests, and digital announcements for Delhi polytechnic students.',
-    result: 'Redesigned their technical infrastructure, boosting page loads to 98% and driving a 45% increase in online student admissions.',
+    industry: 'Education',
+    description: 'A streamlined admissions platform designed for students and parents.',
+    outcome: 'Reduced friction in the enrollment process and created a more professional digital presence.',
     image: '/images/HomePage/mission-client-pic.png'
   },
   {
     name: 'Aarav Academy',
     url: 'https://aaravacademy.in/',
-    industry: '9th-12th Coaching',
-    stack: 'Vite, React Router, Custom Keyframe Motion',
-    problem: 'Lacked a high-end web identity to capture digital course inquiries, distribute test scores, and match their premium classroom tutoring standards.',
-    result: 'Constructed a responsive, conversion-focused landing experience that doubled digital admissions inquiries in 30 days.',
+    industry: 'Coaching Institute',
+    description: 'A modern website built to showcase programs and strengthen credibility.',
+    outcome: 'Improved online trust and made it easier for prospective students to discover and contact the academy.',
     image: '/images/HomePage/aarav-client-pic.jpeg'
   }
 ];
+
 
 export const reasons = [
   { title: 'Fast delivery', text: 'Tight process and clear milestones keep projects moving.' },
@@ -100,106 +99,83 @@ export const testimonials = [
     quote: "Fidarix completely transformed how we handle admissions. Our Lateral Entry engineering coaching portal is now incredibly fast, responsive, and handles test series data flawlessly. Our student inquiries grew by 45% within a month of launch.",
     name: "Ranjan Shrivastav",
     role: "Director, Mission Engineering",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&auto=format&fit=crop&q=80"
-  },
+    image: "/images/HomePage/ranjan.png"  },
   {
     quote: "Partnering with Fidarix was a game-changer for Aarav Academy. The UI animations are stunning, and we've doubled our digital course registrations.",
     name: "Arvind Kumar",
     role: "Founder, Aarav Academy",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=800&auto=format&fit=crop&q=80"
+    image: "/images/HomePage/arvind.png"
   }
 ];
 
 export const pricingPlans = [
   {
     name: 'Starter',
-    tagline: 'Perfect for individuals and small businesses looking to establish an online presence.',
+    tagline: 'Fast, mobile-optimized site to build your online presence.',
     price: '₹3,999 – ₹6,999',
     delivery: '2–4 days',
     revisions: 'Basic setup',
-    support: 'SSL setup guidance',
+    support: 'SSL support',
     features: [
-      'Up to 5 custom-designed pages',
-      'Home, About, Services, Gallery/Portfolio, Contact',
-      'Mobile-responsive design',
-      'Basic SEO setup',
-      'Contact form & WhatsApp integration',
-      'Google Maps & Social media links',
-      'SSL setup guidance',
-      'Basic speed optimization',
+      '5 Custom Pages',
+      'Mobile-Responsive Design',
+      'Core SEO & Speed Setup',
+      'Contact Form & WhatsApp Link',
+      'Google Maps & Social Links',
     ],
     popular: false,
-    bestFor: 'Freelancers, Local shops, Coaches, Tutors, Small service businesses'
+    bestFor: 'Freelancers, Local shops, Small service businesses'
   },
   {
     name: 'Business',
-    tagline: 'For businesses that need a stronger online presence and better lead generation.',
+    tagline: 'Premium UI designed to capture leads and build credibility.',
     price: '₹7,999 – ₹11,999',
     delivery: '4–7 days',
-    revisions: '1 round of revisions',
-    support: 'Google Analytics & Search Console setup',
+    revisions: '1 revision round',
+    support: 'Analytics setup',
     features: [
-      'Everything in Starter included',
-      'Up to 7 custom pages',
-      'Custom UI design',
-      'Advanced contact & inquiry forms',
-      'Blog setup',
-      'Testimonials & FAQ section',
-      'Google Analytics & Console setup',
-      'On-page SEO optimization',
-      'Lead capture forms',
-      'Performance optimization',
+      'Everything in Starter',
+      '7 Pages + Custom UI Design',
+      'Advanced On-Page SEO',
+      'Blog or Testimonials Section',
+      'Google Analytics Setup',
     ],
     popular: true,
-    bestFor: 'Consultants, Real estate agents, Clinics, Gyms, Restaurants, Growing businesses'
+    bestFor: 'Consultants, Real estate agents, Growing agencies'
   },
   {
     name: 'Growth',
-    tagline: 'Built for businesses ready to scale and generate consistent leads online.',
+    tagline: 'Advanced integrations to automate bookings and scale operations.',
     price: '₹12,999 – ₹15,999',
     delivery: '7–10 days',
-    revisions: '2 rounds of revisions',
-    support: '30 days priority support',
+    revisions: '2 revision rounds',
+    support: '30 days support',
     features: [
-      'Everything in Business included',
-      'Up to 10 pages',
-      'Premium custom design',
-      'Brand color & typography setup',
-      'Landing page optimization',
-      'Blog & content structure setup',
-      'Advanced SEO setup',
-      'Lead generation funnel setup',
-      'Email capture & CRM integration (if required)',
-      'Booking / Appointment system',
-      'Analytics dashboard setup',
+      'Everything in Business',
+      '10 Pages + Branding Assets',
+      'Online Booking & Scheduling',
+      'CRM & Email Marketing Setup',
+      'Lead Generation Funnel',
     ],
     popular: false,
-    bestFor: 'Established businesses, Coaches, SaaS startups, Professional services'
+    bestFor: 'SaaS startups, Professional firms, Established brands'
   },
   {
     name: 'Premium',
-    tagline: 'A complete business growth package with advanced functionality and automation.',
+    tagline: 'Custom e-commerce platforms and automated business portals.',
     price: '₹24,999 – ₹29,999',
     delivery: '10–14 days',
-    revisions: '3 rounds of revisions',
-    support: '60 days priority support',
+    revisions: '3 revision rounds',
+    support: '60 days support',
     features: [
-      'Everything in Growth included',
-      'Up to 15 pages',
-      'Fully custom premium design',
-      'Conversion-focused UX',
-      'Multiple landing pages',
-      'Advanced forms & workflows',
-      'CRM & automation integration',
-      'Email marketing integration',
-      'Advanced booking system',
-      'Membership or basic client portal',
-      'E-commerce setup (up to 20 products) OR custom business functionality',
-      'Technical SEO & Schema markup',
-      'Performance optimization & Security hardening',
+      'Everything in Growth',
+      '15 Pages + Custom Portal',
+      'E-commerce (Up to 20 Products)',
+      'Custom Workflow Automation',
+      'Technical SEO & Schema Setup',
     ],
     popular: false,
-    bestFor: 'Multi-location businesses, Startups, E-commerce brands, Scaling businesses'
+    bestFor: 'E-commerce brands, Tech startups, Enterprises'
   },
 ];
 
@@ -235,6 +211,25 @@ export const faqs = [
     question: 'Can you improve SEO too?',
     answer: 'Absolutely. All our websites are built with technical SEO best practices in mind, including optimized metadata, fast loading speeds, and clean semantic HTML structure.',
   },
+];
+
+export const pricingFaqs = [
+  {
+    question: 'How long does a website take?',
+    answer: 'Timeline varies by package. The Starter site takes 2–4 days, Business takes 4–7 days, Growth takes 7–10 days, and Custom/Premium builds take 10–14 days. We prioritize clean code and speed from day one.'
+  },
+  {
+    question: 'Do I need hosting?',
+    answer: 'No, we assist with hosting setup. For static websites, we can deploy them on fast platforms like Vercel or Netlify. For custom databases or e-commerce, we set up AWS, Hostinger, or your preferred provider.'
+  },
+  {
+    question: 'Can I update content myself?',
+    answer: 'Yes! All sites are built on clean component structures. If you select our Growth or Premium plans, we can also integrate an easy-to-use CMS or operational admin panel so you can make updates without writing code.'
+  },
+  {
+    question: 'Do you provide support?',
+    answer: 'Absolutely. We provide free post-launch support: SSL setup for Starter/Business, 30 days of active support for Growth, and 60 days for Premium. You can also sign up for our optional monthly maintenance packages.'
+  }
 ];
 
 export const aboutTimeline = [

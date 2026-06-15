@@ -42,7 +42,39 @@
 
   .mobile-menu-button {
     display: none;
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    background: var(--line);
+    border: 1px solid var(--primary);
+    border-radius: 999px;
+    padding: 0.5rem;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+/* Show hamburger on small screens */
+@media (max-width: 767px) {
+  .mobile-menu-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: var(--bg);
+    padding: 1rem 0;
+  }
+  .nav-links.open {
+    display: flex;
+  }
+}
+
 
   .site-main {
     width: 100%;
@@ -341,6 +373,18 @@
     overflow: hidden;
   }
 
+  /* Reduce section padding on tablets and phones */
+  @media (max-width: 900px) {
+    .section-wise {
+      padding: 60px 0;
+    }
+  }
+  @media (max-width: 480px) {
+    .section-wise {
+      padding: 40px 0;
+    }
+  }
+
   .marquee-container {
     overflow: hidden;
     white-space: nowrap;
@@ -558,10 +602,73 @@
     border-top: 1px solid rgba(255, 255, 255, 0.08);
   }
 
-  .footer-wise .site-frame {
-    width: min(1180px, calc(100% - 32px));
-    margin: 0 auto;
+  /* Reduce footer padding on smaller screens */
+  @media (max-width: 900px) {
+    .footer-wise {
+      padding: 40px 0 20px;
+    }
   }
+  @media (max-width: 480px) {
+    .footer-wise {
+      padding: 30px 0 15px;
+    }
+  }
+
+  .footer-wise .pricing-plans-section {
+    padding: 80px 3vw;
+    max-width: 1600px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  /* Reduce padding on smaller screens */
+  @media (max-width: 900px) {
+    .pricing-plans-section {
+      padding: 50px 2vw;
+    }
+  }
+  @media (max-width: 480px) {
+    .pricing-plans-section {
+      padding: 30px 1.5vw;
+    }
+  }
+
+  .footer-wise .site-frame {
+    width: 100%;
+    max-width: 1180px;
+    padding: 0 1rem;
+    margin: 0 auto;
+}
+
+/* Mobile‑first layout: single column defaults */
+@media (min-width: 640px) {
+  .site-frame {
+    padding: 0 2rem;
+  }
+}
+
+/* Adjust grid sections for responsive columns */
+@media (min-width: 768px) {
+  .hero-grid {
+    grid-template-columns: minmax(0, 1.3fr) minmax(320px, 0.85fr);
+  }
+  .grid-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .grid-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .grid-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* Ultrawide screens */
+@media (min-width: 1800px) {
+  .site-frame {
+    padding: 0 4rem;
+  }
+}
 
   .footer-grid {
     display: grid;
@@ -578,9 +685,17 @@
 
   @media (max-width: 500px) {
     .footer-grid {
-      grid-template-columns: 1fr;
+        /* two columns: main content and a narrow column for social icons */
+        grid-template-columns: 1fr auto;
       gap: 30px;
     }
+
+      /* Place the connect/social column to the right of the logo on very small screens */
+      .footer-connect {
+        grid-column: 2 / 3;
+        align-self: start;
+        justify-self: end;
+      }
   }
 
   .footer-col {
@@ -637,17 +752,31 @@
   }
 
   .footer-bottom {
-    margin-top: 60px;
-    padding-top: 24px;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 20px;
-    color: rgba(255, 255, 255, 0.4);
-    font-size: 0.86rem;
-    font-weight: 500;
+  margin-top: 30px; /* reduced margin */
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.78rem; /* smaller font */
+  font-weight: 500;
+}
+
+@media (max-width: 900px) {
+  .footer-bottom {
+    margin-top: 20px;
+  }
+}
+
+  /* Reduce footer margin on smaller screens */
+  @media (max-width: 480px) {
+    .footer-bottom {
+      margin-top: 20px;
+      font-size: 0.78rem;
+    }
   }
 
   .footer-legal-links {
