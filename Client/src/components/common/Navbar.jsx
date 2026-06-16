@@ -4,7 +4,7 @@ import { navItems } from '../../data/site';
 
 export function LogoMark() {
   return (
-    <img src="/images/common/logo.png" alt="Logo" className="h-[50px] scale-[1.6] ml-[14px] w-auto object-contain" />
+    <img src="/images/common/FIDARIX Logo Final.png" alt="Logo" className="h-[46px] scale-[1.5] ml-[10px] mr-[4px] w-auto object-contain" />
   );
 }
 
@@ -29,10 +29,10 @@ export default function SiteHeader() {
   return (
     <header className={`fixed top-0 left-0 right-0 z-[100] pt-0 transition-all duration-[350ms] ease-out mix-blend-difference ${isScrolled ? 'py-2' : 'py-0'}`}>
       <div className="flex items-center justify-between w-full h-[80px] px-[40px] max-[900px]:flex-col max-[900px]:h-auto max-[900px]:p-[16px_20px] max-[900px]:gap-[12px] relative">
-        <Link className="inline-flex items-center gap-[6px] min-w-0" to="/">
+        <Link className="inline-flex items-center gap-[10px] min-w-0 group" to="/">
           <LogoMark />
-          <span className="flex flex-col leading-none">
-            <span className="font-['Space_Grotesk'] text-[1.6rem] tracking-[0.26em] uppercase text-white transition-colors duration-[400ms]">Fidarix</span>
+          <span className="flex flex-col leading-none mt-1">
+            <span className="font-['Inter'] font-extrabold text-[1.5rem] tracking-tight uppercase text-white transition-colors duration-[400ms] group-hover:text-white/90">Fidarix</span>
           </span>
         </Link>
 

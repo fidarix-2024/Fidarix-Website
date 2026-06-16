@@ -11,10 +11,10 @@ export function SiteFooter({ isDark }) {
         <div className="grid grid-cols-2 md:grid-cols-[1.2fr_repeat(3,1fr)] gap-4 md:gap-[60px]">
           {/* Column 1: Logo and Pitch */}
           <div className="flex flex-col gap-5 max-md:gap-2 col-span-2 md:col-span-1">
-            <Link className="inline-flex items-center gap-3" to="/" style={{ color: '#ffffff' }}>
+            <Link className="inline-flex items-center gap-[10px] min-w-0 group" to="/" style={{ color: '#ffffff' }}>
               <LogoMark />
-              <span className="flex flex-col line-height-1">
-                <span className="font-['Space_Grotesk'] font-medium text-xl tracking-[0.26em] uppercase">Fidarix</span>
+              <span className="flex flex-col leading-none mt-1">
+                <span className="font-['Inter'] font-extrabold text-[1.5rem] tracking-tight uppercase transition-colors duration-[400ms] group-hover:text-white/90">Fidarix</span>
               </span>
             </Link>
             <p className="text-white/60 text-[1.1rem] leading-[1.6] m-0 max-w-[320px] hidden md:block">
