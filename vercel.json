@@ -1,4 +1,7 @@
 {
+  "framework": "vite",
+  "buildCommand": "npm run build --workspace=Client",
+  "outputDirectory": "Client/build",
   "rewrites": [
     {
       "source": "/(.*)",

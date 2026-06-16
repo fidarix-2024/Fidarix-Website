@@ -4,7 +4,7 @@ import { navItems } from '../../data/site';
 
 export function LogoMark() {
   return (
-    <img src="/images/common/logo.png" alt="Logo" className="h-[50px] scale-[1.6] ml-[14px] w-auto object-contain" />
+    <img src="/images/common/FIDARIX Logo Final.png" alt="Logo" className="h-[46px] scale-[1.5] ml-[10px] mr-[4px] w-auto object-contain" />
   );
 }
 
