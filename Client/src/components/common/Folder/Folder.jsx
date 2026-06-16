@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import './Folder.css';
+
 
 const darkenColor = (hex, percent) => {
   let color = hex.startsWith('#') ? hex.slice(1) : hex;
@@ -27,6 +27,8 @@ const Folder = ({ color = '#5227FF', size = 1, items = [], className = '' }) => 
   }
 
   const [open, setOpen] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const [hoveredPaper, setHoveredPaper] = useState(null);
   const [paperOffsets, setPaperOffsets] = useState(Array.from({ length: maxItems }, () => ({ x: 0, y: 0 })));
 
   const folderBackColor = darkenColor(color, 0.08);
@@ -56,6 +58,7 @@ const Folder = ({ color = '#5227FF', size = 1, items = [], className = '' }) => 
   };
 
   const handlePaperMouseLeave = (e, index) => {
+    setHoveredPaper(null);
     setPaperOffsets(prev => {
       const newOffsets = [...prev];
       newOffsets[index] = { x: 0, y: 0 };
@@ -81,21 +84,23 @@ const Folder = ({ color = '#5227FF', size = 1, items = [], className = '' }) => 
   };
 
   return (
-    <div style={scaleStyle} className={`fd-root ${className}`}>
+    <div style={scaleStyle} className={`inline-block select-none ${className}`}>
       <div
-        className={`fd-group ${!open ? 'fd-hover' : ''}`}
+        className={`relative transition-all duration-200 ease-in cursor-pointer group`}
         style={{
           ...folderStyle,
-          transform: open ? 'translateY(-8px)' : undefined
+          transform: (open || (!open && isHovered)) ? 'translateY(-8px)' : undefined
         }}
         onClick={handleClick}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
       >
         <div
-          className="fd-back"
+          className="relative w-[100px] h-[80px] rounded-[0_10px_10px_10px]"
           style={{ backgroundColor: folderBackColor }}
         >
           <span
-            className="fd-tab"
+            className="absolute z-0 bottom-[98%] left-0 w-[30px] h-[10px] rounded-[5px_5px_0_0]"
             style={{ backgroundColor: folderBackColor }}
           ></span>
           {papers.map((item, i) => {
@@ -104,16 +109,18 @@ const Folder = ({ color = '#5227FF', size = 1, items = [], className = '' }) => 
             if (i === 1) sizeStyle = { width: '80%', height: open ? '80%' : '70%' };
             if (i === 2) sizeStyle = { width: '90%', height: open ? '80%' : '60%' };
 
+            const scale = (open && hoveredPaper === i) ? 'scale(1.1)' : '';
             const transformStyle = open
-              ? `${getOpenTransform(i)} translate(${paperOffsets[i].x}px, ${paperOffsets[i].y}px)`
-              : 'translate(-50%, 10%)';
+              ? `${getOpenTransform(i)} translate(${paperOffsets[i].x}px, ${paperOffsets[i].y}px) ${scale}`
+              : (isHovered ? 'translate(-50%, 0)' : 'translate(-50%, 10%)');
 
             return (
               <div
                 key={i}
                 onMouseMove={e => handlePaperMouseMove(e, i)}
                 onMouseLeave={e => handlePaperMouseLeave(e, i)}
-                className={`fd-paper ${open ? 'fd-paper-open' : 'fd-paper-closed'}`}
+                onMouseEnter={() => setHoveredPaper(i)}
+                className={`absolute z-20 bottom-[10%] left-1/2 transition-all duration-300 ease-in-out rounded-[10px] overflow-hidden flex items-center justify-center text-[0.6rem] text-black shadow-[0_2px_5px_rgba(0,0,0,0.1)]`}
                 style={{
                   ...sizeStyle,
                   transform: transformStyle,
@@ -125,17 +132,17 @@ const Folder = ({ color = '#5227FF', size = 1, items = [], className = '' }) => 
             );
           })}
           <div
-            className="fd-front-left"
+            className="absolute z-30 w-full h-full transition-all duration-300 ease-in-out rounded-[5px_10px_10px_10px] origin-bottom"
             style={{
               backgroundColor: color,
-              transform: open ? 'skew(15deg) scaleY(0.6)' : undefined
+              transform: (open || isHovered) ? 'skew(15deg) scaleY(0.6)' : undefined
             }}
           ></div>
           <div
-            className="fd-front-right"
+            className="absolute z-30 w-full h-full transition-all duration-300 ease-in-out rounded-[5px_10px_10px_10px] origin-bottom"
             style={{
               backgroundColor: color,
-              transform: open ? 'skew(-15deg) scaleY(0.6)' : undefined
+              transform: (open || isHovered) ? 'skew(-15deg) scaleY(0.6)' : undefined
             }}
           ></div>
         </div>

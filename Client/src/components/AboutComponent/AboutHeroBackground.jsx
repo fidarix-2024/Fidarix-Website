@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, memo } from 'react';
 import { Renderer, Program, Mesh, Triangle } from 'ogl';
 
 const MAX_COLORS = 8;
@@ -165,7 +165,7 @@ void main() {
 }
 `;
 
-const AboutHeroBackground = ({
+const AboutHeroBackground = memo(({
   className,
   dpr,
   paused = false,
@@ -278,8 +278,16 @@ const AboutHeroBackground = ({
       canvas.addEventListener('pointermove', onPointerMove);
     }
 
+    let isVisible = true;
+    const observer = new IntersectionObserver(([entry]) => {
+      isVisible = entry.isIntersecting;
+    }, { threshold: 0.01 });
+    observer.observe(container);
+
     const loop = t => {
       rafRef.current = requestAnimationFrame(loop);
+      if (!isVisible) return;
+
       uniforms.iTime.value = t * 0.001;
       if (mouseDampening > 0) {
         if (!lastTimeRef.current) lastTimeRef.current = t;
@@ -307,6 +315,7 @@ const AboutHeroBackground = ({
 
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      observer.disconnect();
       if (mouseInteraction) canvas.removeEventListener('pointermove', onPointerMove);
       ro.disconnect();
       if (canvas.parentElement === container) {
@@ -356,6 +365,6 @@ const AboutHeroBackground = ({
       }}
     />
   );
-};
+});
 
 export default AboutHeroBackground;

@@ -43,6 +43,7 @@ const MarqueeItem = ({ item }) => {
           <img
             src={item.image}
             alt={item.text}
+            loading="lazy"
             className="w-full h-full object-cover object-center filter grayscale contrast-[1.1] brightness-[0.95] group-hover/img:grayscale-0 group-hover/img:brightness-100 transition-all duration-300"
           />
         </div>

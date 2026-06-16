@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { team, techStack, aboutTimeline, founders, reasons } from '../../data/site';
 import AboutHeroBackground from '../../components/AboutComponent/AboutHeroBackground';
@@ -7,11 +7,12 @@ import DomainAccordion from '../../components/AboutComponent/DomainAccordion';
 import { Link } from 'react-router-dom';
 import { ArrowRight, CheckCircle2, Zap, Code, Smartphone, Tag, TrendingUp, LifeBuoy, PenTool, Sparkles, Rocket } from 'lucide-react';
 import SplitText from '../../components/common/SplitText';
-import './AboutPage.css';
 
 function AboutPage() {
-  // Ensure Lenis works well if used, but let's just make sure page loads at top
+  const [showHeavyComponents, setShowHeavyComponents] = useState(true);
+
   useEffect(() => {
+    // Scroll to top
     window.scrollTo(0, 0);
   }, []);
 
@@ -20,23 +21,26 @@ function AboutPage() {
       {/* 1. HERO SECTION WITH LIGHTFALL */}
       <section className="relative w-full h-[85vh] min-h-[600px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <AboutHeroBackground
-            colors={['#A6C8FF', '#5227FF', '#FF9FFC']}
-            backgroundColor="#050505"
-            speed={0.5}
-            streakCount={3}
-            streakWidth={1.5}
-            streakLength={1.2}
-            glow={1.2}
-            density={0.7}
-            twinkle={1.5}
-            zoom={2.5}
-            backgroundGlow={0.6}
-            opacity={1}
-            mouseInteraction={true}
-            mouseStrength={0.6}
-            mouseRadius={1.2}
-          />
+          {showHeavyComponents && (
+            <AboutHeroBackground
+              dpr={1}
+              colors={['#A6C8FF', '#5227FF', '#FF9FFC']}
+              backgroundColor="#050505"
+              speed={0.5}
+              streakCount={3}
+              streakWidth={1.5}
+              streakLength={1.2}
+              glow={1.2}
+              density={0.7}
+              twinkle={1.5}
+              zoom={2.5}
+              backgroundGlow={0.6}
+              opacity={1}
+              mouseInteraction={true}
+              mouseStrength={0.6}
+              mouseRadius={1.2}
+            />
+          )}
         </div>
 
         {/* Overlay gradient to ensure text readability */}
@@ -55,6 +59,7 @@ function AboutPage() {
               to={{ opacity: 1, y: 0 }}
               tag="span"
               textAlign="center"
+              playOnScroll={false}
             />
             <SplitText
               text="Digital Trust."
@@ -67,6 +72,7 @@ function AboutPage() {
               to={{ opacity: 1, y: 0 }}
               tag="span"
               textAlign="center"
+              playOnScroll={false}
             />
           </h1>
           <p className="text-white/70 text-[clamp(1.1rem,2vw,1.3rem)] leading-[1.6] max-w-[750px] mx-auto mb-10 animate-[fadeIn_1s_ease_0.3s_forwards] opacity-0 font-medium">
@@ -105,7 +111,7 @@ function AboutPage() {
             <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#080808] to-transparent z-10 pointer-events-none"></div>
 
             <div className="flex w-max animate-marquee gap-8 py-20 px-4 items-center">
-              {[...reasons, ...reasons, ...reasons, ...reasons].map((reason, i) => {
+              {[...reasons, ...reasons].map((reason, i) => {
                 let Icon = CheckCircle2;
                 if (reason.title === 'Fast delivery') Icon = Zap;
                 if (reason.title === 'Modern tech stack') Icon = Code;
@@ -297,10 +303,12 @@ function AboutPage() {
             className="w-full relative overflow-hidden group border-y border-white/10 transition-all duration-700 aspect-auto min-h-[500px] md:min-h-[700px] flex items-center"
           >
             {/* Background Image filling the entire box */}
-            <div
-              className="absolute inset-0 bg-cover bg-center transition-transform duration-[1200ms] group-hover:scale-105"
-              style={{ backgroundImage: "url('/images/AboutPage/contact_cta_background.png')" }}
-            ></div>
+            <img
+              src="/images/AboutPage/contact_cta_background.png"
+              alt="Ready to upgrade background"
+              loading="lazy"
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] group-hover:scale-105"
+            />
 
             {/* Dark Overlays to ensure text readability */}
             <div className="absolute inset-0 bg-black/60 group-hover:bg-black/40 transition-colors duration-700"></div>

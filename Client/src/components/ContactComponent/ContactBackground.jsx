@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unknown-property */
-import { forwardRef, useImperativeHandle, useEffect, useRef, useMemo } from 'react';
+import React, { forwardRef, useImperativeHandle, useEffect, useRef, useMemo, useState, memo } from 'react';
 
 import * as THREE from 'three';
 
@@ -7,7 +7,6 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { PerspectiveCamera } from '@react-three/drei';
 import { degToRad } from 'three/src/math/MathUtils.js';
 
-import './ContactBackground.css';
 
 function extendMaterial(BaseMaterial, cfg) {
   const physical = THREE.ShaderLib.physical;
@@ -50,8 +49,8 @@ function extendMaterial(BaseMaterial, cfg) {
   return mat;
 }
 
-const CanvasWrapper = ({ children }) => (
-  <Canvas dpr={[1, 2]} frameloop="always" className="beams-container">
+const CanvasWrapper = ({ children, isVisible }) => (
+  <Canvas dpr={1} frameloop={isVisible ? 'always' : 'never'} className="relative w-full h-full">
     {children}
   </Canvas>
 );
@@ -141,7 +140,7 @@ float cnoise(vec3 P){
 }
 `;
 
-const ContactBackground = ({
+const ContactBackground = memo(({
   beamWidth = 2,
   beamHeight = 15,
   beamNumber = 12,
@@ -152,6 +151,19 @@ const ContactBackground = ({
   rotation = 0
 }) => {
   const meshRef = useRef(null);
+  const containerRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(true);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      setIsVisible(entry.isIntersecting);
+    }, { threshold: 0.01 });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   const beamMaterial = useMemo(
     () =>
       extendMaterial(THREE.MeshStandardMaterial, {
@@ -210,17 +222,19 @@ const ContactBackground = ({
   );
 
   return (
-    <CanvasWrapper>
-      <group rotation={[0, 0, degToRad(rotation)]}>
-        <PlaneNoise ref={meshRef} material={beamMaterial} count={beamNumber} width={beamWidth} height={beamHeight} />
-        <DirLight color={lightColor} position={[0, 3, 10]} />
-      </group>
-      <ambientLight intensity={1} />
-      <color attach="background" args={['#000000']} />
-      <PerspectiveCamera makeDefault position={[0, 0, 20]} fov={30} />
-    </CanvasWrapper>
+    <div ref={containerRef} className="w-full h-full">
+      <CanvasWrapper isVisible={isVisible}>
+        <group rotation={[0, 0, degToRad(rotation)]}>
+          <PlaneNoise ref={meshRef} material={beamMaterial} count={beamNumber} width={beamWidth} height={beamHeight} />
+          <DirLight color={lightColor} position={[0, 3, 10]} />
+        </group>
+        <ambientLight intensity={1} />
+        <color attach="background" args={['#000000']} />
+        <PerspectiveCamera makeDefault position={[0, 0, 20]} fov={30} />
+      </CanvasWrapper>
+    </div>
   );
-};
+});
 
 function createStackedPlanesBufferGeometry(n, width, height, spacing, heightSegments) {
   const geometry = new THREE.BufferGeometry();

@@ -19,7 +19,8 @@ const SplitText = ({
   rootMargin = '-100px',
   textAlign = 'center',
   tag = 'p',
-  onLetterAnimationComplete
+  onLetterAnimationComplete,
+  playOnScroll = true
 }) => {
   const ref = useRef(null);
   const animationCompletedRef = useRef(false);
@@ -27,23 +28,14 @@ const SplitText = ({
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
   // Keep callback ref updated
+  // Removed fontsLoaded wait to ensure instant rendering
   useEffect(() => {
     onCompleteRef.current = onLetterAnimationComplete;
   }, [onLetterAnimationComplete]);
 
-  useEffect(() => {
-    if (document.fonts.status === 'loaded') {
-      setFontsLoaded(true);
-    } else {
-      document.fonts.ready.then(() => {
-        setFontsLoaded(true);
-      });
-    }
-  }, []);
-
   useGSAP(
     () => {
-      if (!ref.current || !text || !fontsLoaded) return;
+      if (!ref.current || !text) return;
       // Prevent re-animation if already completed
       if (animationCompletedRef.current) return;
       const el = ref.current;
@@ -79,6 +71,10 @@ const SplitText = ({
 
       const resolvedSplitType = splitType === 'chars' ? 'words,chars' : splitType;
 
+      const rect = el.getBoundingClientRect();
+      const inViewport = rect.top < window.innerHeight && rect.bottom > 0;
+      const shouldPlayOnScroll = playOnScroll && !inViewport;
+
       const splitInstance = new GSAPSplitText(el, {
         type: resolvedSplitType,
         smartWrap: true,
@@ -97,13 +93,15 @@ const SplitText = ({
               duration,
               ease,
               stagger: delay / 1000,
-              scrollTrigger: {
-                trigger: el,
-                start,
-                once: true,
-                fastScrollEnd: true,
-                anticipatePin: 0.4
-              },
+              ...(shouldPlayOnScroll ? {
+                scrollTrigger: {
+                  trigger: el,
+                  start,
+                  once: true,
+                  fastScrollEnd: true,
+                  anticipatePin: 0.4
+                }
+              } : {}),
               onComplete: () => {
                 animationCompletedRef.current = true;
                 onCompleteRef.current?.();
@@ -139,7 +137,7 @@ const SplitText = ({
         JSON.stringify(to),
         threshold,
         rootMargin,
-        fontsLoaded
+        playOnScroll
       ],
       scope: ref
     }

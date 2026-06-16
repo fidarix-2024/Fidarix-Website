@@ -1,42 +1,56 @@
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import Lenis from 'lenis';
-import { useEffect } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { useEffect, lazy, Suspense } from 'react';
+import { AnimatePresence } from 'framer-motion';
 import { SiteChrome } from './components/common/Layout';
-import HomePage from './pages/HomePage';
-import AboutPage from './pages/AboutPage';
-import ServicesPage from './pages/ServicesPage';
-import PricingPage from './pages/PricingPage';
-import ContactPage from './pages/ContactPage';
-import NotFoundPage from './pages/NotFoundPage';
+import PageTransition from './components/common/PageTransition';
+import RouteLoader from './components/common/RouteLoader';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import gsap from 'gsap';
+
+gsap.registerPlugin(ScrollTrigger);
+
+// Lazy load page components to split bundle size
+const HomePage = lazy(() => import('./pages/HomePage'));
+const AboutPage = lazy(() => import('./pages/AboutPage'));
+const ServicesPage = lazy(() => import('./pages/ServicesPage'));
+const PricingPage = lazy(() => import('./pages/PricingPage'));
+const ContactPage = lazy(() => import('./pages/ContactPage'));
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 
 function LenisProvider() {
   const location = useLocation();
 
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.1,
-      easing: (time) => 1 - Math.pow(1 - time, 3),
+      duration: 0.8,
+      easing: (time) => Math.min(1, 1.001 - Math.pow(2, -10 * time)), // snappier easing
       smoothWheel: true,
       smoothTouch: false,
+      wheelMultiplier: 1.2, // slightly faster scroll speed
     });
 
-    let frame = 0;
+    lenis.on('scroll', ScrollTrigger.update);
+
     const animate = (time) => {
-      lenis.raf(time);
-      frame = window.requestAnimationFrame(animate);
+      lenis.raf(time * 1000);
     };
 
-    frame = window.requestAnimationFrame(animate);
+    gsap.ticker.add(animate);
+    gsap.ticker.lagSmoothing(0);
 
     return () => {
-      window.cancelAnimationFrame(frame);
+      gsap.ticker.remove(animate);
       lenis.destroy();
     };
   }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 250);
+    return () => clearTimeout(timer);
   }, [location.pathname]);
 
   return null;
@@ -51,65 +65,47 @@ function App() {
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -16 }}
-              transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <HomePage />
-            </motion.div>
+            <Suspense fallback={<RouteLoader />}>
+              <PageTransition>
+                <HomePage />
+              </PageTransition>
+            </Suspense>
           } />
           <Route path="/about" element={
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -16 }}
-              transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <AboutPage />
-            </motion.div>
+            <Suspense fallback={<RouteLoader />}>
+              <PageTransition>
+                <AboutPage />
+              </PageTransition>
+            </Suspense>
           } />
           <Route path="/services" element={
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -16 }}
-              transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <ServicesPage />
-            </motion.div>
+            <Suspense fallback={<RouteLoader />}>
+              <PageTransition>
+                <ServicesPage />
+              </PageTransition>
+            </Suspense>
           } />
           <Route path="/pricing" element={
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -16 }}
-              transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <PricingPage />
-            </motion.div>
+            <Suspense fallback={<RouteLoader />}>
+              <PageTransition>
+                <PricingPage />
+              </PageTransition>
+            </Suspense>
           } />
           <Route path="/contact" element={
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -16 }}
-              transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <ContactPage />
-            </motion.div>
+            <Suspense fallback={<RouteLoader />}>
+              <PageTransition>
+                <ContactPage />
+              </PageTransition>
+            </Suspense>
           } />
           <Route path="/home" element={<Navigate to="/" replace />} />
           <Route path="*" element={
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -16 }}
-              transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <NotFoundPage />
-            </motion.div>
+            <Suspense fallback={<RouteLoader />}>
+              <PageTransition>
+                <NotFoundPage />
+              </PageTransition>
+            </Suspense>
           } />
         </Routes>
       </AnimatePresence>

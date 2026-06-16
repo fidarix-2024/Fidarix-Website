@@ -1,7 +1,6 @@
 import { BloomEffect, ChromaticAberrationEffect, EffectComposer, EffectPass, RenderPass } from 'postprocessing';
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, memo } from 'react';
 import * as THREE from 'three';
-import './GridScan.css';
 
 const vert = `
 varying vec2 vUv;
@@ -270,7 +269,7 @@ void main(){
 
 const MAX_SCANS = 8;
 
-export const ServicesScanner = ({
+export const ServicesScanner = memo(({
   sensitivity = 0.55,
   lineThickness = 1,
   linesColor = '#2F293A',
@@ -492,49 +491,57 @@ export const ServicesScanner = ({
     };
     window.addEventListener('resize', onResize);
 
+    let isVisible = true;
+    const observer = new IntersectionObserver(([entry]) => {
+      isVisible = entry.isIntersecting;
+    }, { threshold: 0.01 });
+    observer.observe(container);
+
     let last = performance.now();
     const tick = () => {
       const now = performance.now();
       const dt = Math.max(0, Math.min(0.1, (now - last) / 1000));
       last = now;
 
-      lookCurrent.current.copy(
-        smoothDampVec2(lookCurrent.current, lookTarget.current, lookVel.current, smoothTime, maxSpeed, dt)
-      );
+      if (isVisible) {
+        lookCurrent.current.copy(
+          smoothDampVec2(lookCurrent.current, lookTarget.current, lookVel.current, smoothTime, maxSpeed, dt)
+        );
 
-      const tiltSm = smoothDampFloat(
-        tiltCurrent.current,
-        tiltTarget.current,
-        { v: tiltVel.current },
-        smoothTime,
-        maxSpeed,
-        dt
-      );
-      tiltCurrent.current = tiltSm.value;
-      tiltVel.current = tiltSm.v;
+        const tiltSm = smoothDampFloat(
+          tiltCurrent.current,
+          tiltTarget.current,
+          { v: tiltVel.current },
+          smoothTime,
+          maxSpeed,
+          dt
+        );
+        tiltCurrent.current = tiltSm.value;
+        tiltVel.current = tiltSm.v;
 
-      const yawSm = smoothDampFloat(
-        yawCurrent.current,
-        yawTarget.current,
-        { v: yawVel.current },
-        smoothTime,
-        maxSpeed,
-        dt
-      );
-      yawCurrent.current = yawSm.value;
-      yawVel.current = yawSm.v;
+        const yawSm = smoothDampFloat(
+          yawCurrent.current,
+          yawTarget.current,
+          { v: yawVel.current },
+          smoothTime,
+          maxSpeed,
+          dt
+        );
+        yawCurrent.current = yawSm.value;
+        yawVel.current = yawSm.v;
 
-      const skew = new THREE.Vector2(lookCurrent.current.x * skewScale, -lookCurrent.current.y * yBoost * skewScale);
-      material.uniforms.uSkew.value.set(skew.x, skew.y);
-      material.uniforms.uTilt.value = tiltCurrent.current * tiltScale;
-      material.uniforms.uYaw.value = THREE.MathUtils.clamp(yawCurrent.current * yawScale, -0.6, 0.6);
+        const skew = new THREE.Vector2(lookCurrent.current.x * skewScale, -lookCurrent.current.y * yBoost * skewScale);
+        material.uniforms.uSkew.value.set(skew.x, skew.y);
+        material.uniforms.uTilt.value = tiltCurrent.current * tiltScale;
+        material.uniforms.uYaw.value = THREE.MathUtils.clamp(yawCurrent.current * yawScale, -0.6, 0.6);
 
-      material.uniforms.iTime.value = now / 1000;
-      renderer.clear(true, true, true);
-      if (composerRef.current) {
-        composerRef.current.render(dt);
-      } else {
-        renderer.render(scene, camera);
+        material.uniforms.iTime.value = now / 1000;
+        renderer.clear(true, true, true);
+        if (composerRef.current) {
+          composerRef.current.render(dt);
+        } else {
+          renderer.render(scene, camera);
+        }
       }
       rafRef.current = requestAnimationFrame(tick);
     };
@@ -542,6 +549,7 @@ export const ServicesScanner = ({
 
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      observer.disconnect();
       window.removeEventListener('resize', onResize);
       material.dispose();
       quad.geometry.dispose();
@@ -649,9 +657,9 @@ export const ServicesScanner = ({
   }, [enableGyro]);
 
   return (
-    <div ref={containerRef} className={`gridscan${className ? ` ${className}` : ''}`} style={style} />
+    <div ref={containerRef} className={`relative w-full h-full overflow-hidden${className ? ` ${className}` : ''}`} style={style} />
   );
-};
+});
 
 function srgbColor(hex) {
   const c = new THREE.Color(hex);

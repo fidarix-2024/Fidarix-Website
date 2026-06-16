@@ -1,5 +1,5 @@
 import { Renderer, Program, Mesh, Color, Triangle } from 'ogl';
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, memo } from 'react';
 
 const vertexShader = `
 attribute vec2 uv;
@@ -169,7 +169,7 @@ void main() {
 }
 `;
 
-export default function Galaxy({
+const Galaxy = memo(function Galaxy({
   focal = [0.5, 0.5],
   rotation = [1.0, 0.0],
   starSpeed = 0.5,
@@ -186,6 +186,8 @@ export default function Galaxy({
   rotationSpeed = 0.1,
   autoCenterRepulsion = 0,
   transparent = true,
+  particleCount,
+  color,
   ...rest
 }) {
   const ctnDom = useRef(null);
@@ -198,6 +200,7 @@ export default function Galaxy({
     if (!ctnDom.current) return;
     const ctn = ctnDom.current;
     const renderer = new Renderer({
+      dpr: 1,
       alpha: transparent,
       premultipliedAlpha: false
     });
@@ -259,9 +262,16 @@ export default function Galaxy({
 
     const mesh = new Mesh(gl, { geometry, program });
     let animateId;
+    let isVisible = true;
+    const observer = new IntersectionObserver(([entry]) => {
+      isVisible = entry.isIntersecting;
+    }, { threshold: 0.01 });
+    observer.observe(ctn);
 
     function update(t) {
       animateId = requestAnimationFrame(update);
+      if (!isVisible) return;
+
       if (!disableAnimation) {
         program.uniforms.uTime.value = t * 0.001;
         program.uniforms.uStarSpeed.value = (t * 0.001 * starSpeed) / 10.0;
@@ -301,6 +311,7 @@ export default function Galaxy({
 
     return () => {
       cancelAnimationFrame(animateId);
+      observer.disconnect();
       window.removeEventListener('resize', resize);
       if (mouseInteraction) {
         ctn.removeEventListener('mousemove', handleMouseMove);
@@ -329,4 +340,6 @@ export default function Galaxy({
   ]);
 
   return <div ref={ctnDom} className="w-full h-full relative" {...rest} />;
-}
+});
+
+export default Galaxy;

@@ -1,8 +1,5 @@
 import { useEffect, useMemo, useRef, useCallback } from 'react';
 import { useGesture } from '@use-gesture/react';
-import './DomeGallery.css';
-
-const DEFAULT_IMAGES = [
   {
     src: 'https://images.unsplash.com/photo-1755331039789-7e5680e26e8f?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     alt: 'Abstract art'
@@ -592,7 +589,7 @@ export default function ServicesGallery({
   return (
     <div
       ref={rootRef}
-      className="sphere-root"
+      className="sphere-root-vars relative w-full h-full group"
       style={{
         ['--segments-x']: segments,
         ['--segments-y']: segments,
@@ -602,19 +599,22 @@ export default function ServicesGallery({
         ['--image-filter']: grayscale ? 'grayscale(1)' : 'none'
       }}
     >
-      <main ref={mainRef} className="sphere-main">
-        <div className="stage">
-          <div ref={sphereRef} className="sphere">
+      <main ref={mainRef} className="absolute inset-0 grid place-items-center overflow-hidden touch-none select-none bg-transparent">
+        <div className="w-full h-full grid place-items-center" style={{ perspective: 'calc(var(--radius) * 2)', perspectiveOrigin: '50% 50%', contain: 'layout paint size' }}>
+          <div ref={sphereRef} className="will-change-transform [transform-style:preserve-3d] transition-transform duration-300">
             {items.map((it, i) => (
               <div
                 key={`${it.x},${it.y},${i}`}
-                className="item"
+                className="absolute top-[-999px] bottom-[-999px] left-[-999px] right-[-999px] m-auto origin-center backface-hidden transition-transform duration-300 [transform-style:preserve-3d]"
                 data-src={it.src}
                 data-offset-x={it.x}
                 data-offset-y={it.y}
                 data-size-x={it.sizeX}
                 data-size-y={it.sizeY}
                 style={{
+                  width: 'calc(var(--item-width) * var(--item-size-x))',
+                  height: 'calc(var(--item-height) * var(--item-size-y))',
+                  transform: 'rotateY(calc(var(--rot-y) * (var(--offset-x) + ((var(--item-size-x) - 1) / 2)) + var(--rot-y-delta, 0deg))) rotateX(calc(var(--rot-x) * (var(--offset-y) - ((var(--item-size-y) - 1) / 2)) + var(--rot-x-delta, 0deg))) translateZ(var(--radius))',
                   ['--offset-x']: it.x,
                   ['--offset-y']: it.y,
                   ['--item-size-x']: it.sizeX,
@@ -622,28 +622,29 @@ export default function ServicesGallery({
                 }}
               >
                 <div
-                  className="item__image"
+                  className="absolute inset-[10px] bg-transparent overflow-hidden backface-hidden transition-transform duration-300 cursor-pointer touch-manipulation pointer-events-auto transform-gpu [transform-style:preserve-3d] focus:outline-none"
+                  style={{ borderRadius: 'var(--tile-radius, 12px)' }}
                   role="button"
                   tabIndex={0}
                   aria-label={it.alt || 'Open image'}
                   onClick={onTileClick}
                   onPointerUp={onTilePointerUp}
                 >
-                  <img src={it.src} draggable={false} alt={it.alt} />
+                  <img src={it.src} draggable={false} alt={it.alt} className="w-full h-full object-cover pointer-events-none backface-hidden" style={{ filter: 'var(--image-filter, none)' }} />
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="overlay" />
-        <div className="overlay overlay--blur" />
-        <div className="edge-fade edge-fade--top" />
-        <div className="edge-fade edge-fade--bottom" />
+        <div className="absolute inset-0 m-auto z-[3] pointer-events-none bg-[radial-gradient(rgba(235,235,235,0)_65%,var(--overlay-blur-color,#120F17)_100%)]" />
+        <div className="absolute inset-0 m-auto z-[3] pointer-events-none backdrop-blur-[3px] [mask-image:radial-gradient(rgba(235,235,235,0)_70%,var(--overlay-blur-color,#120F17)_90%)] -webkit-mask-image:radial-gradient(rgba(235,235,235,0)_70%,var(--overlay-blur-color,#120F17)_90%)]" />
+        <div className="absolute left-0 right-0 h-[120px] z-[5] pointer-events-none bg-[linear-gradient(to_bottom,transparent,var(--overlay-blur-color,#120F17))] top-0 rotate-180" />
+        <div className="absolute left-0 right-0 h-[120px] z-[5] pointer-events-none bg-[linear-gradient(to_bottom,transparent,var(--overlay-blur-color,#120F17))] bottom-0" />
 
-        <div className="viewer" ref={viewerRef}>
-          <div ref={scrimRef} className="scrim" />
-          <div ref={frameRef} className="frame" />
+        <div className="absolute inset-0 z-20 pointer-events-none flex items-center justify-center p-[var(--viewer-pad)]" ref={viewerRef}>
+          <div ref={scrimRef} className="absolute inset-0 z-10 bg-black/40 pointer-events-none opacity-0 transition-opacity duration-500 ease-in-out backdrop-blur-[3px] group-data-[enlarging=true]:opacity-100 group-data-[enlarging=true]:pointer-events-auto" />
+          <div ref={frameRef} className="h-full aspect-square flex max-[100vw]:h-auto max-[100vw]:w-full max-h-full" style={{ borderRadius: 'var(--enlarge-radius, 32px)' }} />
         </div>
       </main>
     </div>

@@ -386,6 +386,7 @@ class App {
     this.container = container;
     this.scrollSpeed = scrollSpeed;
     this.scroll = { ease: scrollEase, current: 0, target: 0, last: 0 };
+    this.isVisible = true;
     this.onCheckDebounce = debounce(this.onCheck, 200);
     this.createRenderer();
     this.createCamera();
@@ -395,6 +396,27 @@ class App {
     this.createMedias(items, bend, textColor, borderRadius, font);
     this.update();
     this.addEventListeners();
+    this.setupIntersectionObserver();
+  }
+
+  setupIntersectionObserver() {
+    this.observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            if (!this.isVisible) {
+              this.isVisible = true;
+              this.scroll.last = this.scroll.current;
+              this.raf = window.requestAnimationFrame(this.update.bind(this));
+            }
+          } else {
+            this.isVisible = false;
+          }
+        });
+      },
+      { threshold: 0 }
+    );
+    this.observer.observe(this.container);
   }
   createRenderer() {
     this.renderer = new Renderer({
@@ -523,7 +545,10 @@ class App {
     }
     this.renderer.render({ scene: this.scene, camera: this.camera });
     this.scroll.last = this.scroll.current;
-    this.raf = window.requestAnimationFrame(this.update.bind(this));
+
+    if (this.isVisible) {
+      this.raf = window.requestAnimationFrame(this.update.bind(this));
+    }
   }
   addEventListeners() {
     this.boundOnResize = this.onResize.bind(this);
@@ -552,6 +577,9 @@ class App {
     window.removeEventListener('touchstart', this.boundOnTouchDown);
     window.removeEventListener('touchmove', this.boundOnTouchMove);
     window.removeEventListener('touchend', this.boundOnTouchUp);
+    if (this.observer) {
+      this.observer.disconnect();
+    }
     if (this.renderer && this.renderer.gl && this.renderer.gl.canvas.parentNode) {
       this.renderer.gl.canvas.parentNode.removeChild(this.renderer.gl.canvas);
     }

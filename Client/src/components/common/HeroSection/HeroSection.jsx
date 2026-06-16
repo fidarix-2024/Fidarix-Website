@@ -2,8 +2,6 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useMotionValue, AnimatePresence, animate } from 'framer-motion';
 import Hyperspeed from '../Hyperspeed';
-import './HeroSection.css';
-
 const profiles = [
   {
     name: 'CLUTCH MARKET',
@@ -66,7 +64,7 @@ const ROTATION_SPEED = 0.08; // default auto-spin degrees per frame at 60fps
    ═══════════════════════════════════════ */
 function HyperspeedBackground() {
   return (
-    <div className="hero-hyperspeed-bg" aria-hidden="true">
+    <div className="absolute inset-0 z-[1] pointer-events-none overflow-hidden bg-black [&>div]:!w-full [&>div]:!h-full [&_canvas]:!w-full [&_canvas]:!h-full [&_canvas]:!block" aria-hidden="true">
       <Hyperspeed
         effectOptions={{
           onSpeedUp: () => {},
@@ -106,8 +104,8 @@ function HyperspeedBackground() {
           },
         }}
       />
-      <div className="hero-hyperspeed-overlay" />
-      <div className="hero-neon-glow" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_50%,rgba(0,0,0,0.18)_0%,rgba(0,0,0,0.72)_100%),linear-gradient(to_top,rgba(6,6,12,0.9)_0%,rgba(6,6,12,0.3)_50%,rgba(6,6,12,0.6)_100%)] pointer-events-none z-[2]" />
+      <div className="absolute w-[90vw] h-[90vh] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[radial-gradient(circle,rgba(var(--active-neon-rgb),0.12)_0%,rgba(var(--active-neon-rgb),0.04)_45%,transparent_75%)] blur-[60px] pointer-events-none z-[3] transition-colors duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] will-change-[background]" />
     </div>
   );
 }
@@ -120,44 +118,46 @@ function SpindleCard({ profile, index, total, isActive, onClick, onImageClick })
 
   return (
     <div
-      className={`hero-spindle-card ${isActive ? 'active' : ''}`}
+      className={`absolute top-0 left-0 w-full h-full rounded-[20px] transition-all duration-[750ms] ease-[cubic-bezier(0.16,1,0.3,1)] will-change-[opacity,filter] shadow-[0_20px_50px_rgba(0,0,0,0.85)] ${isActive ? 'opacity-100 filter-none z-10 scale-100 group' : 'opacity-[0.65] brightness-[0.7] contrast-[1.05] grayscale-0 z-0'}`}
       style={{
+        transformStyle: 'preserve-3d',
         width: CARD_W,
         height: CARD_H,
         transform: `rotateY(${angle}deg) translateZ(${RADIUS}px)`,
       }}
       onClick={onClick}
     >
-      <div className="hero-card-inner">
+      <div className="relative w-full h-full rounded-[20px] border border-white/5 overflow-hidden bg-black flex flex-col justify-end">
         {/* Artwork Image */}
-        <div className="hero-card-image-wrap">
+        <div className="absolute inset-0 z-[1] overflow-hidden">
           <img
             src={profile.image}
             alt={profile.name}
+            className={`w-full h-full object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${isActive ? 'group-hover:scale-[1.06]' : ''}`}
             draggable={false}
             loading={index < 3 ? 'eager' : 'lazy'}
           />
-          <div className="hero-card-image-overlay" />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.95)_0%,rgba(0,0,0,0.7)_40%,rgba(0,0,0,0.3)_70%,transparent_90%)] z-[2] pointer-events-none" />
         </div>
 
         {/* Top reflections / card structure */}
-        <div className="hero-card-reflection" />
-        <div className="hero-card-border-glow" />
+        <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.06)_0%,transparent_40%)] z-[3] pointer-events-none" />
+        <div className="absolute inset-0 rounded-[20px] shadow-[inset_0_0_25px_rgba(255,255,255,0.02)] z-[4] pointer-events-none" />
 
         {/* Text Overlay - Only visible when this card is at the front */}
-        <div className="hero-card-content">
-          <div className="hero-card-tags">
-            <span className="hero-tag-hot">
+        <div className={`relative z-10 p-[24px_28px] w-full text-left transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-[15px]'}`}>
+          <div className="flex gap-[10px] items-center mb-2">
+            <span className="bg-[rgba(255,60,60,0.14)] border border-[rgba(255,60,60,0.35)] text-[#ff3b30] text-[9px] font-extrabold tracking-[1px] px-[7px] py-[2.5px] rounded-[5px] flex items-center gap-1">
               <span className="flame-icon">🔥</span> HOT
             </span>
-            <span className="hero-tag-pill">{profile.category}</span>
+            <span className="bg-white/10 border border-white/15 text-white/85 text-[8.5px] font-bold tracking-[1.5px] px-[7px] py-[2.5px] rounded-[5px] uppercase">{profile.category}</span>
           </div>
 
-          <h2 className="hero-card-title">{profile.name}</h2>
-          <p className="hero-card-desc">{profile.description}</p>
+          <h2 className="font-['Bebas_Neue'] text-[clamp(2rem,4.5vw,3.4rem)] font-normal leading-[0.85] text-white m-0 mb-2 tracking-[-0.01em] drop-shadow-[0_8px_30px_rgba(0,0,0,0.8)]">{profile.name}</h2>
+          <p className="font-['Fira_Code'] text-[10px] text-white/55 leading-[1.4] m-0 mb-4 tracking-[0.5px] uppercase max-w-full">{profile.description}</p>
 
           <button
-            className="hero-card-launch-btn"
+            className="bg-white text-black font-['Space_Grotesk'] text-[10px] font-bold tracking-[2px] px-[28px] py-[10px] rounded-full border-none cursor-pointer shadow-[0_4px_12px_rgba(255,255,255,0.12)] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform hover:bg-white hover:shadow-[0_0_20px_var(--active-neon)] hover:scale-[1.04]"
             onClick={(e) => {
               e.stopPropagation();
               onImageClick(profile.image, profile.name);
@@ -301,16 +301,16 @@ export default function HeroSection() {
 
   return (
     <section
-      className="hero-section"
+      className="relative w-full h-screen bg-[#06060c] overflow-hidden flex flex-col justify-center items-center font-['Manrope'] text-white z-[1]"
       style={{
         '--active-neon': activeProfile.neon,
         '--active-neon-rgb': activeProfile.neonRgb,
       }}
     >
-      <div className="hero-grain" />
+      <div className="absolute inset-[-50%] w-[200%] h-[200%] z-[99] pointer-events-none opacity-[0.035] mix-blend-overlay animate-grain-shift" style={{ filter: 'url(#grain-filter)' }} />
 
       {/* SVG noise filter */}
-      <svg className="hero-svg-filters" aria-hidden="true">
+      <svg className="absolute w-0 h-0 pointer-events-none" aria-hidden="true">
         <filter id="grain-filter">
           <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
           <feColorMatrix type="saturate" values="0" />
@@ -322,43 +322,43 @@ export default function HeroSection() {
 
       {/* ═══ MOBILE VIEW ═══ */}
       {isMobile ? (
-        <div className="hero-mobile-container">
-          <div className="hero-headline-wrap">
-            <p className="hero-eyebrow">DESIGN · DEVELOPMENT · STRATEGY</p>
-            <h1 className="hero-headline">We Build Digital Legacies</h1>
+        <div className="w-full h-full flex flex-col justify-start pt-[100px] box-border">
+          <div className="text-center mb-6 px-5">
+            <p className="text-[10px] tracking-[3px] text-white/40 uppercase mb-2">DESIGN · DEVELOPMENT · STRATEGY</p>
+            <h1 className="text-[28px] font-extrabold m-0 leading-[1.1] tracking-[-0.5px]">We Build Digital Legacies</h1>
           </div>
 
           <div
-            className="hero-mobile-scroll"
+            className="flex gap-5 px-10 pb-[30px] overflow-x-auto snap-x snap-mandatory webkit-overflow-scrolling-touch scrollbar-none w-full box-border [&::-webkit-scrollbar]:hidden"
             onScroll={handleMobileScroll}
           >
             {profiles.map((p, i) => (
-              <div key={i} className="hero-mobile-card-wrap">
+              <div key={i} className="shrink-0 w-[80vw] snap-center">
                 <div
-                  className="hero-mobile-card"
+                  className="relative w-full h-[220px] rounded-[16px] overflow-hidden border border-white/10 shadow-[0_15px_35px_rgba(0,0,0,0.6)] flex flex-col justify-end"
                   onClick={() => setPreview({ src: p.image, name: p.name })}
                 >
-                  <img src={p.image} alt={p.name} loading="lazy" />
-                  <div className="hero-card-image-overlay" />
-                  <div className="hero-mobile-card-content">
-                    <div className="hero-card-tags">
-                      <span className="hero-tag-hot">🔥 HOT</span>
-                      <span className="hero-tag-pill">{p.category}</span>
+                  <img src={p.image} alt={p.name} loading="lazy" className="absolute inset-0 w-full h-full object-cover z-[1]" />
+                  <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.95)_0%,rgba(0,0,0,0.7)_40%,rgba(0,0,0,0.3)_70%,transparent_90%)] z-[2] pointer-events-none" />
+                  <div className="relative z-10 p-[16px_20px] text-left">
+                    <div className="flex gap-[10px] items-center mb-[6px]">
+                      <span className="bg-[rgba(255,60,60,0.14)] border border-[rgba(255,60,60,0.35)] text-[#ff3b30] text-[9px] font-extrabold tracking-[1px] px-[7px] py-[2.5px] rounded-[5px] flex items-center gap-1">🔥 HOT</span>
+                      <span className="bg-white/10 border border-white/15 text-white/85 text-[8.5px] font-bold tracking-[1.5px] px-[7px] py-[2.5px] rounded-[5px] uppercase">{p.category}</span>
                     </div>
-                    <h2 className="hero-card-title">{p.name}</h2>
-                    <p className="hero-card-desc">{p.description}</p>
-                    <button className="hero-card-launch-btn">LAUNCH</button>
+                    <h2 className="font-['Bebas_Neue'] text-[1.8rem] m-0 mb-[6px]">{p.name}</h2>
+                    <p className="font-['Fira_Code'] text-[9px] text-white/55 leading-[1.3] m-0 mb-[12px] tracking-[0.5px] uppercase max-w-full">{p.description}</p>
+                    <button className="bg-white text-black font-['Space_Grotesk'] text-[9.5px] font-bold tracking-[2px] px-[24px] py-[8px] rounded-full border-none cursor-pointer shadow-[0_4px_12px_rgba(255,255,255,0.12)]">LAUNCH</button>
                   </div>
                 </div>
               </div>
             ))}
           </div>
 
-          <div className="hero-mobile-indicators">
+          <div className="flex justify-center gap-2 mt-[10px]">
             {profiles.map((_, i) => (
               <span
                 key={i}
-                className={`hero-dot-indicator ${i === activeIndex ? 'active' : ''}`}
+                className={`w-2 h-2 rounded-full transition-all duration-500 ease-out`}
                 style={{
                   backgroundColor: i === activeIndex ? activeProfile.neon : 'rgba(255,255,255,0.2)',
                 }}
@@ -369,15 +369,15 @@ export default function HeroSection() {
       ) : (
         /* ═══ DESKTOP VIEW — 3D SPINDLE ═══ */
         <div
-          className="hero-desktop-container"
+          className="w-full h-full flex flex-col justify-center items-center z-10"
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={handleMouseLeave}
           onMouseMove={handleMouseMove}
         >
           {/* 3D Spindle Cylinder Viewport */}
-          <div className="hero-spindle-viewport" ref={containerRef}>
+          <div className="relative w-full h-[80vh] flex items-center justify-center mt-[90px] max-lg:mt-[70px]" style={{ perspective: '1400px', perspectiveOrigin: '50% 50%' }} ref={containerRef}>
             <motion.div
-              className="hero-spindle-ring"
+              className="relative w-[400px] h-[260px] max-lg:w-[320px] max-lg:h-[208px]"
               style={{
                 rotateY: rotationY,
                 rotateX: tiltX,
@@ -399,24 +399,23 @@ export default function HeroSection() {
           </div>
 
           {/* Bottom Right Controls */}
-          <div className="hero-controls-bar">
-            <div className="hero-thumbs-row">
+          <div className="absolute bottom-[40px] left-[60px] right-[60px] flex justify-end items-center gap-[32px] z-30">
+            <div className="flex gap-[12px]">
               {profiles.map((p, i) => (
                 <button
                   key={i}
-                  className={`hero-thumb-btn ${i === activeIndex ? 'active' : ''}`}
+                  className={`relative w-[60px] h-[40px] rounded-lg overflow-hidden border border-white/15 bg-transparent cursor-pointer p-0 transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] will-change-[transform,border-color,box-shadow] group ${i === activeIndex ? 'border-white shadow-[0_0_16px_var(--thumb-neon)] -translate-y-[2px]' : ''}`}
                   onClick={() => spinToCard(i)}
                   style={{
                     '--thumb-neon': p.neon,
                   }}
                 >
-                  <img src={p.image} alt={p.name} />
-                  <div className="hero-thumb-glow" />
+                  <img src={p.image} alt={p.name} className={`w-full h-full object-cover transition-opacity duration-300 ${i === activeIndex ? 'opacity-100' : 'opacity-60 group-hover:opacity-85'}`} />
                 </button>
               ))}
             </div>
-            <Link to="/services" className="hero-see-all">
-              SEE ALL SERVICES <span className="arrow-right">▶</span>
+            <Link to="/services" className="font-['Space_Grotesk'] text-[11px] font-bold tracking-[2px] text-white/50 no-underline flex items-center gap-[6px] transition-colors duration-300 hover:text-white group">
+              SEE ALL SERVICES <span className="text-[8px] text-[var(--active-neon)] transition-colors duration-[800ms] ease-out">▶</span>
             </Link>
           </div>
         </div>
@@ -425,28 +424,28 @@ export default function HeroSection() {
       {/* Lightbox Modal */}
       <AnimatePresence>
         {preview && (
-          <div className="hero-lightbox-portal">
+          <div className="fixed inset-0 z-[99999] flex items-center justify-center p-[40px]">
             <motion.div
-              className="hero-lightbox-backdrop"
+              className="absolute inset-0 bg-[rgba(4,4,8,0.92)] backdrop-blur-[20px] cursor-pointer"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setPreview(null)}
             />
             <motion.div
-              className="hero-lightbox-container"
+              className="relative z-10 w-full max-w-[960px] max-h-[80vh] aspect-[16/10] bg-black rounded-[20px] overflow-hidden shadow-[0_40px_120px_rgba(0,0,0,0.95),0_0_80px_rgba(255,255,255,0.05)] border border-white/10 flex flex-col"
               initial={{ opacity: 0, scale: 0.3, y: 70 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.35, y: 50 }}
               transition={{ type: 'spring', stiffness: 350, damping: 24, mass: 0.85 }}
             >
-              <button className="hero-lightbox-close" onClick={() => setPreview(null)}>
+              <button className="absolute top-[20px] right-[20px] z-20 w-[44px] h-[44px] rounded-full bg-black/60 border border-white/15 text-white flex items-center justify-center cursor-pointer transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] backdrop-blur-[8px] hover:bg-white hover:text-black hover:rotate-90 hover:scale-[1.05] hover:border-white" onClick={() => setPreview(null)}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <path d="M18 6L6 18M6 6l12 12" />
                 </svg>
               </button>
-              <img src={preview.src} alt={preview.name} className="hero-lightbox-img" />
-              <div className="hero-lightbox-title">{preview.name}</div>
+              <img src={preview.src} alt={preview.name} className="w-full h-full object-cover block" />
+              <div className="absolute bottom-0 left-0 right-0 p-[24px_30px] bg-[linear-gradient(to_top,rgba(0,0,0,0.85)_0%,rgba(0,0,0,0.3)_70%,transparent_100%)] text-white font-['Space_Grotesk'] text-[20px] font-extrabold tracking-[1px] uppercase pointer-events-none">{preview.name}</div>
             </motion.div>
           </div>
         )}

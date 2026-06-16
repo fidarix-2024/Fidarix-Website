@@ -1,7 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import SiteHeader, { LogoMark } from './Navbar';
 import TextPressure from './TextPressure';
-import './Layout.css';
 
 export function SiteFooter({ isDark }) {
   return (
@@ -42,7 +41,7 @@ export function SiteFooter({ isDark }) {
           </div>
 
           {/* Column 4: Connect */}
-          <div className="flex flex-col gap-2 md:gap-4 col-span-2 md:col-span-1 footer-connect">
+          <div className="flex flex-col gap-2 md:gap-4 col-span-2 md:col-span-1 max-[500px]:col-start-2 max-[500px]:self-start max-[500px]:justify-self-end">
             <h4 className="font-['Space_Grotesk'] text-[0.75rem] md:text-[1rem] font-extrabold text-white uppercase tracking-[0.12em] m-0 mb-1 md:mb-3 border-b border-white/8 pb-1 md:pb-3">Connect</h4>
             <div className="flex flex-row gap-6 items-center mt-3">
               <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-primary transition-transform hover:-translate-y-1" aria-label="LinkedIn">
@@ -150,7 +149,7 @@ export function ImpactHero({
         <h1 className={`text-white ${titleSize} ${leadingClass} font-extrabold font-['Space_Grotesk'] uppercase tracking-tight flex flex-col items-center mb-8`}>
           {lines.map((line, i) => (
             <span key={i} className="block overflow-hidden py-1.5 -my-1.5">
-              <span className="reveal-text" style={{ animationDelay: `${i * 0.15}s` }}>
+              <span className="block animate-slide-up" style={{ animationDelay: `${i * 0.15}s` }}>
                 {line}
               </span>
             </span>
@@ -168,8 +167,8 @@ export function ImpactHero({
 
 export function SectionWise({ children, className = '', bg = '', style }) {
   return (
-    <section className={`section-wise ${bg} ${className}`} style={style}>
-      <div className="site-frame">
+    <section className={`py-[120px] max-md:py-[60px] max-sm:py-[40px] overflow-hidden ${bg} ${className}`} style={style}>
+      <div className="w-[min(1180px,calc(100%-32px))] mx-auto px-0 sm:px-8 2xl:px-16">
         {children}
       </div>
     </section>
@@ -178,13 +177,17 @@ export function SectionWise({ children, className = '', bg = '', style }) {
 
 export function Marquee({ items, speed = '30s' }) {
   return (
-    <div className="marquee-container">
-      <div className="marquee-content" style={{ animationDuration: speed }}>
+    <div className="overflow-hidden whitespace-nowrap py-10 hover:[&>div]:[animation-play-state:paused]">
+      <div className="inline-flex items-center gap-0 animate-marquee" style={{ animationDuration: speed }}>
         {items.map((item, i) => (
-          <span key={i}>{item}</span>
+          <span key={i} className="px-10 text-[0.82rem] font-extrabold tracking-[0.18em] uppercase text-white/45 cursor-default transition-all duration-300 relative hover:text-[#c084fc] hover:drop-shadow-[0_0_12px_rgba(167,90,255,0.8)] after:content-['●'] after:absolute after:-right-[2px] after:top-1/2 after:-translate-y-1/2 after:text-[0.3rem] after:text-white/15">
+            {item}
+          </span>
         ))}
         {items.map((item, i) => (
-          <span key={`dup-${i}`}>{item}</span>
+          <span key={`dup-${i}`} className="px-10 text-[0.82rem] font-extrabold tracking-[0.18em] uppercase text-white/45 cursor-default transition-all duration-300 relative hover:text-[#c084fc] hover:drop-shadow-[0_0_12px_rgba(167,90,255,0.8)] after:content-['●'] after:absolute after:-right-[2px] after:top-1/2 after:-translate-y-1/2 after:text-[0.3rem] after:text-white/15">
+            {item}
+          </span>
         ))}
       </div>
     </div>

@@ -1,168 +1,41 @@
 @import "tailwindcss";
 
-:root {
-  --space-sm: 0.5rem;
-  --space-md: 1rem;
-  --space-lg: 2rem;
-}
+@theme {
+  --color-primary: #5a74ff;
+  --color-primary-2: #9b4dff;
+  --color-primary-3: #4cc3ff;
+  
+  --color-wise-green: #9fe870;
+  --color-wise-burgundy: #3c0d0d;
+  --color-wise-dark: #1a1a1a;
+  --color-wise-yellow: #f8ff1f;
+  --color-wise-pink: #ff91e0;
 
-html, body {
-  overflow-x: hidden;
-}
-
-  :root {
-    color-scheme: dark;
-    font-family: 'Manrope', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    line-height: 1.5;
-    font-weight: 400;
-    color: #ffffff;
-    background:
-      radial-gradient(circle at 10% 8%, rgba(90, 116, 255, 0.15), transparent 30%),
-      radial-gradient(circle at 85% 15%, rgba(155, 77, 255, 0.12), transparent 32%),
-      #000000;
-    font-synthesis: none;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    --bg: #000000;
-    --surface: rgba(255, 255, 255, 0.03);
-    --surface-strong: rgba(255, 255, 255, 0.05);
-    --surface-soft: rgba(255, 255, 255, 0.02);
-    --text: #ffffff;
-    --muted: rgba(255, 255, 255, 0.6);
-    --line: rgba(255, 255, 255, 0.08);
-    --line-strong: rgba(90, 116, 255, 0.3);
-    --primary: #5a74ff;
-    --primary-2: #9b4dff;
-    --primary-3: #4cc3ff;
-    --shadow: 0 28px 80px rgba(0, 0, 0, 0.6);
-    --shadow-soft: 0 18px 50px rgba(0, 0, 0, 0.4);
-    --radius-xl: 48px;
-    --radius-lg: 32px;
-    --radius-md: 24px;
-    --radius-sm: 16px;
-
-    /* Wise-inspired palette options */
-    --wise-green: #9fe870;
-    --wise-burgundy: #3c0d0d;
-    --wise-dark: #1a1a1a;
-    --wise-yellow: #f8ff1f;
-    --wise-pink: #ff91e0;
-  }
-
-  .bg-burgundy {
-    background-color: var(--wise-burgundy);
-    color: #fff;
-  }
-
-  .bg-dark {
-    background-color: var(--wise-dark);
-    color: #fff;
-  }
-
-  .bg-primary {
-    background-color: var(--primary);
-    color: #fff;
-  }
-
-
-
-  * {
-    box-sizing: border-box;
-  }
-
-  html,
-  body {
-    min-height: 100%;
-    margin: 0;
-    overflow-x: clip;
-  }
-
-  #root {
-    min-height: 100%;
-    margin: 0;
-  }
-
-  html {
-    scroll-behavior: auto;
-  }
-
-  body {
-    min-height: 100vh;
-    color: var(--text);
-    background: #000000;
-  }
-
-  #root,
-  .app-shell,
-  .page-wise,
-  .services-page-dark {
-    background: #000000;
-  }
-
-  a {
-    color: inherit;
-    text-decoration: none;
-  }
-
-  button,
-  input,
-  textarea,
-  select {
-    font: inherit;
-  }
-
-  img {
-    display: block;
-    max-width: 100%;
-  }
-
-  .app-shell {
-    min-height: 100vh;
-  }
-
-  .site-frame {
-    width: min(1180px, calc(100% - 32px));
-    margin: 0 auto;
-  }
+  --animate-marquee: marquee 30s linear infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-fade-square: fadeSquare ease-in-out infinite;
+  --animate-orbit-1: orbit-1 40s linear infinite;
+  --animate-orbit-2: orbit-2 40s linear infinite;
+  --animate-orbit-3: orbit-3 40s linear infinite;
+  --animate-orbit-4: orbit-4 40s linear infinite;
+  --animate-splash-explosion: splashExplosion 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-tooltip-float: tooltipFloat 4s ease-in-out infinite;
+  --animate-slide-up: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-grain-shift: grain-shift 0.4s steps(6) infinite;
+  --animate-roadmap-slide-up: roadmapSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 
   @keyframes marquee {
     0% { transform: translateX(0%); }
     100% { transform: translateX(-50%); }
   }
-
-  .animate-marquee {
-    animation: marquee 30s linear infinite;
-  }
-  
-  .animate-marquee:hover {
-    animation-play-state: paused;
-  }
-
-  @keyframes shimmer {
-    100% {
-      transform: translateX(100%);
-    }
-  }
-
   @keyframes float {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-10px); }
   }
-
-  .animate-float {
-    animation: float 6s ease-in-out infinite;
-  }
-
   @keyframes fadeSquare {
     0%, 100% { opacity: 0; }
     50% { opacity: 0.25; }
   }
-
-  .animate-fade-square {
-    animation: fadeSquare ease-in-out infinite;
-  }
-
   @keyframes orbit-1 {
     from { transform: rotate(0deg) translateY(-1000px) rotate(0deg); }
     to { transform: rotate(360deg) translateY(-1000px) rotate(-360deg); }
@@ -179,7 +52,113 @@ html, body {
     from { transform: rotate(270deg) translateY(-1000px) rotate(-270deg); }
     to { transform: rotate(630deg) translateY(-1000px) rotate(-630deg); }
   }
-  .animate-orbit-1 { animation: orbit-1 40s linear infinite; }
-  .animate-orbit-2 { animation: orbit-2 40s linear infinite; }
-  .animate-orbit-3 { animation: orbit-3 40s linear infinite; }
-  .animate-orbit-4 { animation: orbit-4 40s linear infinite; }
+  @keyframes splashExplosion {
+    0% { transform: scale(0); opacity: 1; }
+    45% { transform: scale(7.5); opacity: 1; }
+    100% { transform: scale(9.5); opacity: 0; }
+  }
+  @keyframes tooltipFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+  }
+  @keyframes slideUp {
+    0% { transform: translateY(110%); }
+    100% { transform: translateY(0); }
+  }
+  @keyframes grain-shift {
+    0%, 100% { transform: translate(0, 0); }
+    10% { transform: translate(-5%, -10%); }
+    30% { transform: translate(3%, -15%); }
+    50% { transform: translate(10%, 5%); }
+  }
+  @keyframes bounceSlow {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(8px); }
+  }
+  @keyframes ch-fadein {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes ch-slidein {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes roadmapSlideUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
+/* ServicesGallery variables and global classes */
+.dg-scroll-lock {
+  overflow: hidden;
+  touch-action: none;
+}
+
+.enlarge {
+  position: absolute;
+  z-index: 30;
+  border-radius: var(--enlarge-radius, 32px);
+  overflow: hidden;
+  transition: transform 500ms ease, opacity 500ms ease;
+  transform-origin: top left;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.enlarge img, .enlarge-closing img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: var(--image-filter, none);
+}
+
+@layer components {
+  .sphere-root-vars {
+    --radius: 520px;
+    --viewer-pad: 72px;
+    --circ: calc(var(--radius) * 3.14);
+    --rot-y: calc((360deg / var(--segments-x)) / 2);
+    --rot-x: calc((360deg / var(--segments-y)) / 2);
+    --item-width: calc(var(--circ) / var(--segments-x));
+    --item-height: calc(var(--circ) / var(--segments-y));
+  }
+}
+
+:root {
+  color-scheme: dark;
+  font-family: 'Manrope', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #ffffff;
+  background:
+    radial-gradient(circle at 10% 8%, rgba(90, 116, 255, 0.15), transparent 30%),
+    radial-gradient(circle at 85% 15%, rgba(155, 77, 255, 0.12), transparent 32%),
+    #000000;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html, body {
+  overflow-x: hidden;
+  scroll-behavior: auto;
+  min-height: 100%;
+  margin: 0;
+  background: #000000;
+}
+
+#root, .app-shell, .page-wise, .services-page-dark {
+  background: #000000;
+  min-height: 100vh;
+}
+
+.site-frame {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+}
+
+/* Base utility classes for backwards compatibility during migration */
+.bg-burgundy { background-color: var(--color-wise-burgundy); color: #fff; }
+.bg-dark { background-color: var(--color-wise-dark); color: #fff; }
+.bg-primary { background-color: var(--color-primary); color: #fff; }

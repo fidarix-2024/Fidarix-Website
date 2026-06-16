@@ -1,6 +1,4 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
-import './InteractiveRoadmap.css';
-
 const steps = [
   {
     id: 1,
@@ -139,16 +137,16 @@ export default function Roadmap() {
   return (
     <div
       ref={trackRef}
-      className="roadmap-scroll-track"
+      className="relative"
       style={{ height: `${(steps.length + 1) * 100}vh` }}
     >
-      <div className="roadmap-sticky-viewport">
+      <div className="sticky top-0 h-screen overflow-hidden bg-black">
 
         {/* Spotlight glow overlay */}
-        <div className="roadmap-spotlight" />
+        <div className="absolute top-[-20%] left-[-10%] w-[80%] h-[80%] pointer-events-none z-[3] bg-[radial-gradient(ellipse_70%_60%_at_30%_35%,rgba(255,255,230,0.07)_0%,rgba(255,255,230,0.03)_30%,transparent_65%)] -rotate-15" />
 
         {/* Fade masks (top + bottom) */}
-        <div className="roadmap-fade-mask" />
+        <div className="absolute inset-0 pointer-events-none z-[4] bg-[linear-gradient(to_bottom,#000000_0%,transparent_15%,transparent_85%,#000000_100%)]" />
 
         {/* ===== ROTATING CIRCLE WHEEL ===== */}
         {(() => {
@@ -157,9 +155,9 @@ export default function Roadmap() {
           const R = isMobile ? 300 : (isTablet ? 480 : 620);
           const angleStep = isMobile ? 26 : 22;
           return (
-            <div className="roadmap-circle-container">
+            <div className="absolute top-0 left-0 w-full lg:w-[65%] h-full z-[2] overflow-visible flex items-center justify-center lg:justify-start">
               <div
-                className="roadmap-circle-wheel"
+                className="absolute rounded-full origin-center will-change-transform pointer-events-none transition-transform duration-[150ms] ease-[cubic-bezier(0.25,1,0.5,1)]"
                 style={{
                   transform: `rotate(${-phase * angleStep}deg)`,
                   width: `${2 * R}px`,
@@ -186,7 +184,7 @@ export default function Roadmap() {
                   return (
                     <div
                       key={step.id}
-                      className={`roadmap-circle-item ${isActive ? 'is-active' : ''} ${isNear ? 'is-near' : ''}`}
+                      className={`absolute block font-bold font-['Space_Grotesk'] whitespace-nowrap tracking-[-0.04em] transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] select-none cursor-pointer pointer-events-auto origin-center text-[clamp(1.8rem,8vw,3rem)] lg:text-[clamp(3.8rem,8.5vw,8.5rem)]`}
                       style={{
                         left: `${left}px`,
                         top: `${top}px`,
@@ -207,30 +205,30 @@ export default function Roadmap() {
         })()}
 
         {/* ===== SIDEBAR NAV (left edge) ===== */}
-        <div className="roadmap-sidebar-nav">
+        <div className="absolute left-[24px] top-1/2 -translate-y-1/2 flex flex-col gap-[3px] z-10 max-md:hidden">
           {steps.map((step, idx) => (
             <button
               key={step.id}
-              className={`roadmap-sidebar-label ${activeIndex === idx ? 'is-active' : ''}`}
+              className={`flex items-center gap-[12px] text-[0.65rem] font-medium tracking-[0.08em] transition-all duration-500 cursor-pointer py-[4px] px-0 bg-transparent border-none outline-none font-inherit whitespace-nowrap ${activeIndex === idx ? 'text-white/70 italic' : 'text-white/20'}`}
               onClick={() => scrollToStep(idx)}
             >
-              <span className="roadmap-sidebar-line" />
+              <span className={`h-[1px] transition-all duration-500 shrink-0 ${activeIndex === idx ? 'w-[32px] bg-white/50' : 'w-[18px] bg-white/12'}`} />
               {step.num}
             </button>
           ))}
         </div>
 
         {/* ===== RIGHT CONTENT ===== */}
-        <div className="roadmap-right-content">
-          <div className="roadmap-right-inner">
-            <div key={activeIndex} className="roadmap-content-animate">
-              <h3 className="roadmap-right-title">{currentStep.fullTitle}</h3>
-              <p className="roadmap-right-desc">{currentStep.desc}</p>
-              <ul className="roadmap-right-deliverables">
+        <div className="absolute right-0 top-auto bottom-0 lg:top-0 w-full lg:w-[35%] h-auto lg:h-full flex items-center z-[6] pointer-events-none p-[40px_24px] lg:p-0 bg-[linear-gradient(to_top,#000_70%,transparent_100%)] lg:bg-transparent">
+          <div className="p-0 lg:p-[0_50px_0_30px] max-w-full lg:max-w-[400px] pointer-events-auto">
+            <div key={activeIndex} className="animate-roadmap-slide-up">
+              <h3 className="text-[clamp(2rem,3.5vw,3.5rem)] font-semibold text-white font-['Space_Grotesk'] m-[0_0_4px_0] tracking-[-0.02em] italic after:content-['.']">{currentStep.fullTitle}</h3>
+              <p className="text-white/45 text-[1.05rem] leading-[1.7] m-[18px_0_0_0] font-normal">{currentStep.desc}</p>
+              <ul className="list-none p-0 m-[22px_0_0_0] flex flex-col gap-[8px]">
                 {currentStep.deliverables.map((item, i) => (
-                  <li key={i} className="roadmap-right-deliverable">
+                  <li key={i} className="flex items-center gap-[10px] text-[0.95rem] font-medium text-white/55">
                     <span
-                      className="roadmap-right-deliverable-dot"
+                      className="w-[4px] h-[4px] rounded-full shrink-0"
                       style={{ background: currentStep.color }}
                     />
                     {item}
@@ -242,9 +240,9 @@ export default function Roadmap() {
         </div>
 
         {/* ===== PROGRESS BAR (right edge) ===== */}
-        <div className="roadmap-progress-track">
+        <div className="absolute right-[28px] top-1/2 -translate-y-1/2 w-[2px] h-[140px] bg-white/5 rounded-full z-10 overflow-hidden max-md:hidden">
           <div
-            className="roadmap-progress-fill"
+            className="w-full rounded-full transition-[height] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] bg-white/35"
             style={{ height: `${smoothProgress * 100}%` }}
           />
         </div>

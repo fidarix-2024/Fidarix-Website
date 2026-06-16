@@ -8,9 +8,9 @@ import BlurText from '../../components/common/BlurText';
 import FlowingMenu from '../../components/common/FlowingMenu';
 import SplitText from '../../components/common/SplitText';
 import GradientBlinds from '../../components/common/GradientBlinds';
+import SEO from '../../components/common/SEO';
 import { Zap, Target, Code, Layout as LayoutIcon, CheckCircle, Rocket, Lightbulb, Hand, Grab } from 'lucide-react';
-import '../../components/ServicesComponent/ServicesScanner/ServicesPageAnimations.css';
-import './ServicesPage.css';  
+
 
 // ----------------------------------------------------
 // THE CHALLENGE SECTION
@@ -70,20 +70,25 @@ const galleryItems = [
   { image: '/images/services/brand-identity.png', text: 'Brand Identity' },
 ];
 
-function CircularGalleryShowcase() {
+function CircularGalleryShowcase({ showHeavy }) {
   return (
-    <div className="hidden md:block" style={{ height: '300vh', width: '100%', position: 'relative', background: '#000000' }}>
-      <div style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden' }}>
-        <CircularGallery
-          items={galleryItems}
-          bend={3}
-          textColor="#ffffff"
-          borderRadius={0.05}
-          scrollEase={0.035}
-          scrollSpeed={0.5}
-          font="bold 30px Space Grotesk"
-          fontUrl="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&display=swap"
-        />
+    <div className="w-full bg-black relative flex flex-col py-10 md:py-16">
+      <div className="relative z-10 flex-shrink-0">
+        <OurSolutionsHeader />
+      </div>
+      <div className="hidden md:block relative w-full h-[600px] md:h-[700px] z-0">
+        {showHeavy && (
+          <CircularGallery
+            items={galleryItems}
+            bend={1}
+            textColor="#ffffff"
+            borderRadius={0.05}
+            scrollEase={0.03}
+            scrollSpeed={0.3}
+            font="bold 30px Space Grotesk"
+            fontUrl="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&display=swap"
+          />
+        )}
       </div>
     </div>
   );
@@ -140,7 +145,7 @@ const ProjectCard = ({ item, isWireframe }) => {
   return (
     <div className="group/card w-[190px] h-[190px] shrink-0 rounded-3xl border border-white/10 hover:border-purple-500/50 overflow-hidden relative shadow-[0_8px_30px_rgba(0,0,0,0.5)] transition-all duration-300">
       {/* Background Image - Full bleed */}
-      <img src={item.image} alt={item.title} className="w-full h-full object-cover transition-transform duration-700 group-hover/card:scale-110" />
+      <img src={item.image} alt={item.title} loading="lazy" className="w-full h-full object-cover transition-transform duration-700 group-hover/card:scale-110" />
       
       {/* Subtle Purple Glow Overlay on hover */}
       <div className="absolute inset-0 bg-gradient-to-t from-purple-900/40 via-transparent to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-500" />
@@ -149,9 +154,9 @@ const ProjectCard = ({ item, isWireframe }) => {
 };
 
 const CardRow = ({ items, direction, isWireframe }) => {
-  const rowItems = [...items, ...items, ...items, ...items, ...items, ...items, ...items, ...items, ...items, ...items, ...items, ...items];
+  const rowItems = [...items, ...items, ...items, ...items, ...items, ...items];
   return (
-    <div className="flex gap-6 w-max" style={{ animation: `scroll-${direction} 80s linear infinite` }}>
+    <div className="flex gap-6 w-max" style={{ animation: `scroll-${direction} 40s linear infinite` }}>
       {rowItems.map((item, i) => (
          <ProjectCard key={i} item={item} isWireframe={isWireframe} />
       ))}
@@ -315,7 +320,7 @@ const ServicesMovingCards = () => {
 
 const TransformationSection = () => {
   return (
-    <SectionWise bg="bg-black" style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '100px', paddingBottom: '100px', backgroundColor: '#000000' }}>
+    <SectionWise bg="bg-black" style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '0px', paddingBottom: '100px', backgroundColor: '#000000' }}>
       <div className="max-w-4xl mx-auto text-center mb-12">
     
         <SplitText
@@ -505,6 +510,7 @@ const CTASection = () => {
           mixBlendMode="lighten"
           color1="#FF9FFC"
           color2="#5227FF"
+          dpr={1}
         />
       </div>
 
@@ -546,14 +552,49 @@ const CTASection = () => {
 // ----------------------------------------------------
 function ServicesPage() {
   const heroRef = useRef(null);
+  const [showHeavyComponents, setShowHeavyComponents] = useState(true);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const schemaData = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "serviceType": "Web Development & Digital Marketing",
+    "provider": {
+      "@type": "Organization",
+      "name": "Fidarix"
+    },
+    "areaServed": {
+      "@type": "Country",
+      "name": "India"
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Digital Services",
+      "itemListElement": [
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Custom Web Development" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "UI/UX Design" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Technical SEO" } }
+      ]
+    }
+  };
 
   return (
-    <div className="page-wise services-page-dark">
+    <div className="min-h-full bg-black text-white">
+      <SEO 
+        title="Services & Digital Leverage" 
+        description="Explore Fidarix's comprehensive digital services including custom web development, UI/UX design, and technical SEO designed to scale your business."
+        canonical="/services"
+        schema={schemaData}
+      />
       {/* 1. HERO SECTION */}
-      <section ref={heroRef} className="services-hero-dark" style={{ position: 'relative' }}>
+      <section ref={heroRef} className="relative min-h-[75vh] md:min-h-screen flex flex-col justify-center items-center py-[100px] md:py-[120px] overflow-hidden bg-black" style={{ position: 'relative' }}>
         <div style={{ position: 'absolute', inset: 0, zIndex: 0, opacity: 0.85, pointerEvents: 'none' }}>
-          <ServicesScanner 
-            sensitivity={0.65}
+          {showHeavyComponents && (
+            <ServicesScanner 
+              sensitivity={0.65}
             linesColor="#2a1060"
             scanColor="#9b4dff"
             scanOpacity={0.9}
@@ -562,7 +603,7 @@ function ServicesPage() {
             lineThickness={2.2}
             lineJitter={0.06}
             scanDirection="pingpong"
-            enablePost={true}
+            enablePost={false}
             bloomIntensity={2.8}
             bloomThreshold={0.1}
             bloomSmoothing={0.6}
@@ -577,14 +618,15 @@ function ServicesPage() {
             enableGyro={true}
             style={{ width: '100%', height: '100%' }}
           />
+          )}
         </div>
-        <div className="hero-vertical-guide left"><span className="hero-guide-arrow" /></div>
-        <div className="hero-vertical-guide right"><span className="hero-guide-arrow" /></div>
-        <div className="hero-scroll-arrow">↓</div>
-        <div className="services-hero-content-monopo">
+        <div className="hidden md:flex absolute top-[8%] bottom-[8%] w-[1px] border-l-2 border-dotted border-white/12 items-center justify-center pointer-events-none z-[2] left-[4vw]"><span className="w-2 h-2 border-t-2 border-r-2 border-white/50 -rotate-[135deg]" /></div>
+        <div className="hidden md:flex absolute top-[8%] bottom-[8%] w-[1px] border-l-2 border-dotted border-white/12 items-center justify-center pointer-events-none z-[2] right-[4vw]"><span className="w-2 h-2 border-t-2 border-r-2 border-white/50 rotate-45" /></div>
+        <div className="absolute bottom-10 right-[4vw] text-2xl text-white/40 pointer-events-none z-[2] animate-[bounceSlow_2s_infinite]">↓</div>
+        <div className="relative z-[5] text-left w-[min(100%,1280px)] px-6 md:px-[8vw] flex flex-col items-start pointer-events-none [&>*]:pointer-events-auto">
          
-          <h1 className="services-hero-title-monopo">
-            <span className="hero-line-left">
+          <h1 className="font-['Space_Grotesk'] text-[clamp(2.2rem,8vw,4rem)] sm:text-[clamp(3.2rem,9.5vw,8rem)] font-extrabold leading-[0.92] tracking-[-0.06em] uppercase flex flex-col w-full mb-10 text-white drop-shadow-[0_10px_40px_rgba(0,0,0,0.6)]">
+            <span className="block text-left">
               <SplitText
                 text="Our"
                 className="text-white inline-block"
@@ -596,9 +638,10 @@ function ServicesPage() {
                 to={{ opacity: 1, y: 0 }}
                 tag="span"
                 textAlign="left"
+                playOnScroll={false}
               />
             </span>
-            <span className="hero-line-right">
+            <span className="block text-left pl-[8%] md:pl-[20%]">
               <SplitText
                 text="Services."
                 className="text-white inline-block"
@@ -610,20 +653,21 @@ function ServicesPage() {
                 to={{ opacity: 1, y: 0 }}
                 tag="span"
                 textAlign="left"
+                playOnScroll={false}
               />
             </span>
           </h1>
-          <p className="services-hero-mono-sub">[ Digital experiences engineered for performance and conversion. ]</p>
-          <div className="services-hero-stats">
-            <div className="services-hero-stat">
-              <span className="stat-num">7+</span>
-              <span className="stat-label">Services Offered</span>
+          <p className="font-mono text-[clamp(0.74rem,1.2vw,0.95rem)] font-bold tracking-[0.06em] mb-10 ml-[8%] md:ml-[20%] bg-transparent py-1.5 px-3 text-white/80 border-l-2 border-primary-2 drop-shadow-[0_2px_10px_rgba(0,0,0,0.3)]">[ Digital experiences engineered for performance and conversion. ]</p>
+          <div className="flex items-center gap-0 mt-0">
+            <div className="flex flex-col gap-1 pr-8">
+              <span className="font-['Space_Grotesk'] text-[clamp(2rem,3.5vw,2.8rem)] font-extrabold text-white leading-none tracking-[-0.04em]">7+</span>
+              <span className="text-xs font-bold uppercase tracking-[0.08em] text-white/45">Services Offered</span>
             </div>
-            <div className="services-hero-stat-divider" />
+            <div className="w-[1px] h-10 bg-white/12 mr-8" />
 
-            <div className="services-hero-stat">
-              <span className="stat-num">100%</span>
-              <span className="stat-label">Client Satisfaction</span>
+            <div className="flex flex-col gap-1 pr-8">
+              <span className="font-['Space_Grotesk'] text-[clamp(2rem,3.5vw,2.8rem)] font-extrabold text-white leading-none tracking-[-0.04em]">100%</span>
+              <span className="text-xs font-bold uppercase tracking-[0.08em] text-white/45">Client Satisfaction</span>
             </div>
           </div>
         </div>
@@ -632,8 +676,7 @@ function ServicesPage() {
       {/* 2. THE CHALLENGE (removed per design request) */}
 
       {/* 3. OUR SOLUTIONS */}
-      <OurSolutionsHeader />
-      <CircularGalleryShowcase />
+      <CircularGalleryShowcase showHeavy={showHeavyComponents} />
 
       {/* 4. TRANSFORMATION */}
       <TransformationSection />
