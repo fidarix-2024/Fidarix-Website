@@ -14,8 +14,8 @@ import ColorBends from '../../components/common/ColorBends';
 import SEO from '../../components/common/SEO';
 
 const STATIC_TILES = Array.from({ length: 200 }).map((_, i) => {
-  const isColored = Math.random() > 0.6; 
-  const baseOpacity = isColored ? (Math.random() * 0.15 + 0.02) : 0; 
+  const isColored = Math.random() > 0.6;
+  const baseOpacity = isColored ? (Math.random() * 0.15 + 0.02) : 0;
   const isAnimated = isColored && Math.random() > 0.4;
   return {
     id: i,
@@ -30,9 +30,9 @@ const STATIC_TILES = Array.from({ length: 200 }).map((_, i) => {
 const AnimatedGridBackground = memo(function AnimatedGridBackground() {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none flex justify-center items-center">
-      <div 
+      <div
         className="w-[120vw] h-[120vh] grid"
-        style={{ 
+        style={{
           gridTemplateColumns: 'repeat(auto-fill, 128px)',
           gridAutoRows: '128px',
           gap: '1px',
@@ -43,7 +43,7 @@ const AnimatedGridBackground = memo(function AnimatedGridBackground() {
         {STATIC_TILES.map((tile) => (
           <div key={tile.id} className="relative w-full h-full bg-[#05000a]">
             {tile.isColored && (
-              <div 
+              <div
                 className={`absolute inset-0 bg-[#7c3aed] ${tile.isAnimated ? 'animate-fade-square' : ''}`}
                 style={{
                   opacity: tile.isAnimated ? 0 : tile.baseOpacity,
@@ -117,26 +117,26 @@ function InteractiveProjectCard({ project, index = 0 }) {
         transition: 'opacity 0.9s cubic-bezier(0.16,1,0.3,1), translate 0.9s cubic-bezier(0.16,1,0.3,1), filter 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.4s ease-out',
       }}
     >
-      <div className="relative rounded-[32px] overflow-hidden bg-[#0a0a0a] w-full aspect-[4/3] md:aspect-[16/10] border border-white/10 shadow-2xl group cursor-pointer">
-        
+      <div className="relative rounded-[32px] overflow-hidden bg-[#0a0a0a] w-full aspect-square md:aspect-[4/3] border border-white/10 shadow-2xl group cursor-pointer">
+
         {/* Background Image */}
         <div className="absolute inset-0">
           <img src={project.image} alt={project.name} loading="lazy" className="w-full h-full object-contain md:object-cover md:object-top transition-transform duration-1000 group-hover:scale-105" />
         </div>
-        
+
         {/* Hover Overlay - completely clean by default, dark & blurred on hover */}
         <div className="absolute inset-0 bg-black/60 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-500 z-0"></div>
 
         {/* Content Container */}
         <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-between z-10">
-          
+
           {/* Top Pill (Industry) - Appears on Hover */}
           <div className="self-start opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-[-10px] group-hover:translate-y-0">
             <div className="px-4 py-1.5 rounded-full border border-white/20 bg-white/10 text-white text-[10px] md:text-xs font-bold tracking-widest uppercase shadow-lg">
               {project.industry || "Digital Experience"}
             </div>
           </div>
-          
+
           {/* Bottom Section */}
           <div className="flex flex-col mt-auto relative">
             {/* Default state heading (Glass Pill in the corner) */}
@@ -151,7 +151,7 @@ function InteractiveProjectCard({ project, index = 0 }) {
               <h3 className="font-['Space_Grotesk'] font-bold text-2xl md:text-3xl lg:text-4xl text-white tracking-tight leading-[1.1]">
                 {project.name}
               </h3>
-              
+
               {project.description && (
                 <p className="text-white/90 text-sm md:text-base leading-relaxed m-0 font-medium max-w-[90%]">
                   {project.description}
@@ -164,7 +164,7 @@ function InteractiveProjectCard({ project, index = 0 }) {
               )}
             </div>
           </div>
-          
+
         </div>
       </div>
     </a>
@@ -197,7 +197,7 @@ function TiltTestimonialCard({ testimonial, index = 0 }) {
     const rect = cardRef.current.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width - 0.5;
     const y = (e.clientY - rect.top) / rect.height - 0.5;
-    
+
     const tiltX = y * -12;
     const tiltY = x * 12;
     const glowX = (x + 0.5) * 100;
@@ -305,13 +305,13 @@ const SpaceXHero = ({ showHeavyComponents }) => {
           playOnScroll={false}
         />
         <p className="text-white/70 text-lg md:text-xl font-medium leading-[1.6] max-w-[52ch] mb-10 mx-auto">
-         We design and build premium websites that attract customers,
-generate leads, and help local businesses grow faster.</p>
+          We design and build premium websites that attract customers,
+          generate leads, and help local businesses grow faster.</p>
         <div className="flex flex-wrap gap-4 justify-center">
-          <Link to="/contact" className="inline-flex items-center justify-center min-h-[56px] px-8 rounded-full font-bold text-sm transition-all bg-gradient-to-r from-primary to-primary-2 text-white shadow-[0_0_30px_rgba(90,116,255,0.3)] hover:shadow-[0_0_45px_rgba(90,116,255,0.5)] hover:-translate-y-0.5">
-            Book a Free Consultation
+          <Link to="/contact" className="inline-flex items-center justify-center min-h-[56px] px-8 rounded-none font-['Space_Grotesk'] font-bold text-sm transition-all bg-white text-black shadow-[0_0_30px_rgba(255,255,255,0.3)] hover:shadow-[0_0_45px_rgba(255,255,255,0.5)] hover:-translate-y-0.5">
+            Contact Us
           </Link>
-          <Link to="/pricing" className="inline-flex items-center justify-center min-h-[56px] px-8 rounded-full font-bold text-sm transition-all border border-white/20 bg-white/5 hover:bg-white/10 hover:border-white/30 hover:-translate-y-0.5">
+          <Link to="/pricing" className="inline-flex items-center justify-center min-h-[56px] px-8 rounded-none font-['Space_Grotesk'] font-bold text-sm transition-all border border-white bg-transparent text-white hover:bg-white hover:text-black hover:-translate-y-0.5">
             View Pricing
           </Link>
         </div>
@@ -332,19 +332,18 @@ function InteractiveCard({ children, isPremium }) {
 
   return (
     <motion.div
-      className={`group relative flex flex-col justify-start rounded-[20px] md:rounded-[28px] p-[32px_24px] md:p-12 overflow-hidden backdrop-blur-md transition-all duration-500 ease-out ${
-        isPremium 
+      className={`group relative flex flex-col justify-start rounded-[20px] md:rounded-[28px] p-[32px_24px] md:p-12 overflow-hidden backdrop-blur-md transition-all duration-500 ease-out ${isPremium
           ? "bg-gradient-to-b from-[rgba(124,58,237,0.02)] to-[rgba(0,0,0,0.6)] border border-[rgba(155,77,255,0.25)] shadow-[0_20px_50px_rgba(124,58,237,0.06)] hover:-translate-y-2 hover:border-[rgba(155,77,255,0.5)] hover:shadow-[0_30px_60px_rgba(124,58,237,0.15)]"
           : "bg-white/5 border border-white/5 shadow-[0_10px_40px_rgba(0,0,0,0.4)] hover:bg-white/10 hover:border-white/10 hover:-translate-y-1"
-      }`}
+        }`}
       onMouseMove={handleMouseMove}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-100px" }}
       variants={{
         hidden: { opacity: 0, y: 40 },
-        visible: { 
-          opacity: 1, y: 0, 
+        visible: {
+          opacity: 1, y: 0,
           transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1], staggerChildren: 0.08, delayChildren: isPremium ? 0.35 : 0.2 }
         }
       }}
@@ -385,10 +384,10 @@ function HomePage() {
       // Allow it to scale up slightly (up to 1.25x) on very large monitors so it doesn't look tiny
       setOrbitScale(Math.min(1.25, sH, sW));
     };
-    
+
     // Initial calculation
     handleResize();
-    
+
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -409,13 +408,13 @@ function HomePage() {
 
   return (
     <div className="min-h-screen bg-black text-white flex flex-col">
-      <SEO 
-        title="Premium Web Development & Digital Leverage" 
+      <SEO
+        title="Premium Web Development & Digital Leverage"
         description="Fidarix crafts premium digital experiences, high-performance websites, and growth engines that help businesses completely outshine their competition."
         canonical="/"
-        schema={schemaData} 
+        schema={schemaData}
       />
-      
+
       {/* 1. HERO SECTION */}
       <SpaceXHero showHeavyComponents={showHeavyComponents} />
 
@@ -428,12 +427,12 @@ function HomePage() {
         <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(255,189,46,0.03)_0%,transparent_70%)] pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 md:px-8 relative z-10">
-          
+
           {/* Header Section */}
           <div className="w-full mb-16 flex flex-col md:flex-row md:items-end justify-between gap-8">
             <div className="max-w-3xl">
               <span className="text-[#9b4dff] font-bold tracking-[0.2em] uppercase text-xs mb-4 flex items-center gap-2">
-               
+
               </span>
               <SplitText
                 text="Why we exist?"
@@ -448,9 +447,7 @@ function HomePage() {
                 textAlign="left"
               />
             </div>
-            <p className="text-white/60 text-lg leading-[1.6] max-w-[400px] md:pb-2">
-              We don't just build websites. We craft digital experiences designed to scale your business and completely outshine the competition.
-            </p>
+           
           </div>
 
           {/* 2x2 Feature Grid */}
@@ -503,7 +500,7 @@ function HomePage() {
               >
                 {/* Hover Gradient */}
                 <div className={`absolute top-0 left-0 w-full h-full bg-gradient-to-br ${item.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`} />
-                
+
                 <div className="relative z-10">
                   <div className="flex justify-between items-start mb-8">
                     <span className="text-white/40 uppercase tracking-widest text-xs font-bold px-3 py-1 rounded-full border border-white/10 bg-white/5">{item.label}</span>
@@ -530,7 +527,7 @@ function HomePage() {
       <SectionWise bg="bg-transparent" style={{ paddingTop: '100px', paddingBottom: '120px', backgroundColor: '#000000', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
         <div className="text-center mb-20 flex flex-col items-center">
           <span className="text-xs font-extrabold text-primary-2 uppercase tracking-[0.22em] flex items-center gap-2 mb-3">
-            
+
           </span>
           <SplitText
             text="Results We’re Proud Of"
@@ -564,7 +561,7 @@ function HomePage() {
 
       {/* 5B. WHY BUSINESSES MOVE BEYOND TEMPLATES SECTION */}
       <SectionWise bg="bg-transparent" style={{ paddingTop: '100px', paddingBottom: '100px', backgroundColor: '#000000', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', position: 'relative', overflow: 'hidden' }}>
-        
+
         {/* Animated ColorBends Background */}
         <div className="absolute inset-0 z-0 opacity-[0.35]">
           <ColorBends
@@ -585,10 +582,10 @@ function HomePage() {
         </div>
 
         <div className="text-white max-w-7xl mx-auto px-4 relative z-10">
-          
+
           <div className="text-center mb-16 flex flex-col items-center">
             <span className="text-xs font-extrabold text-[#9b4dff] uppercase tracking-[0.22em] flex items-center gap-2 mb-3">
-             
+
             </span>
             <SplitText
               text="Why Businesses Move Beyond Templates"
@@ -609,10 +606,10 @@ function HomePage() {
           </div>
 
           <div className="relative grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-stretch mb-16">
-            
+
             {/* Left Card: Template Website */}
-            <motion.div 
-              className="bg-[#0a0a0a] border border-white/5 rounded-[32px] p-8 md:p-12 relative flex flex-col items-start shadow-2xl"
+            <motion.div
+              className="bg-[#0a0a0a] border border-red-500/20 rounded-[32px] p-8 md:p-12 relative flex flex-col items-start shadow-[0_0_40px_rgba(239,68,68,0.03)] overflow-hidden"
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-100px" }}
@@ -621,29 +618,32 @@ function HomePage() {
                 visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
               }}
             >
-              <div className="h-[28px] mb-8" />
-              <h3 className="font-['Space_Grotesk'] text-white/70 text-2xl md:text-[1.7rem] font-bold mb-8 flex items-center gap-4">
-                <span className="text-[10px] border border-white/10 px-2.5 py-1 rounded bg-white/5 text-white/40 font-bold uppercase tracking-widest">Standard</span>
-                Template Website
-              </h3>
-              <ul className="list-none p-0 m-0 flex flex-col gap-5 w-full">
-                {[
-                  "Quick to launch",
-                  "Uses pre-made layouts",
-                  "Limited brand differentiation",
-                  "Built for convenience",
-                  "Works for getting started"
-                ].map((point, index) => (
-                  <li key={index} className="font-['Manrope'] text-[1rem] leading-[1.6] text-white/40 flex items-start gap-4">
-                    <span className="w-1.5 h-1.5 rounded-full bg-white/20 mt-[9px] shrink-0"></span>
-                    <span>{point}</span>
-                  </li>
-                ))}
-              </ul>
+              <div className="absolute inset-0 bg-gradient-to-b from-red-500/5 to-transparent pointer-events-none" />
+              <div className="relative z-10 w-full">
+                <div className="h-[28px] mb-8" />
+                <h3 className="font-['Space_Grotesk'] text-white/70 text-2xl md:text-[1.7rem] font-bold mb-8 flex items-center gap-4">
+                  <span className="text-[10px] border border-red-500/30 px-2.5 py-1 rounded bg-red-500/10 text-red-400/80 font-bold uppercase tracking-widest">Standard</span>
+                  Template Website
+                </h3>
+                <ul className="list-none p-0 m-0 flex flex-col gap-5 w-full">
+                  {[
+                    "Quick to launch",
+                    "Uses pre-made layouts",
+                    "Limited brand differentiation",
+                    "Built for convenience",
+                    "Works for getting started"
+                  ].map((point, index) => (
+                    <li key={index} className="font-['Manrope'] text-[1rem] leading-[1.6] text-white/40 flex items-start gap-4">
+                      <span className="w-1.5 h-1.5 rounded-full bg-red-500/40 mt-[9px] shrink-0"></span>
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </motion.div>
 
             {/* Right Card: Fidarix Website */}
-            <motion.div 
+            <motion.div
               className="bg-[#05000a] border border-[#3e1b73] rounded-[32px] p-8 md:p-12 relative flex flex-col items-start shadow-[0_0_50px_rgba(124,58,237,0.15)] overflow-hidden"
               initial="hidden"
               whileInView="visible"
@@ -696,16 +696,16 @@ function HomePage() {
           {/* Subtle animated divider / visual transition leading into Testimonials */}
           <div className="w-full mt-8 relative flex justify-center items-center">
             <div className="w-full bg-gradient-to-r from-transparent via-[rgba(124,58,237,0.25)] to-transparent h-[1px]"></div>
-            <motion.div 
+            <motion.div
               className="absolute w-3 h-3 bg-[#9b4dff] shadow-[0_0_10px_#9b4dff,0_0_20px_#9b4dff] rounded-full blur-[2px]"
-              animate={{ 
+              animate={{
                 x: [-150, 150],
                 opacity: [0, 1, 0]
               }}
-              transition={{ 
-                duration: 4, 
-                repeat: Infinity, 
-                ease: "easeInOut" 
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut"
               }}
             />
           </div>
@@ -720,18 +720,18 @@ function HomePage() {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(124,58,237,0.15)_0%,transparent_60%)] pointer-events-none filter blur-[80px]" />
 
         <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center min-h-[850px] py-10 md:justify-center">
-          
+
           {/* Phone Mockup (Center) */}
           <div className="relative w-[320px] md:w-[340px] h-[600px] md:h-[680px] bg-gradient-to-b from-[#1c0836] to-[#0a001a] rounded-[50px] border-[8px] border-[#2a1744] shadow-[0_0_60px_rgba(124,58,237,0.2)] flex flex-col items-center justify-center px-6 text-center z-10 flex-shrink-0">
             {/* Dynamic Island */}
             <div className="absolute top-4 left-1/2 -translate-x-1/2 w-[120px] h-[32px] bg-black rounded-full shadow-[inset_0_0_4px_rgba(255,255,255,0.05)]"></div>
-            
+
             {/* Pill */}
             <div className="inline-flex items-center gap-2 border border-white/10 bg-white/5 rounded-full px-4 py-1.5 mb-8 text-xs text-white uppercase tracking-widest">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
               Testimonials
             </div>
-            
+
             <SplitText
               text="What Our Clients are Saying"
               className="text-[2rem] font-bold text-white mb-6 leading-[1.1] font-['Space_Grotesk'] tracking-tight"
@@ -769,7 +769,7 @@ function HomePage() {
                 name: "Abhishek Shrivastav",
                 role: "Director, MissionIq",
                 quote: "Fidarix revolutionized our workflow. It's like having a dedicated tech team who works around the clock!",
-                image:'/images/HomePage/abhishek.png'
+                image: '/images/HomePage/abhishek.png'
               },
               {
                 name: "Ravi",
@@ -793,7 +793,7 @@ function HomePage() {
 
           {/* Desktop Testimonial Cards Layer */}
           <div className="hidden md:block absolute w-full h-full inset-0 pointer-events-none z-20">
-            
+
             {/* Top Left */}
             <div className="absolute left-[8%] xl:left-0 top-[18%] w-[420px] pointer-events-auto bg-gradient-to-br from-[#1c0836] to-[#0a001a] border border-[#3e1b73] rounded-[24px] p-6 shadow-[0_20px_40px_rgba(0,0,0,0.5),0_0_40px_rgba(124,58,237,0.15)] hover:-translate-y-2 transition-transform duration-300 backdrop-blur-md animate-float" style={{ animationDelay: '0s' }}>
               <div className="flex justify-between items-start mb-4">
@@ -859,7 +859,7 @@ function HomePage() {
       <section className="relative min-h-[500px] flex items-center justify-center py-20 px-6 overflow-hidden">
         {showHeavyComponents && (
           <div className="absolute inset-0 z-0 opacity-40">
-            <Galaxy 
+            <Galaxy
               particleCount={300}
               color="#A6C8FF"
               speed={0.5}
@@ -872,8 +872,8 @@ function HomePage() {
 
         <div className="relative z-10 max-w-3xl mx-auto text-center flex flex-col items-center gap-6">
           <span className="text-xs font-extrabold text-primary-2 uppercase tracking-[0.22em] flex items-center gap-2">
-          
-          
+
+
           </span>
           <SplitText
             text="Ready to Build Your Website?"
@@ -892,14 +892,11 @@ function HomePage() {
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             <ButtonLink to="/contact" style={{ padding: '18px 38px', fontSize: '1.1rem' }}>
-              Book a Free Consultation
-            </ButtonLink>
-            <ButtonLink to="/contact" variant="ghost" style={{ padding: '18px 38px', fontSize: '1.1rem' }}>
               Contact Us
             </ButtonLink>
           </div>
           <div className="text-white/40 text-sm font-semibold tracking-wider mt-4">
-            Starting from ₹3,999
+            Starting from ₹2,999 - ₹5,999
           </div>
         </div>
       </section>

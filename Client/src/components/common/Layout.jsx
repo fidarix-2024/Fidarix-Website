@@ -4,60 +4,59 @@ import TextPressure from './TextPressure';
 
 export function SiteFooter({ isDark }) {
   return (
-    <footer className={`bg-black text-white w-full pt-20 pb-10 max-md:pt-8 max-md:pb-4 border-t ${
-      isDark ? 'border-white/8' : 'border-white/8'
-    }`}>
+    <footer className={`bg-black text-white w-full pt-20 pb-10 max-md:pt-8 max-md:pb-4 border-t ${isDark ? 'border-white/8' : 'border-white/8'
+      }`}>
       <div className="w-[min(1180px,calc(100%-32px))] mx-auto">
-        <div className="grid grid-cols-2 md:grid-cols-[1.2fr_repeat(3,1fr)] gap-4 md:gap-[60px]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-[1.2fr_repeat(3,1fr)] gap-8 md:gap-[60px]">
           {/* Column 1: Logo and Pitch */}
-          <div className="flex flex-col gap-5 max-md:gap-2 col-span-2 md:col-span-1">
+          <div className="flex flex-col gap-3 md:gap-4 col-span-1 sm:col-span-2 md:col-span-1">
             <Link className="inline-flex items-center gap-3" to="/" style={{ color: '#ffffff' }}>
               <LogoMark />
               <span className="flex flex-col line-height-1">
-                <span className="font-['Space_Grotesk'] font-medium text-xl tracking-[0.26em] uppercase">Fidarix</span>
+                <span className="font-['Space_Grotesk'] font-medium text-lg md:text-xl tracking-[0.26em] uppercase">Fidarix</span>
               </span>
             </Link>
-            <p className="text-white/60 text-[1.1rem] leading-[1.6] m-0 max-w-[320px] hidden md:block">
+            <p className="text-white/60 text-[0.95rem] md:text-[1.1rem] leading-[1.6] m-0 max-w-full md:max-w-[320px]">
               We craft premium digital experiences that refuse to blend in. Combining striking design, flawless engineering, and strategic growth for ambitious brands.
             </p>
           </div>
 
           {/* Column 2: Navigation */}
           <div className="flex flex-col gap-2 md:gap-4">
-            <h4 className="font-['Space_Grotesk'] text-[0.75rem] md:text-[1rem] font-extrabold text-white uppercase tracking-[0.12em] m-0 mb-1 md:mb-3 border-b border-white/8 pb-1 md:pb-3">Navigation</h4>
-            <Link to="/" className="text-white/60 text-[0.85rem] md:text-[1.1rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">Home</Link>
-            <Link to="/about" className="text-white/60 text-[0.85rem] md:text-[1.1rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">About</Link>
-            <Link to="/services" className="text-white/60 text-[0.85rem] md:text-[1.1rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">Services</Link>
-            <Link to="/contact" className="text-white/60 text-[0.85rem] md:text-[1.1rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">Contact</Link>
+            <h4 className="font-['Space_Grotesk'] text-[0.85rem] md:text-[1rem] font-extrabold text-white uppercase tracking-[0.12em] m-0 mb-1 md:mb-3 border-b border-white/8 pb-2 md:pb-3">Navigation</h4>
+            <Link to="/" className="text-white/60 text-[0.9rem] md:text-[1.1rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">Home</Link>
+            <Link to="/about" className="text-white/60 text-[0.9rem] md:text-[1.1rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">About</Link>
+            <Link to="/services" className="text-white/60 text-[0.9rem] md:text-[1.1rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">Services</Link>
+            <Link to="/contact" className="text-white/60 text-[0.9rem] md:text-[1.1rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">Contact</Link>
           </div>
 
           {/* Column 3: Services */}
           <div className="flex flex-col gap-2 md:gap-4">
-            <h4 className="font-['Space_Grotesk'] text-[0.75rem] md:text-[1rem] font-extrabold text-white uppercase tracking-[0.12em] m-0 mb-1 md:mb-3 border-b border-white/8 pb-1 md:pb-3">Services</h4>
-            <Link to="/services" className="text-white/60 text-[0.85rem] md:text-[1.1rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">Web Development</Link>
-            <Link to="/services" className="text-white/60 text-[0.85rem] md:text-[1.1rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">Web Design</Link>
-            <Link to="/services" className="text-white/60 text-[0.85rem] md:text-[1.1rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">SEO Optimization</Link>
-            <Link to="/services" className="text-white/60 text-[0.85rem] md:text-[1.1rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">Branding</Link>
+            <h4 className="font-['Space_Grotesk'] text-[0.85rem] md:text-[1rem] font-extrabold text-white uppercase tracking-[0.12em] m-0 mb-1 md:mb-3 border-b border-white/8 pb-2 md:pb-3">Services</h4>
+            <Link to="/services" className="text-white/60 text-[0.9rem] md:text-[1.1rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">Web Development</Link>
+            <Link to="/services" className="text-white/60 text-[0.9rem] md:text-[1.1rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">Web Design</Link>
+            <Link to="/services" className="text-white/60 text-[0.9rem] md:text-[1.1rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">SEO Optimization</Link>
+            <Link to="/services" className="text-white/60 text-[0.9rem] md:text-[1.1rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">Branding</Link>
           </div>
 
           {/* Column 4: Connect */}
-          <div className="flex flex-col gap-2 md:gap-4 col-span-2 md:col-span-1 max-[500px]:col-start-2 max-[500px]:self-start max-[500px]:justify-self-end">
-            <h4 className="font-['Space_Grotesk'] text-[0.75rem] md:text-[1rem] font-extrabold text-white uppercase tracking-[0.12em] m-0 mb-1 md:mb-3 border-b border-white/8 pb-1 md:pb-3">Connect</h4>
-            <div className="flex flex-row gap-6 items-center mt-3">
+          <div className="flex flex-col gap-2 md:gap-4 col-span-1 sm:col-span-2 md:col-span-1">
+            <h4 className="font-['Space_Grotesk'] text-[0.85rem] md:text-[1rem] font-extrabold text-white uppercase tracking-[0.12em] m-0 mb-1 md:mb-3 border-b border-white/8 pb-2 md:pb-3">Connect</h4>
+            <div className="flex flex-row gap-5 items-center mt-1 md:mt-2">
               <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-primary transition-transform hover:-translate-y-1" aria-label="LinkedIn">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                <svg width="24" height="24" className="md:w-[28px] md:h-[28px]" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
                 </svg>
               </a>
               <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-primary transition-transform hover:-translate-y-1" aria-label="Instagram">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="24" height="24" className="md:w-[28px] md:h-[28px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
                   <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
                   <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
                 </svg>
               </a>
               <Link to="/contact" className="text-white/60 hover:text-primary transition-transform hover:-translate-y-1" aria-label="Email Us">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="24" height="24" className="md:w-[28px] md:h-[28px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
                   <polyline points="22,6 12,13 2,6" />
                 </svg>
@@ -123,10 +122,10 @@ export function PageHero({ eyebrow, title, copy, actions, panel, children }) {
   );
 }
 
-export function ImpactHero({ 
-  lines, 
-  copy, 
-  actions, 
+export function ImpactHero({
+  lines,
+  copy,
+  actions,
   children,
   minHeight = 'min-h-[80vh]',
   titleSize = 'text-[clamp(2.8rem,7vw,5.5rem)]',
@@ -140,7 +139,7 @@ export function ImpactHero({
           {children}
         </div>
       )}
-      
+
       {/* Corner Glows */}
       <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-[radial-gradient(circle,rgba(76,195,255,0.4)_0%,transparent_70%)] pointer-events-none filter blur-[80px]" />
       <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-[radial-gradient(circle,rgba(155,77,255,0.4)_0%,transparent_70%)] pointer-events-none filter blur-[80px]" />
@@ -159,7 +158,7 @@ export function ImpactHero({
           {copy}
         </div>
       </div>
-      
+
       {actions ? <div className="relative z-10 mt-auto flex flex-wrap gap-4 justify-center animate-[fadeIn_1s_ease_0.8s_forwards] opacity-0 w-full pt-12">{actions}</div> : null}
     </section>
   );
@@ -208,21 +207,19 @@ export function SectionHeading({ eyebrow, title, copy }) {
   );
 }
 
-export function ButtonLink({ to, children, variant = 'primary' }) {
+export function ButtonLink({ to, children, variant = 'primary', className = '', style = {}, ...props }) {
   const getVariantClass = () => {
     switch (variant) {
       case 'primary':
-        return 'bg-gradient-to-r from-primary to-primary-2 text-white shadow-[0_18px_30px_rgba(90,116,255,0.24)]';
       case 'secondary':
-        return 'bg-white/86 border-white/8 text-white';
       case 'ghost':
       default:
-        return 'bg-transparent border-white/8 text-white';
+        return 'bg-white text-black border border-white hover:bg-black hover:text-white hover:border-white';
     }
   };
 
   return (
-    <Link className={`inline-flex items-center justify-center gap-2.5 min-h-[48px] px-[18px] rounded-full border border-transparent font-bold text-[0.95rem] tracking-[-0.01em] transition-all hover:-translate-y-0.5 ${getVariantClass()}`} to={to}>
+    <Link className={`inline-flex items-center justify-center gap-2.5 min-h-[48px] px-[18px] rounded-none font-['Space_Grotesk'] font-bold text-[0.95rem] tracking-[-0.01em] transition-all hover:-translate-y-0.5 ${getVariantClass()} ${className}`} style={style} to={to} {...props}>
       {children}
     </Link>
   );

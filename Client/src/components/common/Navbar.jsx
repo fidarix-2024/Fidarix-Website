@@ -27,33 +27,36 @@ export default function SiteHeader() {
   );
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-[100] pt-0 transition-all duration-[350ms] ease-out mix-blend-difference ${isScrolled ? 'py-2' : 'py-0'}`}>
-      <div className="flex items-center justify-between w-full h-[80px] px-[40px] max-[900px]:flex-col max-[900px]:h-auto max-[900px]:p-[16px_20px] max-[900px]:gap-[12px] relative">
-        <Link className="inline-flex items-center gap-[6px] min-w-0" to="/">
+    <header className={`fixed top-0 left-0 right-0 z-[100] pt-0 transition-all duration-[350ms] ease-out ${menuOpen ? 'bg-transparent' : 'mix-blend-difference'} ${isScrolled && !menuOpen ? 'py-2' : 'py-0'}`}>
+      <div className="flex items-center justify-between w-full h-[80px] px-[40px] max-[900px]:h-[70px] max-[900px]:px-5 relative">
+        <Link className="inline-flex items-center gap-[6px] min-w-0 z-[110]" to="/">
           <LogoMark />
           <span className="flex flex-col leading-none">
-            <span className="font-['Space_Grotesk'] text-[1.6rem] tracking-[0.26em] uppercase text-white transition-colors duration-[400ms]">Fidarix</span>
+            <span className="font-['Space_Grotesk'] text-[1.6rem] max-[900px]:text-[1.3rem] tracking-[0.26em] uppercase text-white transition-colors duration-[400ms]">Fidarix</span>
           </span>
         </Link>
 
-        {/* Mobile hamburger button */}
+        {/* Mobile menu toggle button */}
         <button
-          className={`hidden max-[900px]:inline-grid grid-rows-[repeat(3,6px)] gap-[6px] w-[44px] h-[40px] p-[6px] items-center justify-items-center bg-white/5 border border-white/5 rounded-full text-white cursor-pointer transition-all duration-200 hover:bg-white/10 hover:-translate-y-[1px] ${menuOpen ? 'is-open' : ''}`}
+          className={`hidden max-[900px]:flex items-center justify-center w-[44px] h-[44px] bg-white text-black rounded-none border border-white cursor-pointer z-[120] transition-all duration-300 hover:bg-black hover:text-white`}
           aria-label="Toggle navigation"
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen(!menuOpen)}
         >
-          <span className={`block w-[22px] h-[2.5px] bg-current rounded-[2px] transition-all duration-300 opacity-100 ${menuOpen ? 'translate-y-[7px] rotate-45' : ''}`} />
-          <span className={`block w-[22px] h-[2.5px] bg-current rounded-[2px] transition-all duration-300 opacity-100 ${menuOpen ? 'opacity-0 scale-x-0' : ''}`} />
-          <span className={`block w-[22px] h-[2.5px] bg-current rounded-[2px] transition-all duration-300 opacity-100 ${menuOpen ? '-translate-y-[7px] -rotate-45' : ''}`} />
+          {menuOpen ? (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          ) : (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          )}
         </button>
 
-        <nav className={`min-[900px]:flex min-[900px]:items-center min-[900px]:gap-[16px] min-[900px]:flex-wrap min-[900px]:justify-center min-[900px]:absolute min-[900px]:left-1/2 min-[900px]:-translate-x-1/2 ${menuOpen ? 'flex flex-col gap-[10px] w-full pb-[8px]' : 'hidden'}`}>
+        <nav className={`min-[900px]:flex min-[900px]:items-center min-[900px]:gap-[16px] min-[900px]:justify-center min-[900px]:absolute min-[900px]:left-1/2 min-[900px]:-translate-x-1/2 ${menuOpen ? 'fixed inset-0 bg-black/80 backdrop-blur-lg z-[105] flex flex-col items-center justify-center gap-6 pt-[70px] pb-10' : 'hidden'}`}>
           {routes.map((item) => (
             <NavLink
               key={item.path}
               to={item.path}
-              className={({ isActive }) => `px-[16px] py-[10px] rounded-[8px] text-white/90 font-semibold text-[1.15rem] tracking-[0.02em] transition-all duration-[180ms] hover:text-white max-[900px]:text-[0.95rem] max-[900px]:px-[12px] max-[900px]:py-[8px] ${isActive ? 'text-white font-bold' : ''}`}
+              onClick={() => setMenuOpen(false)}
+              className={({ isActive }) => `px-[20px] py-[12px] rounded-none text-white/80 font-bold text-[1.8rem] tracking-[0.05em] transition-all duration-[300ms] hover:text-white hover:bg-white/5 min-[900px]:text-[1.15rem] min-[900px]:px-[16px] min-[900px]:py-[10px] min-[900px]:rounded-[8px] min-[900px]:font-semibold ${isActive ? 'text-white bg-white/10' : ''}`}
             >
               {item.label}
             </NavLink>

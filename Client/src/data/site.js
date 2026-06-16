@@ -99,7 +99,8 @@ export const testimonials = [
     quote: "Fidarix completely transformed how we handle admissions. Our Lateral Entry engineering coaching portal is now incredibly fast, responsive, and handles test series data flawlessly. Our student inquiries grew by 45% within a month of launch.",
     name: "Ranjan Shrivastav",
     role: "Director, Mission Engineering",
-    image: "/images/HomePage/ranjan.png"  },
+    image: "/images/HomePage/ranjan.png"
+  },
   {
     quote: "Partnering with Fidarix was a game-changer for Aarav Academy. The UI animations are stunning, and we've doubled our digital course registrations.",
     name: "Arvind Kumar",
@@ -112,7 +113,7 @@ export const pricingPlans = [
   {
     name: 'Starter',
     tagline: 'Fast, mobile-optimized site to build your online presence.',
-    price: '₹3,999 – ₹6,999',
+    price: '₹2,999 – ₹5,999',
     delivery: '2–4 days',
     revisions: 'Basic setup',
     support: 'SSL support',
@@ -239,14 +240,14 @@ export const aboutTimeline = [
 ];
 
 export const founders = [
-  { 
-    name: 'Dishi Gautam', 
+  {
+    name: 'Dishi Gautam',
     role: 'Founder',
     bio: 'Driving the visual language and strategic direction of Fidarix with a focus on premium aesthetics.',
     image: '/images/AboutPage/Dishi_founder.jpeg'
   },
-  { 
-    name: 'Yash Raj', 
+  {
+    name: 'Yash Raj',
     role: 'Founder',
     bio: 'Architecting high-performance digital experiences and ensuring technical excellence across all builds.',
     image: '/images/AboutPage/Yash_founder.jpeg'

@@ -63,7 +63,6 @@ function AboutPage() {
             />
             <SplitText
               text="Digital Trust."
-              className="text-[#A6C8FF]"
               delay={40}
               duration={0.7}
               ease="power4.out"
@@ -353,7 +352,7 @@ function AboutPage() {
 
               <Link
                 to="/contact"
-                className="inline-flex items-center gap-4 px-10 py-5 rounded-full bg-primary text-white font-bold text-lg hover:bg-white hover:text-black hover:scale-105 transition-all duration-500 shadow-[0_0_40px_rgba(82,39,255,0.4)] hover:shadow-[0_0_60px_rgba(255,255,255,0.5)]"
+                className="inline-flex items-center gap-4 px-10 py-5 rounded-none font-['Space_Grotesk'] bg-white text-black font-bold text-lg hover:bg-black hover:text-white hover:border hover:border-white transition-all duration-500 shadow-[0_0_40px_rgba(255,255,255,0.2)] hover:shadow-[0_0_60px_rgba(255,255,255,0.4)]"
               >
                 Let's Talk
                 <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform duration-300" />

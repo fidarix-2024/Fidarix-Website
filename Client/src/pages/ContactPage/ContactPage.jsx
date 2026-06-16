@@ -155,7 +155,7 @@ function ContactPage() {
 
               <textarea name="message" required placeholder="Message *" className="min-h-[180px] p-[18px_20px] border-[1.5px] border-[#111] rounded-md bg-[#f9f9f9] font-['Manrope'] text-[15px] text-[#111] w-full resize-y outline-none transition-colors duration-200 appearance-none placeholder:text-[#7c7c7c] focus:border-[#000] focus:bg-white" />
 
-              <button type="submit" disabled={isSubmitting} className="bg-[#0b0b0b] text-white border-none rounded-none p-[18px_36px] font-['Space_Grotesk'] font-bold text-[14px] tracking-[0.1em] cursor-pointer self-start transition-all duration-200 hover:bg-[#222] hover:-translate-y-[2px]" style={{ opacity: isSubmitting ? 0.7 : 1 }}>
+              <button type="submit" disabled={isSubmitting} className="bg-white text-black border border-white rounded-none p-[18px_36px] font-['Space_Grotesk'] font-bold text-[14px] tracking-[0.1em] cursor-pointer self-start transition-all duration-200 hover:bg-black hover:text-white hover:-translate-y-[2px]" style={{ opacity: isSubmitting ? 0.7 : 1 }}>
                 {isSubmitting ? 'SENDING...' : 'SEND MESSAGE'}
               </button>
             </form>

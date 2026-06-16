@@ -67,8 +67,8 @@ function HyperspeedBackground() {
     <div className="absolute inset-0 z-[1] pointer-events-none overflow-hidden bg-black [&>div]:!w-full [&>div]:!h-full [&_canvas]:!w-full [&_canvas]:!h-full [&_canvas]:!block" aria-hidden="true">
       <Hyperspeed
         effectOptions={{
-          onSpeedUp: () => {},
-          onSlowDown: () => {},
+          onSpeedUp: () => { },
+          onSlowDown: () => { },
           distortion: 'turbulentDistortion',
           length: 400,
           roadWidth: 10,
@@ -157,7 +157,7 @@ function SpindleCard({ profile, index, total, isActive, onClick, onImageClick })
           <p className="font-['Fira_Code'] text-[10px] text-white/55 leading-[1.4] m-0 mb-4 tracking-[0.5px] uppercase max-w-full">{profile.description}</p>
 
           <button
-            className="bg-white text-black font-['Space_Grotesk'] text-[10px] font-bold tracking-[2px] px-[28px] py-[10px] rounded-full border-none cursor-pointer shadow-[0_4px_12px_rgba(255,255,255,0.12)] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform hover:bg-white hover:shadow-[0_0_20px_var(--active-neon)] hover:scale-[1.04]"
+            className="bg-white text-black font-['Space_Grotesk'] text-[10px] font-bold tracking-[2px] px-[28px] py-[10px] rounded-none border-none cursor-pointer shadow-[0_4px_12px_rgba(255,255,255,0.12)] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform hover:bg-white hover:shadow-[0_0_20px_var(--active-neon)] hover:scale-[1.04]"
             onClick={(e) => {
               e.stopPropagation();
               onImageClick(profile.image, profile.name);
@@ -347,7 +347,7 @@ export default function HeroSection() {
                     </div>
                     <h2 className="font-['Bebas_Neue'] text-[1.8rem] m-0 mb-[6px]">{p.name}</h2>
                     <p className="font-['Fira_Code'] text-[9px] text-white/55 leading-[1.3] m-0 mb-[12px] tracking-[0.5px] uppercase max-w-full">{p.description}</p>
-                    <button className="bg-white text-black font-['Space_Grotesk'] text-[9.5px] font-bold tracking-[2px] px-[24px] py-[8px] rounded-full border-none cursor-pointer shadow-[0_4px_12px_rgba(255,255,255,0.12)]">LAUNCH</button>
+                    <button className="bg-white text-black font-['Space_Grotesk'] text-[9.5px] font-bold tracking-[2px] px-[24px] py-[8px] rounded-none border-none cursor-pointer shadow-[0_4px_12px_rgba(255,255,255,0.12)]">LAUNCH</button>
                   </div>
                 </div>
               </div>
@@ -439,7 +439,7 @@ export default function HeroSection() {
               exit={{ opacity: 0, scale: 0.35, y: 50 }}
               transition={{ type: 'spring', stiffness: 350, damping: 24, mass: 0.85 }}
             >
-              <button className="absolute top-[20px] right-[20px] z-20 w-[44px] h-[44px] rounded-full bg-black/60 border border-white/15 text-white flex items-center justify-center cursor-pointer transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] backdrop-blur-[8px] hover:bg-white hover:text-black hover:rotate-90 hover:scale-[1.05] hover:border-white" onClick={() => setPreview(null)}>
+              <button className="absolute top-[20px] right-[20px] z-20 w-[44px] h-[44px] rounded-none bg-white border border-white text-black flex items-center justify-center cursor-pointer transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-black hover:text-white hover:rotate-90 hover:scale-[1.05]" onClick={() => setPreview(null)}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <path d="M18 6L6 18M6 6l12 12" />
                 </svg>

@@ -121,7 +121,7 @@ function MenuItem({ link, text, image, speed, textColor, marqueeBgColor, marquee
       style={{ borderTop: isFirst ? 'none' : `1px solid ${borderColor}` }}
     >
       <a
-        className="flex items-center justify-center h-full min-h-[120px] relative cursor-pointer uppercase no-underline font-extrabold text-[clamp(2rem,4vw,3.5rem)] font-['Space_Grotesk'] tracking-tight"
+        className="flex items-center justify-center h-full min-h-[100px] relative cursor-pointer uppercase no-underline font-extrabold text-[clamp(1.5rem,2.5vw,2.5rem)] font-['Space_Grotesk'] tracking-tight"
         href={link}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
@@ -137,7 +137,7 @@ function MenuItem({ link, text, image, speed, textColor, marqueeBgColor, marquee
         <div className="h-full w-fit flex" ref={marqueeInnerRef}>
           {[...Array(repetitions)].map((_, idx) => (
             <div className="marquee-part flex items-center flex-shrink-0" key={idx} style={{ color: marqueeTextColor }}>
-              <span className="whitespace-nowrap uppercase font-extrabold text-[clamp(2rem,4vw,3.5rem)] leading-[1] px-[2vw] font-['Space_Grotesk'] tracking-tight">{text}</span>
+              <span className="whitespace-nowrap uppercase font-extrabold text-[clamp(1.5rem,2.5vw,2.5rem)] leading-[1] px-[2vw] font-['Space_Grotesk'] tracking-tight">{text}</span>
               <div
                 className="w-[400px] md:w-[600px] h-[10vh] my-[2em] mx-[1vw] rounded-[50px] bg-cover bg-center border border-black/10"
                 style={{ backgroundImage: `url(${image})` }}

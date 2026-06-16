@@ -29,7 +29,7 @@ export default function PricingPage() {
 
   return (
     <div className="bg-black text-white min-h-screen relative overflow-hidden font-['Inter']">
-        {/* 1. HERO SECTION WITH BACKGROUND IMAGE */}
+      {/* 1. HERO SECTION WITH BACKGROUND IMAGE */}
       <section className="relative min-h-[85vh] flex flex-col justify-center items-center text-center pt-[140px] px-6 pb-[100px] overflow-hidden">
         {/* Background Image Layer */}
         <div className="absolute inset-0 z-0">
@@ -46,7 +46,7 @@ export default function PricingPage() {
         </div>
 
         <div className="max-w-[900px] w-full relative z-10">
-         
+
           <SplitText
             text="Built to Convert. Designed to Scale."
             className="font-['Space_Grotesk'] text-[clamp(2.5rem,5.8vw,4.8rem)] font-black leading-[1.05] tracking-[-0.04em] text-white m-0 mb-[30px] uppercase"
@@ -62,15 +62,15 @@ export default function PricingPage() {
           />
 
           <p className="text-[clamp(1rem,1.35vw,1.25rem)] leading-[1.6] text-white/65 max-w-[680px] mx-auto mb-12 drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]">
-            Affordable, fast, and conversion-focused websites starting at just ₹3,999. 
+            Affordable, fast, and conversion-focused websites starting at just ₹2,999 - ₹5,999. 
             Designed to attract customers, build trust, and generate leads.
           </p>
 
           <div className="flex gap-4 justify-center items-center flex-wrap">
-            <button onClick={handleScrollToPlans} className="bg-white text-black py-[17px] px-[38px] rounded-full font-extrabold text-[0.96rem] cursor-pointer shadow-[0_10px_30px_rgba(255,255,255,0.15)] transition-all duration-300 border border-white hover:-translate-y-[3px] hover:shadow-[0_15px_35px_rgba(255,255,255,0.25)] hover:bg-black hover:text-white">
-              View Packages <ArrowRight className="w-5 h-5 inline ml-1" />
+            <button onClick={handleScrollToPlans} className="bg-white text-black py-[17px] px-[38px] rounded-none font-['Space_Grotesk'] font-extrabold text-[0.96rem] cursor-pointer shadow-[0_10px_30px_rgba(255,255,255,0.15)] transition-all duration-300 border border-white hover:-translate-y-[3px] hover:shadow-[0_15px_35px_rgba(255,255,255,0.25)] hover:bg-black hover:text-white">
+              See Pricing <ArrowRight className="w-5 h-5 inline ml-1" />
             </button>
-            <ButtonLink to="/contact" variant="ghost" className="!rounded-full !py-[17px] !px-[38px] !text-[0.96rem] !font-extrabold">
+            <ButtonLink to="/contact" variant="ghost" className="!rounded-none !py-[17px] !px-[38px] !text-[0.96rem] !font-extrabold !bg-white !text-black !border-white">
               Request Custom Quote
             </ButtonLink>
           </div>
@@ -78,7 +78,7 @@ export default function PricingPage() {
       </section>
 
       {/* TRUST STRIP */}
-      <motion.div 
+      <motion.div
         className="w-full relative z-[99] mb-[60px] md:mt-5 md:mb-10"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
@@ -99,7 +99,7 @@ export default function PricingPage() {
             <div className="font-['Space_Grotesk'] text-[1.1rem] font-bold tracking-[0.1em] uppercase text-white/85 transition-all duration-300 hover:text-[#c084fc] hover:drop-shadow-[0_0_12px_rgba(167,90,255,0.8)]">
               <span>Free Consultation</span>
             </div>
-            
+
             {/* Duplicated Items for seamless scrolling */}
             <div className="font-['Space_Grotesk'] text-[1.1rem] font-bold tracking-[0.1em] uppercase text-white/85 transition-all duration-300 hover:text-[#c084fc] hover:drop-shadow-[0_0_12px_rgba(167,90,255,0.8)]">
               <span>Mobile Optimized</span>
@@ -137,68 +137,68 @@ export default function PricingPage() {
             All websites include staging preview, standard mobile optimization, and basic speed optimizations.
           </p>
         </div>
-       
+
 
 
         <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] xl:grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-6 items-stretch sm:gap-5">
           {pricingPlans.map((plan, index) => (
-            <motion.div 
-              key={plan.name} 
+            <motion.div
+              key={plan.name}
               className="h-full"
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
             >
-                <div 
-                  className={`bg-white/2 border border-white/5 rounded-[20px] p-[32px_24px] flex flex-col relative transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[0_10px_40px_rgba(0,0,0,0.4)] hover:-translate-y-2 hover:border-[#7c3aed]/35 hover:shadow-[0_25px_60px_rgba(124,58,237,0.1),0_15px_35px_rgba(0,0,0,0.5)] hover:bg-white/3 w-full h-full select-none ${plan.popular ? 'border-2 !border-[#7c3aed] bg-[linear-gradient(180deg,rgba(124,58,237,0.06)_0%,rgba(59,130,246,0.03)_100%)] shadow-[0_15px_50px_rgba(124,58,237,0.18)]' : ''}`}
-                >
-                  {plan.popular && (
-                    <div className="absolute -top-[13px] left-1/2 -translate-x-1/2 bg-[#0a0614]/95 border border-[#7c3aed]/70 text-[#b48aff] text-[0.68rem] font-extrabold tracking-[0.12em] py-[5px] px-[14px] rounded-full flex items-center gap-1.5 whitespace-nowrap shadow-[0_0_14px_rgba(124,58,237,0.35),inset_0_0_8px_rgba(124,58,237,0.08)] uppercase">
-                      <Zap className="w-3.5 h-3.5" /> Popular Choice
-                    </div>
-                  )}
-                  
-                  <div className="mb-[18px]">
-                    <h3 className="font-['Space_Grotesk'] text-[1.4rem] font-extrabold uppercase tracking-[-0.01em] m-0 mb-1.5">{plan.name}</h3>
-                    <p className="text-[0.8rem] leading-[1.3] text-white/50 min-h-unset m-0 mb-3">{plan.tagline}</p>
-                    <div className="mb-4">
-                      <span className="font-['Space_Grotesk'] text-[clamp(1.6rem,2.2vw,2rem)] font-black text-[#10b981] tracking-[-0.02em]">{plan.price}</span>
-                    </div>
-                    <div className="text-[0.78rem] text-white/45 flex items-center gap-2">
-                      <span>Delivery: <strong>{plan.delivery}</strong></span>
-                      <span className="text-white/20">•</span>
-                      <span>{plan.revisions}</span>
-                    </div>
+              <div
+                className={`bg-white/2 border border-white/5 rounded-[20px] p-[32px_24px] flex flex-col relative transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[0_10px_40px_rgba(0,0,0,0.4)] hover:-translate-y-2 hover:border-[#7c3aed]/35 hover:shadow-[0_25px_60px_rgba(124,58,237,0.1),0_15px_35px_rgba(0,0,0,0.5)] hover:bg-white/3 w-full h-full select-none ${plan.popular ? 'border-2 !border-[#7c3aed] bg-[linear-gradient(180deg,rgba(124,58,237,0.06)_0%,rgba(59,130,246,0.03)_100%)] shadow-[0_15px_50px_rgba(124,58,237,0.18)]' : ''}`}
+              >
+                {plan.popular && (
+                  <div className="absolute -top-[13px] left-1/2 -translate-x-1/2 bg-[#0a0614]/95 border border-[#7c3aed]/70 text-[#b48aff] text-[0.68rem] font-extrabold tracking-[0.12em] py-[5px] px-[14px] rounded-full flex items-center gap-1.5 whitespace-nowrap shadow-[0_0_14px_rgba(124,58,237,0.35),inset_0_0_8px_rgba(124,58,237,0.08)] uppercase">
+                    <Zap className="w-3.5 h-3.5" /> Popular Choice
                   </div>
+                )}
 
-                  <div className="h-px bg-white/5 mb-[18px]" />
-
-                  <div className="mb-5 flex-1">
-                    <span className="text-[0.74rem] font-extrabold uppercase tracking-[0.08em] text-white/35 block mb-4">What's included:</span>
-                    <ul className="list-none p-0 m-0 flex flex-col gap-2.5">
-                      {plan.features.map((feature, idx) => (
-                        <li key={idx} className="flex items-start gap-[9px] text-[0.84rem] text-white/85 leading-[1.4]">
-                          <Check className="w-4.5 h-4.5 text-[#10b981] shrink-0 mt-[1px]" />
-                          <span>{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
+                <div className="mb-[18px]">
+                  <h3 className="font-['Space_Grotesk'] text-[1.4rem] font-extrabold uppercase tracking-[-0.01em] m-0 mb-1.5">{plan.name}</h3>
+                  <p className="text-[0.8rem] leading-[1.3] text-white/50 min-h-unset m-0 mb-3">{plan.tagline}</p>
+                  <div className="mb-4">
+                    <span className="font-['Space_Grotesk'] text-[clamp(1.6rem,2.2vw,2rem)] font-black text-[#10b981] tracking-[-0.02em]">{plan.price}</span>
                   </div>
-
-                  <div className="mt-auto flex flex-col gap-[14px]">
-                    <div className="text-[0.8rem] leading-[1.4] text-white/50 bg-white/2 border border-white/5 py-3 px-4 rounded-[12px] [&_strong]:text-white/80">
-                      <strong>Best for:</strong> {plan.bestFor}
-                    </div>
-                    <ButtonLink 
-                      to="/contact" 
-                      variant={plan.popular ? 'primary' : 'ghost'} 
-                      className={`w-full text-center !rounded-full !font-extrabold !text-[0.92rem] !p-4 ${plan.popular ? '!bg-[#7c3aed] !text-white !shadow-[0_10px_25px_rgba(124,58,237,0.25)] !border-[#7c3aed] hover:!bg-white hover:!text-black hover:!shadow-[0_12px_30px_rgba(255,255,255,0.25)] hover:!border-white' : ''}`}
-                    >
-                      Choose {plan.name}
-                    </ButtonLink>
+                  <div className="text-[0.78rem] text-white/45 flex items-center gap-2">
+                    <span>Delivery: <strong>{plan.delivery}</strong></span>
+                    <span className="text-white/20">•</span>
+                    <span>{plan.revisions}</span>
                   </div>
                 </div>
+
+                <div className="h-px bg-white/5 mb-[18px]" />
+
+                <div className="mb-5 flex-1">
+                  <span className="text-[0.74rem] font-extrabold uppercase tracking-[0.08em] text-white/35 block mb-4">What's included:</span>
+                  <ul className="list-none p-0 m-0 flex flex-col gap-2.5">
+                    {plan.features.map((feature, idx) => (
+                      <li key={idx} className="flex items-start gap-[9px] text-[0.84rem] text-white/85 leading-[1.4]">
+                        <Check className="w-4.5 h-4.5 text-[#10b981] shrink-0 mt-[1px]" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="mt-auto flex flex-col gap-[14px]">
+                  <div className="text-[0.8rem] leading-[1.4] text-white/50 bg-white/2 border border-white/5 py-3 px-4 rounded-[12px] [&_strong]:text-white/80">
+                    <strong>Best for:</strong> {plan.bestFor}
+                  </div>
+                  <ButtonLink
+                    to="/contact"
+                    variant={plan.popular ? 'primary' : 'ghost'}
+                    className={`w-full text-center !rounded-none !font-extrabold !text-[0.92rem] !p-4 !bg-white !text-black !border-white hover:!bg-black hover:!text-white ${plan.popular ? '!shadow-[0_10px_25px_rgba(255,255,255,0.25)]' : ''}`}
+                  >
+                    Choose {plan.name}
+                  </ButtonLink>
+                </div>
+              </div>
             </motion.div>
           ))}
         </div>
@@ -228,8 +228,8 @@ export default function PricingPage() {
         <div className="bg-white/5 border border-white/5 rounded-[28px] p-10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] md:p-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {optionalAddOns.map((addon, idx) => (
-              <motion.div 
-                key={idx} 
+              <motion.div
+                key={idx}
                 className="flex justify-between items-center bg-white/2 border border-white/5 p-[20px_28px] rounded-[16px] transition-all duration-300 hover:bg-white/5 hover:border-[#7c3aed]/20 hover:translate-x-1"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -249,8 +249,8 @@ export default function PricingPage() {
       </section>
 
       {/* 4. CUSTOM INQUIRY BANNER */}
-      <motion.section 
-        className="my-[80px] mb-[140px] mx-auto max-w-[1100px] w-[calc(100%-8vw)] bg-[radial-gradient(circle_at_10%_20%,rgba(124,58,237,0.12)_0%,transparent_60%),radial-gradient(circle_at_90%_80%,rgba(59,130,246,0.08)_0%,transparent_60%),rgba(255,255,255,0.02)] border border-white/5 rounded-[32px] p-[60px_40px] text-center relative overflow-hidden shadow-[0_30px_70px_rgba(0,0,0,0.6)] md:p-[40px_24px] md:my-[40px] md:mb-[100px]" 
+      <motion.section
+        className="my-[80px] mb-[140px] mx-auto max-w-[1100px] w-[calc(100%-8vw)] bg-[radial-gradient(circle_at_10%_20%,rgba(124,58,237,0.12)_0%,transparent_60%),radial-gradient(circle_at_90%_80%,rgba(59,130,246,0.08)_0%,transparent_60%),rgba(255,255,255,0.02)] border border-white/5 rounded-[32px] p-[60px_40px] text-center relative overflow-hidden shadow-[0_30px_70px_rgba(0,0,0,0.6)] md:p-[40px_24px] md:my-[40px] md:mb-[100px]"
         style={{ position: 'relative', overflow: 'hidden' }}
         initial={{ opacity: 0, scale: 0.96 }}
         whileInView={{ opacity: 1, scale: 1 }}
@@ -282,10 +282,10 @@ export default function PricingPage() {
             textAlign="center"
           />
           <p className="text-white/60 max-w-[680px] mx-auto m-0 mb-9 text-[0.98rem] leading-[1.6]">
-            We build specialized databases, customer portals, inventory tracking panels, 
+            We build specialized databases, customer portals, inventory tracking panels,
             e-commerce networks, and dedicated operational dashboards.
           </p>
-          <ButtonLink to="/contact" variant="primary" className="!rounded-full !py-[18px] !px-[42px] !font-extrabold !text-[0.96rem]">
+          <ButtonLink to="/contact" variant="primary" className="!rounded-none !bg-white !text-black !border-white !py-[18px] !px-[42px] !font-extrabold !text-[0.96rem]">
             Get a Bespoke Estimate →
           </ButtonLink>
         </div>
@@ -294,7 +294,7 @@ export default function PricingPage() {
       {/* 5. FAQ SECTION */}
       <section className="py-[100px] px-[4vw] max-w-[1280px] mx-auto mb-[60px] border-t border-white/5">
         <div className="grid grid-cols-1 md:grid-cols-[1.1fr_1.5fr] gap-[80px] items-start">
-          <motion.div 
+          <motion.div
             className="md:sticky md:top-[120px] flex flex-col items-center md:items-start text-center md:text-left"
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -306,7 +306,7 @@ export default function PricingPage() {
               Have questions about our plans? Here are answers to common queries. If you need a custom package, feel free to contact us.
             </p>
           </motion.div>
-          <motion.div 
+          <motion.div
             className="flex flex-col gap-0"
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -316,8 +316,8 @@ export default function PricingPage() {
             {pricingFaqs.map((faq) => {
               const isOpen = openFaq === faq.question;
               return (
-                <div 
-                  key={faq.question} 
+                <div
+                  key={faq.question}
                   className={`group py-6 border-b border-white/10 flex flex-col justify-center cursor-pointer transition-colors duration-300 hover:border-[#7c3aed]/40 ${isOpen ? 'open' : ''}`}
                   onClick={() => setOpenFaq(isOpen ? null : faq.question)}
                 >
@@ -325,12 +325,12 @@ export default function PricingPage() {
                     <span className={`font-['Space_Grotesk'] font-bold text-[clamp(1.1rem,1.3vw,1.35rem)] leading-[1.4] transition-colors duration-300 group-hover:text-[#b48aff] ${isOpen ? 'text-[#b48aff]' : 'text-white'}`}>{faq.question}</span>
                     <span className={`text-[1.8rem] font-light shrink-0 ml-4 transition-all duration-300 ${isOpen ? 'text-[#7c3aed]' : 'text-white/40'}`}>{isOpen ? '−' : '+'}</span>
                   </div>
-                  <div 
-                    style={{ 
-                      maxHeight: isOpen ? '250px' : '0', 
-                      opacity: isOpen ? 1 : 0, 
-                      overflow: 'hidden', 
-                      transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)' 
+                  <div
+                    style={{
+                      maxHeight: isOpen ? '250px' : '0',
+                      opacity: isOpen ? 1 : 0,
+                      overflow: 'hidden',
+                      transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
                     }}
                   >
                     <p className="m-0 pt-4 pb-1 text-[0.96rem] leading-[1.6] text-white/65">{faq.answer}</p>

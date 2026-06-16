@@ -235,7 +235,7 @@ const ServicesMovingCards = () => {
   return (
     <div 
       ref={containerRef} 
-      className="relative w-[100vw] max-w-[100vw] h-[500px] left-1/2 -translate-x-1/2 overflow-hidden mt-16 mb-4 touch-none select-none cursor-none"
+      className="relative w-[100%] max-w-[100%] h-[500px] left-1/2 -translate-x-1/2 overflow-hidden mt-16 mb-4 touch-none select-none cursor-none"
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
@@ -318,33 +318,6 @@ const ServicesMovingCards = () => {
   );
 };
 
-const TransformationSection = () => {
-  return (
-    <SectionWise bg="bg-black" style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '0px', paddingBottom: '100px', backgroundColor: '#000000' }}>
-      <div className="max-w-4xl mx-auto text-center mb-12">
-    
-        <SplitText
-          text="The Process."
-          className="text-[clamp(2rem,4vw,3.5rem)] font-extrabold text-white leading-[1.1] uppercase tracking-tight font-['Space_Grotesk']"
-          delay={40}
-          duration={0.7}
-          ease="power4.out"
-          splitType="chars"
-          from={{ opacity: 0, y: 40 }}
-          to={{ opacity: 1, y: 0 }}
-          tag="h2"
-          textAlign="center"
-        />
-        <p className="mt-6 text-[1.1rem] text-white/70 leading-[1.7] max-w-2xl mx-auto">
-          Watch abstract wireframes become tactile, interactive products. Slide to reveal the engineering behind the interface.
-        </p>
-      </div>
-
-      <ServicesMovingCards />
-    </SectionWise>
-  );
-};
-
 // ----------------------------------------------------
 // WHAT YOU RECEIVE SECTION
 // ----------------------------------------------------
@@ -357,7 +330,7 @@ const WhatYouReceiveSection = () => {
         </span>
         <SplitText
           text="Deliverables."
-          className="text-[clamp(2rem,4vw,3.5rem)] font-extrabold text-white leading-[1.1] uppercase tracking-tight font-['Space_Grotesk']"
+          className="text-[clamp(3rem,6vw,5.5rem)] font-extrabold text-white leading-[1.1] uppercase tracking-tight font-['Space_Grotesk']"
           delay={40}
           duration={0.7}
           ease="power4.out"
@@ -487,6 +460,7 @@ const HowWeWorkSection = () => {
   );
 };
 
+
 // ----------------------------------------------------
 // CALL TO ACTION SECTION (FOR SERVICES PAGE)
 // ----------------------------------------------------
@@ -595,8 +569,8 @@ function ServicesPage() {
           {showHeavyComponents && (
             <ServicesScanner 
               sensitivity={0.65}
-            linesColor="#2a1060"
-            scanColor="#9b4dff"
+            linesColor="#5227FF"
+            scanColor="#FF9FFC"
             scanOpacity={0.9}
             gridScale={0.13}
             lineStyle="solid"
@@ -678,8 +652,6 @@ function ServicesPage() {
       {/* 3. OUR SOLUTIONS */}
       <CircularGalleryShowcase showHeavy={showHeavyComponents} />
 
-      {/* 4. TRANSFORMATION */}
-      <TransformationSection />
 
       {/* 5. WHAT YOU RECEIVE */}
       <WhatYouReceiveSection />
