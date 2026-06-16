@@ -121,13 +121,16 @@ function MenuItem({ link, text, image, speed, textColor, marqueeBgColor, marquee
       style={{ borderTop: isFirst ? 'none' : `1px solid ${borderColor}` }}
     >
       <a
-        className="flex items-center justify-center h-full min-h-[100px] relative cursor-pointer uppercase no-underline font-extrabold text-[clamp(1.5rem,2.5vw,2.5rem)] font-['Space_Grotesk'] tracking-tight"
+        className="group flex items-center justify-center h-full min-h-[100px] relative cursor-pointer uppercase no-underline font-extrabold text-[clamp(1.5rem,2.5vw,2.5rem)] font-['Space_Grotesk'] tracking-tight"
         href={link}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         style={{ color: textColor }}
       >
-        {text}
+        <span>{text}</span>
+        <span className="opacity-0 -translate-x-2 transition-all duration-300 ease-out group-hover:opacity-100 group-hover:translate-x-2 ml-2">
+          →
+        </span>
       </a>
       <div
         className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none translate-y-[101%]"

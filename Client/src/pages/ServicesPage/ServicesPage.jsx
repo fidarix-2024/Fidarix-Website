@@ -27,7 +27,7 @@ const TheChallengeSection = () => {
           The Challenge.
         </h2>
         <p className="mt-6 text-[1.1rem] text-white/70 leading-[1.7] max-w-2xl mx-auto">
-          Your website shouldn't just exist. It should drive revenue. We fix platforms that underperform.
+          website shouldn't just exist. It should drive revenue. We fix platforms that underperform.
         </p>
       </div>
 
@@ -99,7 +99,7 @@ const OurSolutionsHeader = () => {
   return (
     <SectionWise bg="bg-transparent" style={{ borderBottom: 'none', paddingTop: '80px', paddingBottom: 0, marginBottom: 0 }}>
       <div style={{ textAlign: 'left', marginBottom: 0 }}>
-      
+
         <SplitText
           text="Core Capabilities."
           className="font-extrabold text-white text-[clamp(2.5rem,5vw,4rem)] font-['Space_Grotesk']"
@@ -146,7 +146,7 @@ const ProjectCard = ({ item, isWireframe }) => {
     <div className="group/card w-[190px] h-[190px] shrink-0 rounded-3xl border border-white/10 hover:border-purple-500/50 overflow-hidden relative shadow-[0_8px_30px_rgba(0,0,0,0.5)] transition-all duration-300">
       {/* Background Image - Full bleed */}
       <img src={item.image} alt={item.title} loading="lazy" className="w-full h-full object-cover transition-transform duration-700 group-hover/card:scale-110" />
-      
+
       {/* Subtle Purple Glow Overlay on hover */}
       <div className="absolute inset-0 bg-gradient-to-t from-purple-900/40 via-transparent to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-500" />
     </div>
@@ -158,7 +158,7 @@ const CardRow = ({ items, direction, isWireframe }) => {
   return (
     <div className="flex gap-6 w-max" style={{ animation: `scroll-${direction} 40s linear infinite` }}>
       {rowItems.map((item, i) => (
-         <ProjectCard key={i} item={item} isWireframe={isWireframe} />
+        <ProjectCard key={i} item={item} isWireframe={isWireframe} />
       ))}
     </div>
   );
@@ -220,7 +220,7 @@ const ServicesMovingCards = () => {
     setActiveDrag(false);
     try {
       e.currentTarget.releasePointerCapture(e.pointerId);
-    } catch (err) {}
+    } catch (err) { }
   };
 
   const items = [
@@ -233,8 +233,8 @@ const ServicesMovingCards = () => {
   ];
 
   return (
-    <div 
-      ref={containerRef} 
+    <div
+      ref={containerRef}
       className="relative w-[100%] max-w-[100%] h-[500px] left-1/2 -translate-x-1/2 overflow-hidden mt-16 mb-4 touch-none select-none cursor-none"
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
@@ -257,8 +257,8 @@ const ServicesMovingCards = () => {
         }
       `}</style>
       {/* Wireframe Layer (Left) */}
-      <motion.div 
-        className="absolute inset-0 flex items-center justify-center pointer-events-none" 
+      <motion.div
+        className="absolute inset-0 flex items-center justify-center pointer-events-none"
         style={{ clipPath: clipPathLeft, perspective: '1200px' }}
       >
         <div className="flex flex-col gap-6 min-w-[300vw] items-center" style={{ transform: 'rotateY(12deg) rotateZ(-4deg) scale(1.35)' }}>
@@ -268,8 +268,8 @@ const ServicesMovingCards = () => {
       </motion.div>
 
       {/* Real Layer (Right) */}
-      <motion.div 
-        className="absolute inset-0 flex items-center justify-center pointer-events-none" 
+      <motion.div
+        className="absolute inset-0 flex items-center justify-center pointer-events-none"
         style={{ clipPath: clipPathRight, perspective: '1200px' }}
       >
         <div className="flex flex-col gap-6 min-w-[300vw] items-center" style={{ transform: 'rotateY(-12deg) rotateZ(-4deg) scale(1.35)' }}>
@@ -279,17 +279,17 @@ const ServicesMovingCards = () => {
       </motion.div>
 
       {/* Center Beam and Drag Handle */}
-      <motion.div 
+      <motion.div
         className="absolute inset-y-0 z-30 pointer-events-none flex items-center justify-center"
         style={{ left: handleLeft, transform: 'translateX(-50%)' }}
       >
         <div className="absolute top-[-20%] bottom-[-20%] w-[3px] bg-gradient-to-b from-transparent via-purple-500 to-transparent shadow-[0_0_30px_rgba(168,85,247,1)]" />
         <div className="w-16 h-16 rounded-2xl bg-purple-600 border border-white/20 flex items-center justify-center shadow-[0_0_50px_rgba(168,85,247,0.8)] z-10 text-white select-none relative">
-           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-             <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-             <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-             <line x1="12" y1="22.08" x2="12" y2="12"></line>
-           </svg>
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+          </svg>
         </div>
       </motion.div>
 
@@ -326,7 +326,7 @@ const WhatYouReceiveSection = () => {
     <section className="bg-black border-b border-white/10 pt-24 pb-24 w-full">
       <div className="max-w-4xl mx-auto text-center mb-16 px-6">
         <span className="text-xs font-extrabold text-primary-2 uppercase tracking-[0.22em] flex items-center justify-center gap-2 mb-3">
-      
+
         </span>
         <SplitText
           text="Deliverables."
@@ -346,13 +346,13 @@ const WhatYouReceiveSection = () => {
       </div>
 
       <div className="w-full mt-12" style={{ height: '500px', position: 'relative' }}>
-        <FlowingMenu 
+        <FlowingMenu
           items={[
             { link: '#', text: 'Design Systems', image: '/images/services/uiux-architecture.png' },
             { link: '#', text: 'Architecture', image: '/images/services/frontend-engineering.png' },
             { link: '#', text: 'Visibility', image: '/images/services/search-visibility.png' },
             { link: '#', text: 'Autonomy', image: '/images/services/digital-products.png' }
-          ]} 
+          ]}
         />
       </div>
     </section>
@@ -366,7 +366,7 @@ const HowWeWorkSection = () => {
   return (
     <SectionWise bg="bg-[#020106]" style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', padding: 0 }}>
       <div className="flex flex-col lg:flex-row w-full min-h-[80vh]">
-        
+
         {/* Left Column (Sticky) */}
         <div className="lg:w-[40%] p-10 lg:px-12 lg:py-20 border-b lg:border-b-0 lg:border-r border-white/10 flex flex-col justify-center items-center text-center lg:sticky lg:top-0 lg:h-screen">
           <SplitText
@@ -381,7 +381,7 @@ const HowWeWorkSection = () => {
             tag="h2"
             textAlign="center"
           />
-          
+
           <p className="text-white/50 text-[1.1rem] leading-relaxed max-w-sm mt-6">
             Precision at every step. We operate with total transparency and zero friction.
           </p>
@@ -389,11 +389,11 @@ const HowWeWorkSection = () => {
 
         {/* Right Column (Scrollable Grid) */}
         <div className="lg:w-[60%] grid grid-cols-2 md:grid-cols-2">
-          
+
           {/* Card 1 */}
           <div className="group relative p-5 md:p-12 border-b border-white/10 md:border-r transition-all duration-500 overflow-hidden hover:bg-white/[0.02]">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(168,85,247,0.15),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
-            
+
             <div className="text-[2.5rem] md:text-[5rem] font-bold text-white/20 leading-none mb-3 md:mb-6 font-['Space_Grotesk'] transition-colors duration-500 group-hover:text-purple-400">01</div>
             <h3 className="text-lg md:text-2xl font-bold text-white mb-3 md:mb-6 font-['Space_Grotesk'] relative z-10">Strategy & Scope</h3>
             <p className="text-white/60 leading-relaxed mb-4 md:mb-8 relative z-10 text-sm md:text-base">
@@ -409,7 +409,7 @@ const HowWeWorkSection = () => {
           {/* Card 2 */}
           <div className="group relative p-5 md:p-12 border-b border-white/10 transition-all duration-500 overflow-hidden hover:bg-white/[0.02]">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(168,85,247,0.15),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
-            
+
             <div className="text-[2.5rem] md:text-[5rem] font-bold text-white/20 leading-none mb-3 md:mb-6 font-['Space_Grotesk'] transition-colors duration-500 group-hover:text-purple-400">02</div>
             <h3 className="text-lg md:text-2xl font-bold text-white mb-3 md:mb-6 font-['Space_Grotesk'] relative z-10">Premium Design</h3>
             <p className="text-white/60 leading-relaxed mb-4 md:mb-8 relative z-10 text-sm md:text-base">
@@ -425,7 +425,7 @@ const HowWeWorkSection = () => {
           {/* Card 3 */}
           <div className="group relative p-5 md:p-12 border-b border-white/10 md:border-r transition-all duration-500 overflow-hidden hover:bg-white/[0.02]">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(168,85,247,0.15),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
-            
+
             <div className="text-[2.5rem] md:text-[5rem] font-bold text-white/20 leading-none mb-3 md:mb-6 font-['Space_Grotesk'] transition-colors duration-500 group-hover:text-purple-400">03</div>
             <h3 className="text-lg md:text-2xl font-bold text-white mb-3 md:mb-6 font-['Space_Grotesk'] relative z-10">Performance Build</h3>
             <p className="text-white/60 leading-relaxed mb-4 md:mb-8 relative z-10 text-sm md:text-base">
@@ -441,7 +441,7 @@ const HowWeWorkSection = () => {
           {/* Card 4 */}
           <div className="group relative p-5 md:p-12 border-b md:border-b-0 border-white/10 transition-all duration-500 overflow-hidden hover:bg-white/[0.02]">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(168,85,247,0.15),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
-            
+
             <div className="text-[2.5rem] md:text-[5rem] font-bold text-white/20 leading-none mb-3 md:mb-6 font-['Space_Grotesk'] transition-colors duration-500 group-hover:text-purple-400">04</div>
             <h3 className="text-lg md:text-2xl font-bold text-white mb-3 md:mb-6 font-['Space_Grotesk'] relative z-10">SEO & Launch</h3>
             <p className="text-white/60 leading-relaxed mb-4 md:mb-8 relative z-10 text-sm md:text-base">
@@ -491,7 +491,7 @@ const CTASection = () => {
       <div className="relative z-10 max-w-3xl mx-auto text-center flex flex-col items-center gap-6">
         <span className="text-xs font-extrabold text-primary-2 uppercase tracking-[0.22em] flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-primary-2 inline-block animate-pulse"></span>
-          
+
         </span>
         <SplitText
           text="Next Steps."
@@ -557,8 +557,8 @@ function ServicesPage() {
 
   return (
     <div className="min-h-full bg-black text-white">
-      <SEO 
-        title="Services & Digital Leverage" 
+      <SEO
+        title="Services & Digital Leverage"
         description="Explore Fidarix's comprehensive digital services including custom web development, UI/UX design, and technical SEO designed to scale your business."
         canonical="/services"
         schema={schemaData}
@@ -567,40 +567,40 @@ function ServicesPage() {
       <section ref={heroRef} className="relative min-h-[75vh] md:min-h-screen flex flex-col justify-center items-center py-[100px] md:py-[120px] overflow-hidden bg-black" style={{ position: 'relative' }}>
         <div style={{ position: 'absolute', inset: 0, zIndex: 0, opacity: 0.85, pointerEvents: 'none' }}>
           {showHeavyComponents && (
-            <ServicesScanner 
+            <ServicesScanner
               sensitivity={0.65}
-            linesColor="#5227FF"
-            scanColor="#9b4dff"
-            scanOpacity={0.9}
-            gridScale={0.13}
-            lineStyle="solid"
-            lineThickness={2.2}
-            lineJitter={0.06}
-            scanDirection="pingpong"
-            enablePost={false}
-            bloomIntensity={2.8}
-            bloomThreshold={0.1}
-            bloomSmoothing={0.6}
-            chromaticAberration={0.003}
-            noiseIntensity={0.008}
-            scanGlow={0.9}
-            scanSoftness={2.5}
-            scanPhaseTaper={0.85}
-            scanDuration={2.4}
-            scanDelay={1.8}
-            scanOnClick={true}
-            enableGyro={true}
-            style={{ width: '100%', height: '100%' }}
-          />
+              linesColor="#5227FF"
+              scanColor="#9b4dff"
+              scanOpacity={0.9}
+              gridScale={0.13}
+              lineStyle="solid"
+              lineThickness={2.2}
+              lineJitter={0.06}
+              scanDirection="pingpong"
+              enablePost={false}
+              bloomIntensity={2.8}
+              bloomThreshold={0.1}
+              bloomSmoothing={0.6}
+              chromaticAberration={0.003}
+              noiseIntensity={0.008}
+              scanGlow={0.9}
+              scanSoftness={2.5}
+              scanPhaseTaper={0.85}
+              scanDuration={2.4}
+              scanDelay={1.8}
+              scanOnClick={true}
+              enableGyro={true}
+              style={{ width: '100%', height: '100%' }}
+            />
           )}
         </div>
         <div className="hidden md:flex absolute top-[8%] bottom-[8%] w-[1px] border-l-2 border-dotted border-white/12 items-center justify-center pointer-events-none z-[2] left-[4vw]"><span className="w-2 h-2 border-t-2 border-r-2 border-white/50 -rotate-[135deg]" /></div>
         <div className="hidden md:flex absolute top-[8%] bottom-[8%] w-[1px] border-l-2 border-dotted border-white/12 items-center justify-center pointer-events-none z-[2] right-[4vw]"><span className="w-2 h-2 border-t-2 border-r-2 border-white/50 rotate-45" /></div>
         <div className="absolute bottom-10 right-[4vw] text-2xl text-white/40 pointer-events-none z-[2] animate-[bounceSlow_2s_infinite]">↓</div>
-        <div className="relative z-[5] text-left w-[min(100%,1280px)] px-6 md:px-[8vw] flex flex-col items-start pointer-events-none [&>*]:pointer-events-auto">
-         
-          <h1 className="font-['Space_Grotesk'] text-[clamp(2.2rem,8vw,4rem)] sm:text-[clamp(3.2rem,9.5vw,8rem)] font-extrabold leading-[0.92] tracking-[-0.06em] uppercase flex flex-col w-full mb-10 text-white drop-shadow-[0_10px_40px_rgba(0,0,0,0.6)]">
-            <span className="block text-left">
+        <div className="relative z-[5] text-center w-[min(100%,1280px)] px-6 md:px-[8vw] flex flex-col items-center pointer-events-none [&>*]:pointer-events-auto">
+
+          <h1 className="font-['Space_Grotesk'] text-[clamp(2.5rem,8vw,5rem)] sm:text-[clamp(3.5rem,9.5vw,7.5rem)] font-extrabold leading-[1] tracking-[-0.04em] uppercase flex flex-col md:flex-row md:gap-6 justify-center w-full mb-8 text-white drop-shadow-[0_10px_40px_rgba(0,0,0,0.6)]">
+            <span className="block text-center">
               <SplitText
                 text="Our"
                 className="text-white inline-block"
@@ -611,11 +611,11 @@ function ServicesPage() {
                 from={{ opacity: 0, y: 40 }}
                 to={{ opacity: 1, y: 0 }}
                 tag="span"
-                textAlign="left"
+                textAlign="center"
                 playOnScroll={false}
               />
             </span>
-            <span className="block text-left pl-[8%] md:pl-[20%]">
+            <span className="block text-center">
               <SplitText
                 text="Services."
                 className="text-white inline-block"
@@ -626,12 +626,12 @@ function ServicesPage() {
                 from={{ opacity: 0, y: 40 }}
                 to={{ opacity: 1, y: 0 }}
                 tag="span"
-                textAlign="left"
+                textAlign="center"
                 playOnScroll={false}
               />
             </span>
           </h1>
-          <p className="font-mono text-[clamp(0.74rem,1.2vw,0.95rem)] font-bold tracking-[0.06em] mb-10 ml-[8%] md:ml-[20%] bg-transparent py-1.5 px-3 text-white/80 border-l-2 border-primary-2 drop-shadow-[0_2px_10px_rgba(0,0,0,0.3)]">[ Digital experiences engineered for performance and conversion. ]</p>
+          <p className="font-mono text-[clamp(0.8rem,1.2vw,1rem)] font-bold tracking-[0.06em] mb-12 bg-transparent py-1.5 px-3 text-white/80 border-l-2 border-r-2 border-primary-2 drop-shadow-[0_2px_10px_rgba(0,0,0,0.3)]">[ Digital experiences engineered for performance and conversion. ]</p>
           <div className="flex items-center gap-0 mt-0">
             <div className="flex flex-col gap-1 pr-8">
               <span className="font-['Space_Grotesk'] text-[clamp(2rem,3.5vw,2.8rem)] font-extrabold text-white leading-none tracking-[-0.04em]">7+</span>
