@@ -395,7 +395,7 @@ const HowWeWorkSection = () => {
       <div className="flex flex-col lg:flex-row w-full min-h-[80vh]">
         
         {/* Left Column (Sticky) */}
-        <div className="lg:w-[40%] p-10 lg:px-12 lg:py-20 border-b lg:border-b-0 lg:border-r border-white/10 flex flex-col justify-center lg:sticky lg:top-0 lg:h-screen">
+        <div className="lg:w-[40%] p-10 lg:px-12 lg:py-20 border-b lg:border-b-0 lg:border-r border-white/10 flex flex-col justify-center items-center text-center lg:sticky lg:top-0 lg:h-screen">
           <SplitText
             text="Methodology."
             className="text-[clamp(2rem,3.2vw,3.2rem)] break-words font-extrabold text-white leading-[1.05] tracking-tighter font-['Space_Grotesk'] mb-8"
@@ -406,10 +406,10 @@ const HowWeWorkSection = () => {
             from={{ opacity: 0, y: 40 }}
             to={{ opacity: 1, y: 0 }}
             tag="h2"
-            textAlign="left"
+            textAlign="center"
           />
           
-          <p className="text-white/50 text-[1.1rem] leading-relaxed max-w-sm mt-auto">
+          <p className="text-white/50 text-[1.1rem] leading-relaxed max-w-sm mt-6">
             Precision at every step. We operate with total transparency and zero friction.
           </p>
         </div>
