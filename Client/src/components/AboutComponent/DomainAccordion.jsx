@@ -27,7 +27,7 @@ export default function DomainAccordion() {
         >
           
           <h2 className="text-[clamp(3rem,6vw,5rem)] font-extrabold tracking-tighter leading-[1] mb-6 font-['Space_Grotesk'] text-white">
-            Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF9FFC] via-[#A6C8FF] to-white">Expertise.</span>
+            Our <span className="text-white">Expertise.</span>
           </h2>
           <p className="text-white/60 text-lg md:text-xl max-w-[600px] mx-auto font-medium">
             We don't just build websites. We craft comprehensive digital ecosystems designed to elevate industry leaders.

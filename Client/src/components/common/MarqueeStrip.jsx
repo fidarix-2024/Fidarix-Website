@@ -54,20 +54,20 @@ const MarqueeItem = ({ item }) => {
 
 export default function MarqueeStrip() {
   const itemsRow1 = [
-    { text: 'STRATEGY', image: '/images/templates/startup_template.png' },
+    { text: 'STRATEGY', image: '/images/services/uiux-architecture.png' },
     { text: 'DEVELOPMENT', image: '/images/AboutPage/domain_web_development.png' },
-    { text: 'HIGH CONVERTING', image: '/images/templates/portfolio_template.png' },
+    { text: 'HIGH CONVERTING', image: '/images/services/frontend-engineering.png' },
     { text: 'SEO OPTIMIZED', image: '/images/AboutPage/domain_seo.png' },
-    { text: 'PRODUCT DESIGN', image: '/images/templates/restaurant_template.png' },
+    { text: 'PRODUCT DESIGN', image: '/images/services/digital-products.png' },
     { text: 'CREATIVE STUDIO', image: '/images/AboutPage/domain_web_design.png' },
   ];
 
   const itemsRow2 = [
-    { text: 'MOBILE FIRST', image: '/images/templates/coaching_template.png' },
+    { text: 'MOBILE FIRST', image: '/images/services/ecommerce-experiences.png' },
     { text: 'BRANDING', image: '/images/AboutPage/domain_branding.png' },
-    { text: 'FAST LOADING', image: '/images/templates/startup_template.png' },
+    { text: 'FAST LOADING', image: '/images/services/search-visibility.png' },
     { text: 'USER EXPERIENCE', image: '/images/AboutPage/domain_product_building.png' },
-    { text: 'CUSTOM CODE', image: '/images/templates/portfolio_template.png' },
+    { text: 'CUSTOM CODE', image: '/images/services/brand-identity.png' },
     { text: 'INNOVATION', image: '/images/AboutPage/domain_web_development.png' },
   ];
 

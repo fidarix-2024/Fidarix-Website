@@ -334,7 +334,7 @@ function AboutPage() {
                 />
                 <SplitText
                   text="upgrade?"
-                  className="text-[#FF9FFC]"
+                  className="text-[#9b4dff]"
                   delay={40}
                   duration={0.7}
                   ease="power4.out"

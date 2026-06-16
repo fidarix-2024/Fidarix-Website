@@ -117,7 +117,7 @@ function InteractiveProjectCard({ project, index = 0 }) {
         transition: 'opacity 0.9s cubic-bezier(0.16,1,0.3,1), translate 0.9s cubic-bezier(0.16,1,0.3,1), filter 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.4s ease-out',
       }}
     >
-      <div className="relative rounded-[32px] overflow-hidden bg-[#0a0a0a] w-full aspect-square md:aspect-[4/3] border border-white/10 shadow-2xl group cursor-pointer">
+      <div className="relative rounded-[24px] overflow-hidden bg-[#0a0a0a] w-full aspect-[4/3] md:aspect-[16/10] border border-white/10 shadow-2xl group cursor-pointer">
 
         {/* Background Image */}
         <div className="absolute inset-0">
@@ -546,7 +546,7 @@ function HomePage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-7xl mx-auto px-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 w-full max-w-none mx-auto px-4 md:px-6">
           {projects.map((project, i) => (
             <InteractiveProjectCard key={project.name} project={project} index={i} />
           ))}
@@ -633,7 +633,7 @@ function HomePage() {
                     "Built for convenience",
                     "Works for getting started"
                   ].map((point, index) => (
-                    <li key={index} className="font-['Manrope'] text-[1rem] leading-[1.6] text-white/40 flex items-start gap-4">
+                    <li key={index} className="font-['Manrope'] text-[1rem] leading-[1.6] text-white/90 flex items-start gap-4">
                       <span className="w-1.5 h-1.5 rounded-full bg-red-500/40 mt-[9px] shrink-0"></span>
                       <span>{point}</span>
                     </li>
@@ -896,7 +896,7 @@ function HomePage() {
             </ButtonLink>
           </div>
           <div className="text-white/40 text-sm font-semibold tracking-wider mt-4">
-            Starting from ₹2,999 - ₹5,999
+            Starting from ₹2,999
           </div>
         </div>
       </section>

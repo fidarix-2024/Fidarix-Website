@@ -570,7 +570,7 @@ function ServicesPage() {
             <ServicesScanner 
               sensitivity={0.65}
             linesColor="#5227FF"
-            scanColor="#FF9FFC"
+            scanColor="#9b4dff"
             scanOpacity={0.9}
             gridScale={0.13}
             lineStyle="solid"
