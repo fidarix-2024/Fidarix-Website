@@ -125,11 +125,11 @@ const AboutGridBackground = ({ items, className = '', radius = 300, damping = 0.
                     'radial-gradient(circle at var(--mouse-x) var(--mouse-y), var(--spotlight-color), transparent 70%)'
                 }}
               />
-              <div className="relative z-10 flex-1 p-3 box-border h-[400px]">
+              <div className="relative z-10 flex-1 p-3 box-border min-h-0">
                 <img src={c.image} alt={c.title} loading="lazy" className="w-full h-full object-cover rounded-[16px] filter grayscale group-hover:grayscale-0 transition-all duration-700" />
               </div>
-              <footer className="relative z-10 p-5 text-white font-sans grid grid-cols-[1fr_auto] gap-x-3 gap-y-1 items-center">
-                <h3 className="m-0 text-xl font-bold font-['Space_Grotesk']">{c.title}</h3>
+              <footer className="relative z-10 p-4 md:p-5 text-white font-sans grid grid-cols-[1fr_auto] gap-x-2 md:gap-x-3 gap-y-1 items-center">
+                <h3 className="m-0 text-lg md:text-xl font-bold font-['Space_Grotesk'] min-w-0 break-words">{c.title}</h3>
                 {(c.handle || c.socials) && (
                   <div className="flex gap-3 justify-end items-center text-white/70">
                     {c.handle && <span className="text-[0.95rem] opacity-80 text-right">{c.handle}</span>}
