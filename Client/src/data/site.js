@@ -6,12 +6,6 @@ export const navItems = [
   { label: 'Contact', path: '/contact' },
 ];
 
-export const homeStats = [
-  { value: '120+', label: 'projects completed' },
-  { value: '45+', label: 'clients served' },
-  { value: '8 yrs', label: 'combined experience' },
-  { value: '24h', label: 'average response time' },
-];
 
 export const detailedServices = [
   { title: "Web Development", description: "Business websites, corporate websites, landing pages, and custom website solutions.", number: "01", image: "/images/services/1.jpg" },
@@ -69,12 +63,6 @@ export const reasons = [
   { title: 'Ongoing Support', text: 'Reliable maintenance to keep your site fast and secure.' },
 ];
 
-export const processSteps = [
-  { title: 'Discovery', text: 'We map your offer, audience, and conversion goals.' },
-  { title: 'Design', text: 'We shape the visual system and page flow.' },
-  { title: 'Development', text: 'We build the responsive, production-ready site.' },
-  { title: 'Launch', text: 'We polish, deploy, and hand over with confidence.' },
-];
 
 export const testimonials = [
   {
@@ -234,50 +222,4 @@ export const team = [
 ];
 
 export const techStack = ['React', 'Vite', 'Lenis', 'Lucide', 'Semantic HTML', 'Modern CSS'];
-
-export const blogPosts = [
-  {
-    title: 'Best Website Trends in 2026',
-    excerpt: 'What clients expect from premium business websites this year.',
-    category: 'Design',
-  },
-  {
-    title: 'Why Every Business Needs a Website',
-    excerpt: 'A strong website still does the heavy lifting for trust and conversion.',
-    category: 'Strategy',
-  },
-  {
-    title: 'React vs WordPress',
-    excerpt: 'A practical comparison for teams planning their next build.',
-    category: 'Development',
-  },
-  {
-    title: 'How Fast Websites Increase Sales',
-    excerpt: 'Speed affects bounce rate, trust, and the quality of enquiries.',
-    category: 'Performance',
-  },
-  {
-    title: 'How to Write Better CTA Copy',
-    excerpt: 'Simple patterns that make calls to action feel clearer and stronger.',
-    category: 'Copywriting',
-  },
-  {
-    title: 'SEO Basics for Service Brands',
-    excerpt: 'A checklist for pages that need steady organic traffic.',
-    category: 'SEO',
-  },
-];
-
-export const contactLinks = [
-  { label: 'info@fidarix.com', href: 'mailto:info@fidarix.com' },
-  { label: '+91 87961 98381', href: 'https://wa.me/918796198381' },
-  { label: 'Instagram', href: 'https://instagram.com' },
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/company/fidarix/?viewAsMember=true' },
-];
-
-export const socialLinks = [
-  { label: 'Instagram', href: 'https://instagram.com' },
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/company/fidarix/?viewAsMember=true' },
-  { label: 'X', href: 'https://x.com' },
-  { label: 'YouTube', href: 'https://youtube.com' },
-];
+

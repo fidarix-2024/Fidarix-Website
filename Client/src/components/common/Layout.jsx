@@ -2,7 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import SiteHeader, { LogoMark } from './Navbar';
 import TextPressure from './TextPressure';
 
-export function SiteFooter({ isDark }) {
+function SiteFooter({ isDark }) {
   return (
     <footer className={`bg-black text-white w-full pt-20 pb-10 max-md:pt-6 max-md:pb-4 border-t ${isDark ? 'border-white/8' : 'border-white/8'
       }`}>
@@ -104,23 +104,7 @@ export function SiteChrome({ children }) {
   );
 }
 
-export function PageHero({ eyebrow, title, copy, actions, panel, children }) {
-  return (
-    <section className="grid gap-[18px] border border-white/8 rounded-[48px] bg-white/[0.03] shadow-[0_28px_80px_rgba(0,0,0,0.6)] p-[clamp(26px,4.8vw,46px)] overflow-hidden relative">
-      <div className="grid grid-cols-1 md:grid-cols-[minmax(0,1.3fr)_minmax(320px,0.85fr)] gap-6 items-stretch">
-        <div>
-          {eyebrow ? <p className="inline-flex items-center gap-2 m-0 text-primary uppercase tracking-[0.22em] text-[0.72rem] font-extrabold">{eyebrow}</p> : null}
-          <h1 className="m-0 text-white font-['Space_Grotesk'] font-medium text-[clamp(3.1rem,7vw,6.8rem)] leading-[0.94] max-w-[10ch] tracking-tight">{title}</h1>
-          <p className="m-0 text-white/60 text-[1.03rem] leading-[1.7] mt-4">{copy}</p>
-          {actions ? <div className="flex flex-wrap gap-3 mt-6">{actions}</div> : null}
-        </div>
-        <div className="rounded-[48px] bg-white/[0.02] border border-white/8 p-6 flex items-center justify-center">
-          {panel || children}
-        </div>
-      </div>
-    </section>
-  );
-}
+
 
 export function ImpactHero({
   lines,
@@ -193,19 +177,7 @@ export function Marquee({ items, speed = '30s' }) {
   );
 }
 
-export function SectionHeading({ eyebrow, title, copy }) {
-  return (
-    <div className="flex flex-col gap-2.5 max-w-[760px]">
-      {eyebrow ? (
-        <p className="inline-flex items-center gap-2 m-0 text-primary uppercase tracking-[0.22em] text-[0.72rem] font-extrabold">
-          {eyebrow}
-        </p>
-      ) : null}
-      <h2 className="m-0 text-white font-['Space_Grotesk'] font-medium text-[clamp(1.7rem,3vw,2.6rem)] leading-[1.05] tracking-tight">{title}</h2>
-      {copy ? <p className="m-0 text-white/60 text-[1.03rem] leading-[1.7]">{copy}</p> : null}
-    </div>
-  );
-}
+
 
 export function ButtonLink({ to, children, variant = 'primary', className = '', style = {}, ...props }) {
   const getVariantClass = () => {
@@ -225,31 +197,4 @@ export function ButtonLink({ to, children, variant = 'primary', className = '', 
   );
 }
 
-export function StatGrid({ stats }) {
-  return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-6 py-6 border-t border-b border-white/8">
-      {stats.map((stat) => (
-        <article className="flex flex-col gap-2" key={stat.label}>
-          <p className="m-0 font-['Space_Grotesk'] text-[2.5rem] font-bold tracking-tight text-white leading-none">{stat.value}</p>
-          <p className="m-0 text-white/60 text-sm tracking-wide uppercase">{stat.label}</p>
-        </article>
-      ))}
-    </div>
-  );
-}
 
-export function BrandCanvas() {
-  return (
-    <div className="flex flex-col items-center">
-      <div className="w-full aspect-[4/3] rounded-[24px] bg-gradient-to-tr from-primary/10 via-primary-2/10 to-primary-3/10 border border-white/8 flex items-center justify-center shadow-inner relative overflow-hidden">
-        <span className="text-white/60 text-[0.8rem] font-bold tracking-[0.1em] uppercase z-10">Fidarix theme system</span>
-        <div className="absolute w-[200px] h-[200px] bg-primary/20 rounded-full blur-[40px] animate-pulse" />
-      </div>
-      <div className="flex flex-wrap gap-2 justify-center mt-3.5">
-        <span className="bg-white/6 text-white/80 text-[0.78rem] px-2.5 py-1 rounded-full font-bold">Gradient blue</span>
-        <span className="bg-white/6 text-white/80 text-[0.78rem] px-2.5 py-1 rounded-full font-bold">Editorial spacing</span>
-        <span className="bg-white/6 text-white/80 text-[0.78rem] px-2.5 py-1 rounded-full font-bold">Soft glass cards</span>
-      </div>
-    </div>
-  );
-}

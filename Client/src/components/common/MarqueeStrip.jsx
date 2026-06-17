@@ -54,20 +54,20 @@ const MarqueeItem = ({ item }) => {
 
 export default function MarqueeStrip() {
   const itemsRow1 = [
-    { text: 'STRATEGY', image: '/images/services/uiux-architecture.png' },
+    { text: 'STRATEGY', image: 'https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=500&q=80' },
     { text: 'DEVELOPMENT', image: '/images/AboutPage/domain_web_development.png' },
-    { text: 'HIGH CONVERTING', image: '/images/services/frontend-engineering.png' },
+    { text: 'HIGH CONVERTING', image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=500&q=80' },
     { text: 'SEO OPTIMIZED', image: '/images/AboutPage/domain_seo.png' },
-    { text: 'PRODUCT DESIGN', image: '/images/services/digital-products.png' },
+    { text: 'PRODUCT DESIGN', image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=500&q=80' },
     { text: 'CREATIVE STUDIO', image: '/images/AboutPage/domain_web_design.png' },
   ];
 
   const itemsRow2 = [
-    { text: 'MOBILE FIRST', image: '/images/services/ecommerce-experiences.png' },
+    { text: 'MOBILE FIRST', image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=500&q=80' },
     { text: 'BRANDING', image: '/images/AboutPage/domain_branding.png' },
-    { text: 'FAST LOADING', image: '/images/services/search-visibility.png' },
+    { text: 'FAST LOADING', image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=500&q=80' },
     { text: 'USER EXPERIENCE', image: '/images/AboutPage/domain_product_building.png' },
-    { text: 'CUSTOM CODE', image: '/images/services/brand-identity.png' },
+    { text: 'CUSTOM CODE', image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=500&q=80' },
     { text: 'INNOVATION', image: '/images/AboutPage/domain_web_development.png' },
   ];
 
