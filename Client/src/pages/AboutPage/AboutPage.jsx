@@ -200,7 +200,7 @@ function AboutPage() {
             </div>
 
             {/* Yash: Image */}
-            <div className="w-full max-w-[160px] md:max-w-[340px] h-[260px] md:h-[500px] flex justify-center">
+            <div className="w-full max-w-[160px] md:max-w-[420px] h-[266px] md:h-[586px] flex justify-center">
               <AboutGridBackground
                 items={[
                   {
