@@ -173,9 +173,9 @@ function AboutPage() {
             </p>
           </div>
 
-          <div className="flex flex-row justify-center gap-4 md:gap-16 items-center">
+          <div className="flex flex-col md:flex-row justify-center gap-12 md:gap-16 items-center">
             {/* Dishi: Image */}
-            <div className="w-full max-w-[160px] md:max-w-[340px] h-[260px] md:h-[500px] flex justify-center">
+            <div className="w-full max-w-[340px] h-[520px] flex justify-center">
               <AboutGridBackground
                 items={[
                   {
@@ -183,8 +183,8 @@ function AboutPage() {
                     title: founders[0].name,
                     subtitle: founders[0].role,
                     socials: {
-                      linkedin: 'https://linkedin.com/in/dishigautam',
-                      instagram: 'https://instagram.com/dishigautam'
+                      linkedin: 'https://www.linkedin.com/in/dishi02/',
+                      discord: 'dishi_0226'
                     },
                     borderColor: '#5227FF',
                     gradient: 'linear-gradient(145deg, rgba(82,39,255,0.4), rgba(5,5,5,0.9))',
@@ -200,7 +200,7 @@ function AboutPage() {
             </div>
 
             {/* Yash: Image */}
-            <div className="w-full max-w-[160px] md:max-w-[340px] h-[260px] md:h-[500px] flex justify-center">
+            <div className="w-full max-w-[340px] h-[520px] flex justify-center">
               <AboutGridBackground
                 items={[
                   {
@@ -208,8 +208,8 @@ function AboutPage() {
                     title: founders[1].name,
                     subtitle: founders[1].role,
                     socials: {
-                      linkedin: 'https://linkedin.com/in/yashraj',
-                      instagram: 'https://instagram.com/yashraj'
+                      linkedin: 'https://www.linkedin.com/in/yashh26/',
+                      discord: 'yash_2602.'
                     },
                     borderColor: '#FF9FFC',
                     gradient: 'linear-gradient(210deg, rgba(255,159,252,0.4), rgba(5,5,5,0.9))',

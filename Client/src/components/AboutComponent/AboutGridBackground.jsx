@@ -138,9 +138,9 @@ const AboutGridBackground = ({ items, className = '', radius = 300, damping = 0.
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
                       </a>
                     )}
-                    {c.socials?.instagram && (
-                      <a href={c.socials.instagram} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="hover:text-[#FF9FFC] transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                    {c.socials?.discord && (
+                      <a href={`https://discord.com/users/${c.socials.discord}`} target="_blank" rel="noopener noreferrer" title={`Discord ID: ${c.socials.discord}`} onClick={(e) => e.stopPropagation()} className="hover:text-[#5865F2] transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 12h.01M15 12h.01M19.98 6.4c-1.3-.92-2.8-1.57-4.4-1.89a.12.12 0 0 0-.13.06 17.5 17.5 0 0 0-.62 1.25 18.52 18.52 0 0 0-5.66 0 17.5 17.5 0 0 0-.62-1.25.12.12 0 0 0-.13-.06c-1.6.32-3.1.97-4.4 1.89A.12.12 0 0 0 4 6.5C1.52 10.32.74 14.07 1.08 17.8a.13.13 0 0 0 .05.1c1.78 1.34 3.5 2.15 5.2 2.7a.12.12 0 0 0 .13-.04c.4-.55.77-1.13 1.1-1.74a.12.12 0 0 0-.07-.17 11.96 11.96 0 0 1-1.65-.8.12.12 0 0 1 .01-.2 8.35 8.35 0 0 0 1-.77.12.12 0 0 1 .13-.02c3.27 1.52 6.83 1.52 10.08 0a.12.12 0 0 1 .13.02 8.35 8.35 0 0 0 1 .77.12.12 0 0 1 .01.2 11.96 11.96 0 0 1-1.65.8.12.12 0 0 0-.07.17c.33.61.7 1.19 1.1 1.74a.12.12 0 0 0 .13.04c1.7-.55 3.42-1.36 5.2-2.7a.13.13 0 0 0 .05-.1c.34-3.73-.44-7.48-2.92-11.3a.12.12 0 0 0-.06-.05Z"/></svg>
                       </a>
                     )}
                   </div>

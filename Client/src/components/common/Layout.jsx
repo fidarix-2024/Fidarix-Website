@@ -4,12 +4,12 @@ import TextPressure from './TextPressure';
 
 export function SiteFooter({ isDark }) {
   return (
-    <footer className={`bg-black text-white w-full pt-20 pb-10 max-md:pt-8 max-md:pb-4 border-t ${isDark ? 'border-white/8' : 'border-white/8'
+    <footer className={`bg-black text-white w-full pt-20 pb-10 max-md:pt-6 max-md:pb-4 border-t ${isDark ? 'border-white/8' : 'border-white/8'
       }`}>
       <div className="w-[min(1180px,calc(100%-32px))] mx-auto">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-[1.2fr_repeat(3,1fr)] gap-8 md:gap-[60px]">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-[1.2fr_repeat(3,1fr)] gap-6 sm:gap-8 md:gap-[60px]">
           {/* Column 1: Logo and Pitch */}
-          <div className="flex flex-col gap-3 md:gap-4 col-span-1 sm:col-span-2 md:col-span-1">
+          <div className="flex flex-col gap-3 md:gap-4 col-span-2 sm:col-span-2 md:col-span-1">
             <Link className="inline-flex items-center gap-3" to="/" style={{ color: '#ffffff' }}>
               <LogoMark />
               <span className="flex flex-col line-height-1">
@@ -40,7 +40,7 @@ export function SiteFooter({ isDark }) {
           </div>
 
           {/* Column 4: Connect */}
-          <div className="flex flex-col gap-2 md:gap-4 col-span-1 sm:col-span-2 md:col-span-1">
+          <div className="flex flex-col gap-2 md:gap-4 col-span-2 sm:col-span-2 md:col-span-1">
             <h4 className="font-['Space_Grotesk'] text-[0.85rem] md:text-[1rem] font-extrabold text-white uppercase tracking-[0.12em] m-0 mb-1 md:mb-3 border-b border-white/8 pb-2 md:pb-3">Connect</h4>
             <div className="flex flex-row gap-5 items-center mt-1 md:mt-2">
               <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-primary transition-transform hover:-translate-y-1" aria-label="LinkedIn">
