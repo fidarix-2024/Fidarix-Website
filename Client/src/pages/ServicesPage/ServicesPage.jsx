@@ -76,6 +76,8 @@ function CircularGalleryShowcase({ showHeavy }) {
       <div className="relative z-10 flex-shrink-0">
         <OurSolutionsHeader />
       </div>
+      
+      {/* Desktop 3D Gallery */}
       <div className="hidden md:block relative w-full h-[600px] md:h-[700px] z-0">
         {showHeavy && (
           <CircularGallery
@@ -89,6 +91,22 @@ function CircularGalleryShowcase({ showHeavy }) {
             fontUrl="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&display=swap"
           />
         )}
+      </div>
+
+      {/* Mobile Grid View */}
+      <div className="w-[min(1180px,calc(100%-32px))] mx-auto md:hidden mt-8">
+        <div className="grid grid-cols-2 gap-4">
+          {galleryItems.map((item, i) => (
+            <div key={i} className="flex flex-col bg-white/[0.02] border border-white/5 rounded-2xl p-4 shadow-lg transition-transform hover:-translate-y-1">
+              <div className="w-full aspect-[4/3] sm:aspect-square rounded-xl overflow-hidden mb-4 bg-white/5">
+                <img src={item.image} alt={item.text} className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" loading="lazy" />
+              </div>
+              <h3 className="text-white text-center font-['Space_Grotesk'] text-sm sm:text-base font-bold leading-tight">
+                {item.text}
+              </h3>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

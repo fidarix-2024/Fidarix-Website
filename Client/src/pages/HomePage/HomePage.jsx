@@ -451,7 +451,7 @@ function HomePage() {
           </div>
 
           {/* 2x2 Feature Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-8">
             {[
               {
                 num: "01",
@@ -496,20 +496,20 @@ function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className={`group relative p-8 md:p-10 rounded-[24px] bg-white/[0.02] border border-white/5 backdrop-blur-sm overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl ${item.borderColor}`}
+                className={`group relative p-4 sm:p-6 md:p-10 rounded-[20px] md:rounded-[24px] bg-white/[0.02] border border-white/5 backdrop-blur-sm overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl ${item.borderColor}`}
               >
                 {/* Hover Gradient */}
                 <div className={`absolute top-0 left-0 w-full h-full bg-gradient-to-br ${item.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`} />
 
                 <div className="relative z-10">
-                  <div className="flex justify-between items-start mb-8">
-                    <span className="text-white/40 uppercase tracking-widest text-xs font-bold px-3 py-1 rounded-full border border-white/10 bg-white/5">{item.label}</span>
-                    <div className={`text-white/20 font-['Space_Grotesk'] text-4xl font-black tracking-tighter transition-colors duration-500 ${item.numColor}`}>
+                  <div className="flex justify-between items-start mb-4 md:mb-8">
+                    <span className="text-white/40 uppercase tracking-widest text-[8px] sm:text-xs font-bold px-2 sm:px-3 py-1 rounded-full border border-white/10 bg-white/5">{item.label}</span>
+                    <div className={`text-white/20 font-['Space_Grotesk'] text-xl sm:text-2xl md:text-4xl font-black tracking-tighter transition-colors duration-500 ${item.numColor}`}>
                       {item.num}
                     </div>
                   </div>
-                  <h3 className="text-2xl md:text-3xl font-bold text-white mb-3 font-['Space_Grotesk'] tracking-tight">{item.title}</h3>
-                  <p className="text-white/60 text-base leading-relaxed max-w-[90%]">
+                  <h3 className="text-lg sm:text-xl md:text-3xl font-bold text-white mb-2 md:mb-3 font-['Space_Grotesk'] tracking-tight">{item.title}</h3>
+                  <p className="text-white/60 text-xs sm:text-sm md:text-base leading-relaxed max-w-[100%] md:max-w-[90%]">
                     {item.desc}
                   </p>
                 </div>
@@ -751,7 +751,7 @@ function HomePage() {
 
           {/* Mobile Cards */}
           {/* Mobile Cards */}
-          <div className="flex flex-col gap-6 md:hidden w-full px-4 relative z-20 mt-10">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 md:hidden w-full px-2 relative z-20 mt-10">
             {[
               {
                 name: "Rajan Shrivastav",
@@ -778,15 +778,15 @@ function HomePage() {
                 image: '/images/HomePage/ravi.jpeg'
               }
             ].map((t, i) => (
-              <div key={i} className={`w-full bg-gradient-to-br from-[#1c0836] to-[#0a001a] border rounded-[24px] p-6 shadow-[0_20px_40px_rgba(0,0,0,0.5),0_0_40px_rgba(124,58,237,0.15)] animate-float ${i === 2 ? 'border-t-[4px] border-[#9b4dff] border-l-[#3e1b73] border-r-[#3e1b73] border-b-[#3e1b73] shadow-[0_-5px_30px_rgba(155,77,255,0.3)]' : 'border-[#3e1b73]'}`} style={{ animationDelay: `${i * 1.5}s` }}>
-                <div className="flex justify-between items-start mb-4">
+              <div key={i} className={`w-full bg-gradient-to-br from-[#1c0836] to-[#0a001a] border rounded-[16px] sm:rounded-[24px] p-3 sm:p-6 shadow-[0_20px_40px_rgba(0,0,0,0.5),0_0_40px_rgba(124,58,237,0.15)] animate-float ${i === 2 ? 'border-t-[4px] border-[#9b4dff] border-l-[#3e1b73] border-r-[#3e1b73] border-b-[#3e1b73] shadow-[0_-5px_30px_rgba(155,77,255,0.3)]' : 'border-[#3e1b73]'}`} style={{ animationDelay: `${i * 1.5}s` }}>
+                <div className="flex flex-col sm:flex-row justify-between items-start mb-3 sm:mb-4 gap-2 sm:gap-0">
                   <div>
-                    <h4 className="text-white font-bold text-lg">{t.name}</h4>
-                    <p className="text-white/50 text-sm mt-0.5">{t.role}</p>
+                    <h4 className="text-white font-bold text-xs sm:text-lg">{t.name}</h4>
+                    <p className="text-white/50 text-[9px] sm:text-sm mt-0.5 leading-[1.2]">{t.role}</p>
                   </div>
-                  <img src={t.image} alt={t.name} loading="lazy" className="w-12 h-12 rounded-full border border-white/20 object-cover" />
+                  <img src={t.image} alt={t.name} loading="lazy" className="w-8 h-8 sm:w-12 sm:h-12 rounded-full border border-white/20 object-cover" />
                 </div>
-                <p className="text-white/80 leading-relaxed text-[0.95rem]">"{t.quote}"</p>
+                <p className="text-white/80 leading-snug sm:leading-relaxed text-[10px] sm:text-[0.95rem]">"{t.quote}"</p>
               </div>
             ))}
           </div>
