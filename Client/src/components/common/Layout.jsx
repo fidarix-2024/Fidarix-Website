@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import SiteHeader, { LogoMark } from './Navbar';
 import TextPressure from './TextPressure';
+import { detailedServices } from '../../data/site';
 
 function SiteFooter({ isDark }) {
   return (
@@ -33,10 +34,11 @@ function SiteFooter({ isDark }) {
           {/* Column 3: Services */}
           <div className="flex flex-col gap-2 md:gap-4">
             <h4 className="font-['Space_Grotesk'] text-[0.85rem] md:text-[1rem] font-extrabold text-white uppercase tracking-[0.12em] m-0 mb-1 md:mb-3 border-b border-white/8 pb-2 md:pb-3">Services</h4>
-            <Link to="/services" className="text-white/60 text-[0.9rem] md:text-[1.1rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">Web Development</Link>
-            <Link to="/services" className="text-white/60 text-[0.9rem] md:text-[1.1rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">Web Design</Link>
-            <Link to="/services" className="text-white/60 text-[0.9rem] md:text-[1.1rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">SEO Optimization</Link>
-            <Link to="/services" className="text-white/60 text-[0.9rem] md:text-[1.1rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">Branding</Link>
+            {detailedServices.map((service, index) => (
+              <Link key={index} to="/services" className="text-white/60 text-[0.9rem] md:text-[1.1rem] font-semibold transition-all hover:text-primary hover:translate-x-[3px] no-underline inline-block">
+                {service.title}
+              </Link>
+            ))}
           </div>
 
           {/* Column 4: Connect */}
