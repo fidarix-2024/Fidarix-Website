@@ -96,7 +96,7 @@ export const processSteps = [
 
 export const testimonials = [
   {
-    quote: "Fidarix completely transformed how we handle admissions. Our Lateral Entry engineering coaching portal is now incredibly fast, responsive, and handles test series data flawlessly. Our student inquiries grew by 45% within a month of launch.",
+    quote: "Fidarix completely transformed our digital presence. They built a stunning, professional website that perfectly represents our institute and has significantly boosted our online visibility. Our student inquiries grew by 45% within a month of launch.",
     name: "Ranjan Shrivastav",
     role: "Director, Mission Engineering",
     image: "/images/HomePage/ranjan.png"

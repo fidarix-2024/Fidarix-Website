@@ -756,7 +756,7 @@ function HomePage() {
               {
                 name: "Rajan Shrivastav",
                 role: "Director, Mission Engineering",
-                quote: "Fidarix completely transformed how we handle admissions. Our portal is now incredibly fast and responsive.",
+                quote: "Fidarix completely transformed our digital presence. They built a stunning website that perfectly represents our institute and boosted our visibility.",
                 image: '/images/HomePage/ranjan.png'
               },
               {
@@ -804,7 +804,7 @@ function HomePage() {
                 <img src="/images/HomePage/ranjan.png" alt="Rajan Shrivastav" loading="lazy" className="w-12 h-12 rounded-full border border-white/20 object-cover" />
               </div>
               <p className="text-white/80 leading-relaxed text-[0.95rem]">
-                "Fidarix completely transformed how we handle admissions. Our portal is now incredibly fast and responsive."
+                "Fidarix completely transformed our digital presence. They built a stunning website that perfectly represents our institute and boosted our visibility."
               </p>
             </div>
 
