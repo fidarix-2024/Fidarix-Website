@@ -13,49 +13,31 @@ export const homeStats = [
   { value: '24h', label: 'average response time' },
 ];
 
-export const services = [
-  {
-    title: 'Web Development',
-    subtitle: 'High-conversion sites built on a modern stack.',
-    price: 'From $1,500',
-    timeline: '2-4 weeks',
-    features: ['Marketing sites', 'Landing pages', 'Custom React builds'],
-  },
-  {
-    title: 'UI/UX Design',
-    subtitle: 'Clear information architecture and bold visual systems.',
-    price: 'From $900',
-    timeline: '1-2 weeks',
-    features: ['Wireframes', 'Design systems', 'Prototype handoff'],
-  },
-  {
-    title: 'SEO Optimization',
-    subtitle: 'Technical foundations that help pages rank and convert.',
-    price: 'From $600',
-    timeline: '1 week',
-    features: ['Keyword mapping', 'On-page SEO', 'Performance fixes'],
-  },
-  {
-    title: 'Branding',
-    subtitle: 'Identity systems that feel premium, memorable, and consistent.',
-    price: 'From $800',
-    timeline: '1-2 weeks',
-    features: ['Logo polish', 'Color systems', 'Brand guidelines'],
-  },
-  {
-    title: 'Website Maintenance',
-    subtitle: 'Ongoing care for updates, improvements, and uptime.',
-    price: 'From $250/mo',
-    timeline: 'Monthly',
-    features: ['Updates', 'Fixes', 'Backup support'],
-  },
-  {
-    title: 'Custom Web Apps',
-    subtitle: 'Operational tools and dashboards tailored to your workflows.',
-    price: 'Custom quote',
-    timeline: '4-8 weeks',
-    features: ['Dashboards', 'Automation', 'API integrations'],
-  },
+export const detailedServices = [
+  { title: "Web Development", description: "Business websites, corporate websites, landing pages, and custom website solutions.", number: "01", image: "/images/services/1.jpg" },
+  { title: "Web Design", description: "Modern UI/UX design, responsive layouts, and user-friendly interfaces.", number: "02", image: "/images/services/2.jpg" },
+  { title: "Custom Web Applications", description: "Booking systems, dashboards, portals, management systems, and custom business tools.", number: "03", image: "/images/services/3.jpg" },
+  { title: "E-Commerce Development", description: "Online stores, payment integration, inventory management, and custom ecommerce solutions.", number: "04", image: "/images/services/4.jpg" },
+  { title: "SEO Optimization", description: "Technical SEO, speed optimization, analytics setup, and search visibility improvements.", number: "05", image: "/images/services/5.jpg" },
+  { title: "Product Development", description: "MVPs, SaaS products, startup platforms, and scalable web solutions.", number: "06", image: "/images/services/6.jpg" },
+  { title: "Maintenance & Support", description: "Website updates, security monitoring, backups, bug fixes, and ongoing support.", number: "07", image: "/images/services/7.jpg" },
+];
+
+export const optionalAddOns = [
+  { service: "Additional Page", price: "₹300–₹700" },
+  { service: "Blog Upload", price: "₹100/post" },
+  { service: "Google Business Profile Setup", price: "₹999" },
+  { service: "Hosting Setup", price: "₹500" },
+  { service: "Domain Setup", price: "₹300" },
+  { service: "Monthly Maintenance", price: "₹499–₹1,499/month" },
+  { service: "E-Commerce Product Upload", price: "₹25–₹50/product" },
+  { service: "Payment Gateway Integration", price: "₹999–₹1,999" },
+  { service: "WhatsApp Integration", price: "₹299–₹799" },
+  { service: "Contact Form Integration", price: "₹299–₹699" },
+  { service: "Analytics Setup (GA4 & Search Console)", price: "₹499" },
+  { service: "Speed Optimization", price: "₹999–₹2,499" },
+  { service: "Website Migration", price: "₹999–₹2,999" },
+  { service: "Security Setup", price: "₹499–₹1,499" },
 ];
 
 export const projects = [
@@ -180,16 +162,7 @@ export const pricingPlans = [
   },
 ];
 
-export const optionalAddOns = [
-  { service: 'Additional Page', price: '₹500–₹1,000' },
-  { service: 'Blog Upload (per post)', price: '₹200' },
-  { service: 'Logo Design', price: '₹2,000–₹5,000' },
-  { service: 'Google Business Profile Setup', price: '₹1,500' },
-  { service: 'Hosting Setup', price: '₹1,000' },
-  { service: 'Domain Setup', price: '₹500' },
-  { service: 'Monthly Maintenance', price: '₹999–₹2,999/month' },
-  { service: 'E-commerce Products Upload', price: '₹50–₹100/product' },
-];
+// Optional AddOns are now moved to the top of the file
 
 export const faqs = [
   {

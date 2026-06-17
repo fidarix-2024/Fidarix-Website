@@ -1,15 +1,15 @@
 import { useRef, useEffect, useState } from 'react';
 import { motion, useMotionValue, useSpring, useTransform, AnimatePresence, animate } from 'framer-motion';
 import { ButtonLink, SectionWise } from '../../components/common/Layout';
+import { detailedServices } from '../../data/site';
+import { ArrowRight, Zap, Target, Code, Layout as LayoutIcon, CheckCircle, Rocket, Lightbulb, Hand, Grab } from 'lucide-react';
 import { ServicesScanner } from '../../components/ServicesComponent/ServicesScanner';
-import CircularGallery from '../../components/CircularGallery/CircularGallery';
 import RippleGrid from '../../components/common/RippleGrid';
 import BlurText from '../../components/common/BlurText';
 import FlowingMenu from '../../components/common/FlowingMenu';
 import SplitText from '../../components/common/SplitText';
 import GradientBlinds from '../../components/common/GradientBlinds';
 import SEO from '../../components/common/SEO';
-import { Zap, Target, Code, Layout as LayoutIcon, CheckCircle, Rocket, Lightbulb, Hand, Grab } from 'lucide-react';
 
 
 // ----------------------------------------------------
@@ -61,13 +61,14 @@ const TheChallengeSection = () => {
 // ----------------------------------------------------
 // OUR SOLUTIONS COMPONENTS & SLIDES
 // ----------------------------------------------------
+
 const galleryItems = [
-  { image: '/images/services/uiux-architecture.png', text: 'UI/UX Architecture' },
-  { image: '/images/services/frontend-engineering.png', text: 'Front-End Engineering' },
-  { image: '/images/services/digital-products.png', text: 'Digital Products' },
-  { image: '/images/services/ecommerce-experiences.png', text: 'E-Commerce Experiences' },
-  { image: '/images/services/search-visibility.png', text: 'Search Visibility' },
-  { image: '/images/services/brand-identity.png', text: 'Brand Identity' },
+  { image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1600&q=80', text: 'UI/UX Architecture' },
+  { image: 'https://images.unsplash.com/photo-1634152962476-4b8a00e1915c?auto=format&fit=crop&w=1600&q=80', text: 'Front-End Engineering' },
+  { image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1600&q=80', text: 'Digital Products' },
+  { image: 'https://images.unsplash.com/photo-1557683316-973673baf926?auto=format&fit=crop&w=1600&q=80', text: 'E-Commerce Experiences' },
+  { image: 'https://images.unsplash.com/photo-1614729939124-032f0b56c9ce?auto=format&fit=crop&w=1600&q=80', text: 'Search Visibility' },
+  { image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1600&q=80', text: 'Brand Identity' },
 ];
 
 function CircularGalleryShowcase({ showHeavy }) {
@@ -541,6 +542,82 @@ const CTASection = () => {
 };
 
 // ----------------------------------------------------
+// CORE CAPABILITIES SECTION (BENTO GRID)
+// ----------------------------------------------------
+const DetailedServicesSection = () => {
+  // Refined Bento grid layout classes to better fit standard image aspect ratios
+  const getBentoClasses = (index) => {
+    switch(index) {
+      case 0: return 'md:col-span-2 md:row-span-1 min-h-[320px] md:min-h-[380px]'; // Wide Landscape
+      case 1: return 'md:col-span-1 md:row-span-1 min-h-[320px] md:min-h-[380px]'; // Square
+      case 2: return 'md:col-span-1 md:row-span-1 min-h-[320px] md:min-h-[380px]'; // Square
+      case 3: return 'md:col-span-2 md:row-span-1 min-h-[320px] md:min-h-[380px]'; // Wide Landscape
+      case 4: return 'md:col-span-2 md:row-span-1 min-h-[320px] md:min-h-[380px]'; // Wide Landscape
+      case 5: return 'md:col-span-2 md:row-span-1 min-h-[320px] md:min-h-[380px]'; // Wide Landscape
+      case 6: return 'md:col-span-2 md:row-span-1 min-h-[320px] md:min-h-[380px]'; // Wide Landscape
+      default: return 'md:col-span-1 md:row-span-1 min-h-[320px]';
+    }
+  };
+
+  return (
+    <SectionWise bg="bg-[#020106]" style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '100px', paddingBottom: '120px' }}>
+      <div className="max-w-4xl mx-auto text-center mb-16 px-6">
+        <SplitText
+          text="Core Capabilities."
+          className="text-[clamp(2.5rem,5vw,4.5rem)] font-extrabold text-white leading-[1.1] uppercase tracking-tight font-['Space_Grotesk']"
+          delay={40}
+          duration={0.7}
+          ease="power4.out"
+          splitType="chars"
+          from={{ opacity: 0, y: 40 }}
+          to={{ opacity: 1, y: 0 }}
+          tag="h2"
+          textAlign="center"
+        />
+        <p className="mt-6 text-[1.15rem] text-white/70 leading-[1.7] max-w-2xl mx-auto font-medium">
+          Aesthetic precision backed by robust engineering. We build digital assets that demand attention.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-4 auto-rows-auto gap-4 max-w-[1400px] mx-auto px-6">
+        {detailedServices.map((srv, i) => (
+          <div key={i} className={`group rounded-[28px] bg-black border border-white/10 hover:border-[#5227FF]/60 transition-all duration-700 relative overflow-hidden flex flex-col shadow-[0_15px_40px_rgba(0,0,0,0.6)] ${getBentoClasses(i)}`}>
+            
+            {/* Background Image Layer */}
+            <div className="absolute inset-0 z-0 bg-black">
+              <img src={srv.image} alt={srv.title} className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.05]" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent group-hover:from-black/80 transition-all duration-700" />
+            </div>
+
+            {/* Content Layer */}
+            <div className="relative z-10 p-6 md:p-8 flex flex-col h-full justify-between pointer-events-none">
+              <div className="flex justify-between items-start w-full">
+                <div className="bg-white/10 backdrop-blur-md border border-white/10 text-white/80 font-bold text-sm px-4 py-1.5 rounded-full font-['Space_Grotesk'] tracking-wider group-hover:bg-[#5227FF]/90 group-hover:text-white group-hover:border-[#5227FF] transition-all duration-500">
+                  {srv.number}
+                </div>
+                {/* Subtle top-right icon or arrow can go here */}
+                <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 ease-out bg-white/5 backdrop-blur-sm">
+                  <ArrowRight className="w-4 h-4 text-white" />
+                </div>
+              </div>
+
+              <div className="mt-auto transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 ease-out">
+                <h3 className={`font-extrabold text-white mb-2 font-['Space_Grotesk'] group-hover:text-white transition-colors drop-shadow-xl tracking-tight leading-[1.1] ${i === 0 ? 'text-[2.5rem] md:text-[3.5rem]' : 'text-[1.8rem] md:text-[2.2rem]'}`}>
+                  {srv.title}
+                </h3>
+                <p className="text-white/70 leading-relaxed text-[1rem] drop-shadow-md font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-100 max-w-[90%]">
+                  {srv.description}
+                </p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </SectionWise>
+  );
+};
+
+// ----------------------------------------------------
 // SERVICES PAGE RENDER
 // ----------------------------------------------------
 function ServicesPage() {
@@ -668,11 +745,10 @@ function ServicesPage() {
 
       {/* 2. THE CHALLENGE (removed per design request) */}
 
-      {/* 3. OUR SOLUTIONS */}
-      <CircularGalleryShowcase showHeavy={showHeavyComponents} />
+      {/* 2. CORE CAPABILITIES (BENTO GRID) */}
+      <DetailedServicesSection />
 
-
-      {/* 5. WHAT YOU RECEIVE */}
+      {/* 3. WHAT YOU RECEIVE */}
       <WhatYouReceiveSection />
 
       {/* 6. OUR METHODOLOGY */}
