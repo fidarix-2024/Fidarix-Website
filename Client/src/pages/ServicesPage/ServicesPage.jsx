@@ -365,11 +365,12 @@ const WhatYouReceiveSection = () => {
 
       <div className="w-full mt-12" style={{ height: '500px', position: 'relative' }}>
         <FlowingMenu
+          speed={2}
           items={[
-            { link: '#', text: 'Design Systems', image: '/images/services/uiux-architecture.png' },
-            { link: '#', text: 'Architecture', image: '/images/services/frontend-engineering.png' },
-            { link: '#', text: 'Visibility', image: '/images/services/search-visibility.png' },
-            { link: '#', text: 'Autonomy', image: '/images/services/digital-products.png' }
+            { link: '#', text: 'Design Systems', content: 'Scalable Component Libraries' },
+            { link: '#', text: 'Architecture', content: 'Modern Tech Stack' },
+            { link: '#', text: 'Visibility', content: 'Technical SEO Optimization' },
+            { link: '#', text: 'Autonomy', content: 'Full Digital Independence' }
           ]}
         />
       </div>
@@ -382,8 +383,8 @@ const WhatYouReceiveSection = () => {
 // ----------------------------------------------------
 const HowWeWorkSection = () => {
   return (
-    <SectionWise bg="bg-[#020106]" style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', padding: 0 }}>
-      <div className="flex flex-col lg:flex-row w-full min-h-[80vh]">
+    <section className="bg-[#020106] w-full border-y border-white/8 overflow-hidden">
+      <div className="w-full max-w-[1536px] mx-auto flex flex-col lg:flex-row min-h-[80vh]">
 
         {/* Left Column (Sticky) */}
         <div className="lg:w-[40%] p-10 lg:px-12 lg:py-20 border-b lg:border-b-0 lg:border-r border-white/10 flex flex-col justify-center items-center text-center lg:sticky lg:top-0 lg:h-screen">
@@ -474,7 +475,7 @@ const HowWeWorkSection = () => {
 
         </div>
       </div>
-    </SectionWise>
+    </section>
   );
 };
 
@@ -587,8 +588,8 @@ function ServicesPage() {
           {showHeavyComponents && (
             <ServicesScanner
               sensitivity={0.65}
-              linesColor="#5227FF"
-              scanColor="#9b4dff"
+              linesColor="#a855f7"
+              scanColor="#c084fc"
               scanOpacity={0.9}
               gridScale={0.13}
               lineStyle="solid"
