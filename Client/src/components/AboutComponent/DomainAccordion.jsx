@@ -1,13 +1,13 @@
 import React from 'react';
-import { Code, PenTool, Sparkles, TrendingUp, Rocket } from 'lucide-react';
+import { BookOpen, Target, Sparkles, Compass, Eye } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const domains = [
-  { id: 1, title: 'Web Development', desc: 'Lightning-fast, highly scalable React architectures and robust code foundations.', icon: Code, img: '/images/AboutPage/domain_web_development.png' },
-  { id: 2, title: 'Web Design', desc: 'Award-winning, glassmorphic interfaces that convert visitors into clients.', icon: PenTool, img: '/images/AboutPage/domain_web_design.png' },
-  { id: 3, title: 'Branding', desc: 'Premium, luxury positioning and identity for modern digital brands.', icon: Sparkles, img: '/images/AboutPage/domain_branding.png' },
-  { id: 4, title: 'SEO Optimization', desc: 'Data-driven visibility strategies that dominate search engine rankings.', icon: TrendingUp, img: '/images/AboutPage/domain_seo.png' },
-  { id: 5, title: 'Product Building', desc: 'End-to-end product strategy, prototyping, and execution for startups.', icon: Rocket, img: '/images/AboutPage/domain_product_building.png' }
+  { id: 1, title: 'Our Story', desc: 'Founded with a passion for technology and digital innovation, Fidarix helps businesses establish a strong online presence through modern, reliable, and growth-focused solutions.', icon: BookOpen, img: '/images/AboutPage/1.jpg' },
+  { id: 2, title: 'Our Mission', desc: 'To empower businesses with high-quality digital experiences that drive growth, improve user engagement, and create long-term value.', icon: Target, img: 'https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=1600&q=80' },
+  { id: 3, title: 'About Fidarix', desc: 'Fidarix is a technology-focused digital agency dedicated to building modern websites, custom web applications, and scalable digital products. We combine thoughtful design, clean development, and strategic thinking to create solutions that not only look exceptional but also deliver measurable results. Our goal is simple: help businesses grow through reliable technology and impactful digital experiences.', icon: Sparkles, img: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1600&q=80' },
+  { id: 4, title: 'Our Approach', desc: 'Every project begins with understanding our clients\' goals. Through careful planning, modern design, and quality development, we create solutions tailored to each business\'s unique needs.', icon: Compass, img: 'https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=1600&q=80' },
+  { id: 5, title: 'Our Vision', desc: 'To become a trusted digital partner for businesses seeking innovative, scalable, and future-ready digital solutions.', icon: Eye, img: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80' }
 ];
 
 export default function DomainAccordion() {
@@ -27,10 +27,10 @@ export default function DomainAccordion() {
         >
           
           <h2 className="text-[clamp(3rem,6vw,5rem)] font-extrabold tracking-tighter leading-[1] mb-6 font-['Space_Grotesk'] text-white">
-            Our <span className="text-white">Expertise.</span>
+            Why We <span className="text-white">Build.</span>
           </h2>
-          <p className="text-white/60 text-lg md:text-xl max-w-[600px] mx-auto font-medium">
-            We don't just build websites. We craft comprehensive digital ecosystems designed to elevate industry leaders.
+          <p className="text-white/60 text-lg md:text-xl max-w-[700px] mx-auto font-medium">
+            More than a digital agency, we're a technology partner focused on creating meaningful solutions that help businesses succeed online.
           </p>
         </motion.div>
 
@@ -57,7 +57,8 @@ export default function DomainAccordion() {
                       </div>
                       <h3 className="text-sm font-extrabold text-white font-['Space_Grotesk'] tracking-tight">{domain.title}</h3>
                     </div>
-                    <p className="text-white/70 text-xs leading-[1.4] line-clamp-2">{domain.desc}</p>
+                    {/* Hide desc on small cards or line-clamp it */}
+                    <p className="text-white/70 text-xs leading-[1.4] line-clamp-3">{domain.desc}</p>
                   </div>
                 </div>
               );
@@ -84,12 +85,12 @@ export default function DomainAccordion() {
                     </div>
                     <h3 className="text-sm font-extrabold text-white font-['Space_Grotesk'] tracking-tight">{domain.title}</h3>
                   </div>
-                  <p className="text-white/70 text-xs leading-[1.4]">{domain.desc}</p>
+                  <p className="text-white/70 text-xs leading-[1.4] line-clamp-3">{domain.desc}</p>
                 </div>
               </div>
             );
           })()}
-          {/* Desktop accordion (unchanged) */}
+          {/* Desktop accordion */}
           {domains.map((domain, index) => {
             const Icon = domain.icon;
             return (
@@ -99,7 +100,7 @@ export default function DomainAccordion() {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1, duration: 0.6 }}
                 key={domain.id}
-                className="relative group flex-1 md:hover:grow-[4] hover:grow-[2] transition-all duration-[800ms] ease-[cubic-bezier(0.25,1,0.5,1)] overflow-hidden rounded-[2rem] cursor-pointer border border-white/10 shadow-[0_0_20px_rgba(0,0,0,0.5)] hover:shadow-[0_0_40px_rgba(82,39,255,0.2)] hidden md:flex"
+                className={`relative group flex-1 ${index === 2 ? 'md:flex-[1.5]' : ''} md:hover:grow-[4] hover:grow-[2] transition-all duration-[800ms] ease-[cubic-bezier(0.25,1,0.5,1)] overflow-hidden rounded-[2rem] cursor-pointer border border-white/10 shadow-[0_0_20px_rgba(0,0,0,0.5)] hover:shadow-[0_0_40px_rgba(82,39,255,0.2)] hidden md:flex`}
               >
                 {/* Background Image */}
                 <div 
@@ -112,7 +113,7 @@ export default function DomainAccordion() {
                 <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-transparent opacity-100 md:opacity-0 transition-opacity duration-500"></div>
 
                 {/* Content Container */}
-                <div className="absolute inset-0 p-6 md:p-10 flex flex-col justify-end overflow-hidden">
+                <div className="absolute inset-0 p-6 flex flex-col justify-end overflow-hidden">
                   
                   {/* Icon & Title Row */}
                   <div className="flex items-center gap-4 mb-4 transform md:-translate-x-4 md:group-hover:translate-x-0 transition-transform duration-700 ease-out">
@@ -120,14 +121,14 @@ export default function DomainAccordion() {
                       <Icon className="w-5 h-5 text-white" />
                     </div>
                     {/* Horizontal Title - Visible on mobile always, on desktop only when hovered */}
-                    <h3 className="text-2xl md:text-4xl font-extrabold text-white whitespace-nowrap opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 delay-100 font-['Space_Grotesk'] tracking-tight z-20">
+                    <h3 className="text-xl md:text-3xl font-extrabold text-white whitespace-nowrap opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 delay-100 font-['Space_Grotesk'] tracking-tight z-20">
                       {domain.title}
                     </h3>
                   </div>
 
                   {/* Description text - Fades in and slides up on hover */}
                   <div className="h-auto md:h-0 md:group-hover:h-auto overflow-hidden transition-all duration-700">
-                    <p className="text-white/80 text-base md:text-lg leading-[1.6] max-w-[450px] transform md:translate-y-8 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100 transition-all duration-700 delay-200 md:pl-16 relative z-20">
+                    <p className={`text-white/80 ${index === 2 ? 'text-xs md:text-sm' : 'text-sm'} leading-[1.6] max-w-[500px] transform md:translate-y-8 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100 transition-all duration-700 delay-200 relative z-20`}>
                       {domain.desc}
                     </p>
                   </div>
@@ -137,7 +138,7 @@ export default function DomainAccordion() {
                 {/* Vertical Title (Visible on desktop when NOT hovered) */}
                 <div className="absolute inset-0 hidden md:flex items-end justify-center pb-10 opacity-100 group-hover:opacity-0 transition-opacity duration-300 pointer-events-none z-10">
                   <h3 
-                    className="text-2xl font-bold text-white/50 whitespace-nowrap tracking-[0.2em] uppercase font-['Space_Grotesk']"
+                    className="text-xl md:text-2xl font-bold text-white/50 whitespace-nowrap tracking-[0.2em] uppercase font-['Space_Grotesk']"
                     style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
                   >
                     {domain.title}
