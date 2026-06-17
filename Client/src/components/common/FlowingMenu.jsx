@@ -30,7 +30,7 @@ function FlowingMenu({
   );
 }
 
-function MenuItem({ link, text, image, speed, textColor, marqueeBgColor, marqueeTextColor, borderColor, isFirst }) {
+function MenuItem({ link, text, image, content, speed, textColor, marqueeBgColor, marqueeTextColor, borderColor, isFirst }) {
   const itemRef = useRef(null);
   const marqueeRef = useRef(null);
   const marqueeInnerRef = useRef(null);
@@ -60,7 +60,7 @@ function MenuItem({ link, text, image, speed, textColor, marqueeBgColor, marquee
     calculateRepetitions();
     window.addEventListener('resize', calculateRepetitions);
     return () => window.removeEventListener('resize', calculateRepetitions);
-  }, [text, image]);
+  }, [text, image, content]);
 
   useEffect(() => {
     const setupMarquee = () => {
@@ -74,12 +74,16 @@ function MenuItem({ link, text, image, speed, textColor, marqueeBgColor, marquee
         animationRef.current.kill();
       }
 
-      animationRef.current = gsap.to(marqueeInnerRef.current, {
-        x: -contentWidth,
-        duration: speed,
-        ease: 'none',
-        repeat: -1
-      });
+      animationRef.current = gsap.fromTo(marqueeInnerRef.current, 
+        { x: 0 },
+        {
+          x: -contentWidth,
+          duration: speed,
+          ease: 'none',
+          repeat: -1,
+          overwrite: "auto"
+        }
+      );
     };
 
     const timer = setTimeout(setupMarquee, 50);
@@ -89,7 +93,7 @@ function MenuItem({ link, text, image, speed, textColor, marqueeBgColor, marquee
         animationRef.current.kill();
       }
     };
-  }, [text, image, repetitions, speed]);
+  }, [text, image, content, repetitions, speed]);
 
   const handleMouseEnter = ev => {
     if (!itemRef.current || !marqueeRef.current || !marqueeInnerRef.current) return;
@@ -141,10 +145,22 @@ function MenuItem({ link, text, image, speed, textColor, marqueeBgColor, marquee
           {[...Array(repetitions)].map((_, idx) => (
             <div className="marquee-part flex items-center flex-shrink-0" key={idx} style={{ color: marqueeTextColor }}>
               <span className="whitespace-nowrap uppercase font-extrabold text-[clamp(1.5rem,2.5vw,2.5rem)] leading-[1] px-[2vw] font-['Space_Grotesk'] tracking-tight">{text}</span>
-              <div
-                className="w-[400px] md:w-[600px] h-[10vh] my-[2em] mx-[1vw] rounded-[50px] bg-cover bg-center border border-black/10"
-                style={{ backgroundImage: `url(${image})` }}
-              />
+              {image && (
+                <div
+                  className="w-[400px] md:w-[600px] h-[10vh] my-[2em] mx-[1vw] rounded-[50px] bg-cover bg-center border border-black/10"
+                  style={{ backgroundImage: `url(${image})` }}
+                />
+              )}
+              {content && (
+                <div className="h-[8vh] my-[2.5em] mx-[1vw] px-10 min-w-[300px] rounded-[50px] border border-white/10 flex items-center justify-center bg-black">
+                  <span className="whitespace-nowrap uppercase font-bold text-[clamp(1rem,1.5vw,1.5rem)] leading-[1] font-['Space_Grotesk'] tracking-[0.1em] text-white opacity-90">
+                    {content}
+                  </span>
+                </div>
+              )}
+              {(!image && !content) && (
+                <span className="text-[clamp(1.5rem,2.5vw,2.5rem)] leading-[1] px-[2vw] opacity-30">✳</span>
+              )}
             </div>
           ))}
         </div>

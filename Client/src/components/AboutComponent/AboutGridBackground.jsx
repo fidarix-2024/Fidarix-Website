@@ -102,7 +102,7 @@ const AboutGridBackground = ({ items, className = '', radius = 300, damping = 0.
           key={i}
           onMouseMove={handleCardMove}
           onClick={() => handleCardClick(c.url, i)}
-          className="group relative flex flex-col w-[340px] h-[520px] rounded-[24px] bg-transparent cursor-pointer [perspective:1500px]"
+          className="group relative flex flex-col w-full h-full rounded-[24px] bg-transparent cursor-pointer [perspective:1500px]"
           style={{
             '--spotlight-color': 'rgba(255,255,255,0.3)'
           }}
@@ -138,9 +138,9 @@ const AboutGridBackground = ({ items, className = '', radius = 300, damping = 0.
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
                       </a>
                     )}
-                    {c.socials?.instagram && (
-                      <a href={c.socials.instagram} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="hover:text-[#FF9FFC] transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                    {c.socials?.discord && (
+                      <a href={c.socials.discord.startsWith('http') ? c.socials.discord : `https://discordapp.com/users/${c.socials.discord}`} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="hover:text-[#5865F2] transition-colors" title={c.socials.discord}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.09.09 0 0 0-.07.03c-.18.33-.39.76-.53 1.09a16.09 16.09 0 0 0-4.8 0c-.14-.33-.35-.76-.53-1.09a.09.09 0 0 0-.07-.03c-1.5.26-2.93.71-4.27 1.33a.08.08 0 0 0-.05.05C2.79 11.5 1.41 17.28 2.03 23c.01.03.03.05.06.07 1.77 1.3 3.48 2.08 5.16 2.59a.1.1 0 0 0 .11-.04c.41-.56.78-1.15 1.11-1.77a.09.09 0 0 0-.04-.12c-.57-.22-1.12-.48-1.63-.78a.09.09 0 0 1-.01-.15c.12-.09.23-.19.34-.29a.09.09 0 0 1 .09-.02c3.4 1.55 7.07 1.55 10.46 0a.09.09 0 0 1 .09.02c.11.1.22.2.34.29a.09.09 0 0 1-.01.15c-.52.3-1.07.56-1.64.78a.09.09 0 0 0-.04.12c.33.62.7 1.21 1.11 1.77a.1.1 0 0 0 .11.04c1.68-.51 3.39-1.29 5.16-2.59a.09.09 0 0 0 .06-.07c.72-6.52-.96-12.2-2.88-17.62a.08.08 0 0 0-.05-.05zm-9.02 11.2c-.93 0-1.68-.83-1.68-1.85s.74-1.85 1.68-1.85c.95 0 1.7.83 1.68 1.85 0 1.02-.73 1.85-1.68 1.85zm5.5 0c-.93 0-1.68-.83-1.68-1.85s.74-1.85 1.68-1.85c.95 0 1.7.83 1.68 1.85 0 1.02-.74 1.85-1.68 1.85z"/></svg>
                       </a>
                     )}
                   </div>

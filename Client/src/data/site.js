@@ -296,15 +296,15 @@ export const blogPosts = [
 ];
 
 export const contactLinks = [
-  { label: 'hello@fidarix.com', href: 'mailto:hello@fidarix.com' },
-  { label: '+1 (555) 014-9900', href: 'https://wa.me/15550149900' },
+  { label: 'info@fidarix.com', href: 'mailto:info@fidarix.com' },
+  { label: '+91 87961 98381', href: 'https://wa.me/918796198381' },
   { label: 'Instagram', href: 'https://instagram.com' },
-  { label: 'LinkedIn', href: 'https://linkedin.com' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/company/fidarix/?viewAsMember=true' },
 ];
 
 export const socialLinks = [
   { label: 'Instagram', href: 'https://instagram.com' },
-  { label: 'LinkedIn', href: 'https://linkedin.com' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/company/fidarix/?viewAsMember=true' },
   { label: 'X', href: 'https://x.com' },
   { label: 'YouTube', href: 'https://youtube.com' },
 ];
