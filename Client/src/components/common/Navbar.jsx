@@ -56,7 +56,8 @@ export default function SiteHeader() {
               key={item.path}
               to={item.path}
               onClick={() => setMenuOpen(false)}
-              className={({ isActive }) => `px-[20px] py-[12px] rounded-none text-white/80 font-bold text-[1.8rem] tracking-[0.05em] transition-all duration-[300ms] hover:text-white hover:bg-white/5 min-[900px]:text-[1.15rem] min-[900px]:px-[16px] min-[900px]:py-[10px] min-[900px]:rounded-[8px] min-[900px]:font-semibold ${isActive ? 'text-white bg-white/10' : ''}`}
+              className={({ isActive }) => `px-[20px] py-[12px] rounded-none font-bold text-[1.8rem] tracking-[0.05em] transition-all duration-[300ms] min-[900px]:text-[1.15rem] min-[900px]:px-[16px] min-[900px]:py-[10px] min-[900px]:rounded-[8px] min-[900px]:font-semibold ${isActive ? 'text-black bg-white' : 'text-white/80 hover:text-white hover:bg-white/5'}`}
+
             >
               {item.label}
             </NavLink>
